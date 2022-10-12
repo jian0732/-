@@ -1,0 +1,25 @@
+﻿#Jimg {
+    font-size: 25px;
+/*    margin-right: -5px;
+    margin-left: 10px ;*/
+}
+
+/*.Jspan {
+    margin-left: 10px;
+}*/
+.超連結 {
+    font-size: 20px;
+}
+#超連結 {
+    font-size: 20px;
+    margin-left: 20px;
+    font-weight:bold;
+}
+/*.調整一下 {
+    justify-content: center;
+}*/
+.jj {
+    text-align:center;
+    align-items:center;
+}
+/*style=" font-size: 30px; margin-right: -5px; margin-left: 10px" */

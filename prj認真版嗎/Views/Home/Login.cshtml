@@ -1,0 +1,18 @@
+﻿
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<h1>請輸入密碼</h1>
+
+@using (Html.BeginForm())
+{
+    <input type="text" name="password" class = "text-danger"  />
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">關閉</button>
+        <input type="submit" value="登入"  class="btn btn-primary"/>
+    </div>
+}
+
+

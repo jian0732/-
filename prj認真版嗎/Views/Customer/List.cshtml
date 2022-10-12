@@ -1,0 +1,96 @@
+﻿@using prj認真版嗎.ViewModel
+@model List<CMember>
+
+@{
+    ViewData["Title"] = "List";
+}
+<div id="pa">
+    <h1>會員專區</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().MemberName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().PhotoPath)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Password)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Phone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Gender)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().BirthDay)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().CityId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().MemberStatusId)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MemberName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.PhotoPath)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Phone)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Gender)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.BirthDay)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Address)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CityName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MemberStatusName)
+                    </td>
+                    <td>
+
+                        @Html.ActionLink("修改", "Edit", "Customer", new { id = item.MembersId }, new { @class = "btn btn-success",id="" })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+@section Scripts{
+    <script>
+    
+    $("#dd").click(function () {
+    $('#pa').load('@Url.Content("~/Customer/Edit")')
+      })
+
+    </script>
+
+}
