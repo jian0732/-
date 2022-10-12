@@ -13,6 +13,7 @@ namespace prj認真版嗎.Controllers
 {
     public class ProductController : Controller
     {
+        //編輯測試-by兆倫
         private IWebHostEnvironment _enviro;
         private PlanetTravelContext _db;
         public ProductController(IWebHostEnvironment p, PlanetTravelContext q)
