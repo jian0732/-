@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using prjMvcCoreModel.ViewModel;
 using prj認真版嗎.Models;
 using prj認真版嗎.ViewModel;
 using System;
@@ -18,8 +19,12 @@ namespace prj認真版嗎.Controllers
             _db = q;
             _enviro = p;
         }
-        public IActionResult List()
+        public IActionResult List(string keyword)
         {
+            if (!string.IsNullOrEmpty(keyword))
+            {
+
+            }
             List<CMember> qq = _db.Members.Select(s => new CMember
             {
                 member=s,
@@ -30,6 +35,26 @@ namespace prj認真版嗎.Controllers
             return View(qq);
         }
 
+        //public IActionResult Create()
+        //{
+        //    return PartialView();
+        //}
+        //[HttpPost]
+        //public ActionResult Create( CProductViewModel p)
+        //{
+        //    _db.Admins.Add(ad);
+        //    _db.SaveChanges();
+        //    _db.AdminStatuses.Add(new AdminStatus()
+        //    {
+        //        AdminId = ad.AdminId,
+        //        AdminStatus1 = Vad.AdminStatus1,
+        //        CommentStatus = Vad.CommentStatus,
+        //        MemberStatus = Vad.MemberStatus,
+        //        ProductStatus = Vad.ProductStatus,
+        //    });
+        //    _db.SaveChanges();
+        //    return RedirectToAction("Index");
+        //}
         //public ActionResult Delete(int? id)
         //{
         //    if (id != null)
@@ -48,13 +73,13 @@ namespace prj認真版嗎.Controllers
         {
             if (id != null)
             {
-
-                CMember prod = new CMember();
-                prod.member= _db.Members.FirstOrDefault(p => p.MembersId == id);
-                if (prod != null)
+                CMember qq = _db.Members.Where(p => p.MembersId == id).Select(s =>new CMember
                 {
-                    return PartialView(prod);
-                }
+                    member = s,
+                    CityName = s.City.CityName,
+                    MemberStatusName = s.MemberStatus.MemberStatusName
+                }).FirstOrDefault();
+                return View(qq);
             }
             return RedirectToAction("List");
         }
@@ -68,14 +93,14 @@ namespace prj認真版嗎.Controllers
                 //if (inPord.PhotoPath != null)
                 //{
                 //    string photoname = Guid.NewGuid().ToString() + ".jpg";
-                //    inPord.PhotoPath.SaveAs(Server.MapPath("../../images/" + photoname));
-                //    prod.fimagePath = photoname;
+                //    inPord.photo.SaveAs(Server.MapPath("../../images/" + photoname));
+                //    prod.PhotoPath = photoname;
                 //}
                 prod.Email = inPord.Email;
                 prod.MemberName = inPord.MemberName;
                 prod.Password = inPord.Password;
                 prod.Phone = inPord.Phone;
-                prod.CityId = inPord.CityId;
+                prod.CityId =_db.MemberStatuses.FirstOrDefault(p=>p.MemberStatusName==inPord.MemberStatusName).MemberStatusId;
                 _db.SaveChanges();
             }
             return RedirectToAction("List");

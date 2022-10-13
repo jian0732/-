@@ -1,0 +1,53 @@
+﻿@model prj認真版嗎.ViewModel.CAdminViewModel
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>新增管理員</h1>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Create">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="AdminName" class="control-label"></label>
+                    <input asp-for="AdminName" class="form-control" />
+                    <span asp-validation-for="AdminName" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Password" class="control-label"></label>
+                    <input asp-for="Password" class="form-control" />
+                    <span asp-validation-for="Password" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="CommentStatus" class="control-label"></label>
+                    <input asp-for="CommentStatus" type="checkbox" />
+                    <span asp-validation-for="CommentStatus" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="MemberStatus" class="control-label"></label>
+                    <input asp-for="MemberStatus"type="checkbox" />
+                    <span asp-validation-for="MemberStatus" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ProductStatus" class="control-label"></label>
+                    <input asp-for="ProductStatus" type="checkbox" />
+                    <span asp-validation-for="ProductStatus" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AdminStatus1" class="control-label"></label>
+                    <input asp-for="AdminStatus1" type="checkbox" />
+                    <span asp-validation-for="AdminStatus1" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
+    </div>
+<div>
+    <a asp-action="Index">回管理權限列表</a>
+</div>
+
+

@@ -1,4 +1,5 @@
-﻿using prj認真版嗎.Models;
+﻿using Microsoft.AspNetCore.Http;
+using prj認真版嗎.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -89,5 +90,6 @@ namespace prj認真版嗎.ViewModel
         
         public string MemberStatusName { get; set; }     
         public string CityName { get; set; }
+        public IFormFile photo { get; set; }
     }
 }

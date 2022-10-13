@@ -30,7 +30,7 @@ namespace prj認真版嗎
             {
                 options.UseSqlServer(Configuration.GetConnectionString("PlanetTravelConnection"));
             });
-
+            services.AddSession();
             services.AddControllersWithViews();
         }
 
@@ -51,14 +51,14 @@ namespace prj認真版嗎
             app.UseStaticFiles();
 
             app.UseRouting();
-
+            app.UseSession();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=page}/{id?}");
             });
         }
     }

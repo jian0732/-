@@ -5,7 +5,17 @@
     ViewData["Title"] = "List";
 }
 <div id="pa">
-    <h1>會員專區</h1>
+    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+    <div class="input-group">
+        <input type="text" class="form-control bg-light border-0 small" placeholder="關鍵字查詢"
+               aria-label="Search" aria-describedby="basic-addon2" name="keyword">
+        <div class="input-group-append">
+            <button class="btn btn-primary" type="button">
+                <i class="fas fa-search fa-sm"></i>
+            </button>
+        </div>
+    </div>
+    </form>
     <table class="table">
         <thead>
             <tr>
@@ -44,7 +54,8 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr class="aa">
+
                     <td>
                         @Html.DisplayFor(modelItem => item.MemberName)
                     </td>
@@ -76,20 +87,26 @@
                         @Html.DisplayFor(modelItem => item.MemberStatusName)
                     </td>
                     <td>
-                        @Html.ActionLink("修改", "Edit", "Customer", new { id = item.MembersId }, new { @class = "btn btn-success",id="" })
+                        @*<button class = "btn btn-success" id="Edit">修改</button>*@
+                        @Html.ActionLink("修改", "Edit", "Customer", new { id = item.MembersId }, new { @class = "btn btn-success",id=""})
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-@section Scripts{
+@*@section Scripts{
     <script>
-    
-    $("#dd").click(function () {
-    $('#pa').load('@Url.Content("~/Customer/Edit")')
-      })
+
+        let trs = document.getElementsByClassName('btn')
+        let A = 0;
+        for (let item of trs) {
+            item.addEventListener('click', event => {
+                A = $(event.currentTarget).parents("tr").find("td")[0].innerText
+                $('#pa').load('@Url.Content("~/Customer/Edit")?id='+A)
+            })
+        }
 
     </script>
 
-}
+}*@

@@ -74,6 +74,8 @@ namespace prj認真版嗎.Models
 
                 entity.Property(e => e.AdminId).HasColumnName("AdminID");
 
+                entity.Property(e => e.AdminStatus1).HasColumnName("AdminStatus");
+
                 entity.HasOne(d => d.Admin)
                     .WithMany(p => p.AdminStatuses)
                     .HasForeignKey(d => d.AdminId)
@@ -171,7 +173,9 @@ namespace prj認真版嗎.Models
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.MemberStatusId).HasColumnName("MemberStatusID");
+                entity.Property(e => e.MemberStatusId)
+                    .HasColumnName("MemberStatusID")
+                    .HasDefaultValueSql("((1))");
 
                 entity.Property(e => e.Password)
                     .IsRequired()

@@ -1,10 +1,13 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using prj認真版嗎.Models;
+using prj認真版嗎.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace prj認真版嗎.Controllers
@@ -18,9 +21,15 @@ namespace prj認真版嗎.Controllers
             _Travel = Travel;
             _logger = logger;
         }
-        public IActionResult Index()
+        public IActionResult page()
         {
             return View();
+        }
+        public IActionResult Index()
+        {
+            if (!HttpContext.Session.Keys.Equals(CDictionary.SK_Admin_Login))
+                return View();
+            return RedirectToAction("page");
         }
 
         public IActionResult Privacy()
@@ -38,23 +47,24 @@ namespace prj認真版嗎.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Login(string password)
+        public IActionResult Login(CLogin ps)
         {
-            if (password != "")
+            if (!string.IsNullOrEmpty(ps.password))
             {
-                var q = _Travel.Admins.FirstOrDefault(p => p.Password == password);
+                var q = _Travel.Admins.FirstOrDefault(p => p.Password == ps.password);
                 if(q != null)
-                {
-                 
+                {                   
+                    string jsonUser = JsonSerializer.Serialize(q);
+                    HttpContext.Session.SetString(CDictionary.SK_Admin_Login, jsonUser);
+                    return Content("0", "text / plain", System.Text.Encoding.UTF8);
                 }
                 else
                 {
-
+                    return Content("1", "text / plain", System.Text.Encoding.UTF8);
                 }
-                
             }
 
-            return RedirectToAction("Index");
+            return RedirectToAction("page");
         }
     }
 }

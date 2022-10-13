@@ -12,6 +12,7 @@ namespace prj認真版嗎.Models
         public bool CommentStatus { get; set; }
         public bool ProductStatus { get; set; }
         public bool MemberStatus { get; set; }
+        public bool AdminStatus1 { get; set; }
 
         public virtual Admin Admin { get; set; }
     }
