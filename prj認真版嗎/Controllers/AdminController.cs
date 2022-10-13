@@ -32,7 +32,15 @@ namespace prj認真版嗎.Controllers
         }
         public IActionResult Create()
         {
-            return PartialView();
+            return View();
+        }
+        public IActionResult Cy(string Account)
+        {
+            Admin A = _db.Admins.FirstOrDefault(p => p.Account == Account);
+            if(A != null)
+                return Content("此帳號已存在", "text/plain", System.Text.Encoding.UTF8);
+            else
+                return Content("此帳號可以使用", "text/plain", System.Text.Encoding.UTF8);
         }
 
         [HttpPost]
@@ -70,9 +78,10 @@ namespace prj認真版嗎.Controllers
             Admin A管理員 = _db.Admins.FirstOrDefault(p => p.AdminId == adm.AdminId);
             if(A管理員 != null)
             {
-            A管理員.AdminName = adm.AdminName;
-            A管理員.Password = adm.Password;
-            _db.SaveChanges();
+                A管理員.AdminName = adm.AdminName;
+                A管理員.Password = adm.Password;
+                A管理員.Account = adm.Account;
+                _db.SaveChanges();
 
              AdminStatus AdS = _db.AdminStatuses.FirstOrDefault(p => p.AdminId == adm.AdminId);
              AdS.CommentStatus = adm.CommentStatus;

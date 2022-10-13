@@ -33,6 +33,12 @@ namespace prj認真版嗎.ViewModel
             get { return _admin.AdminName; }
             set { _admin.AdminName = value; }
         }
+        [DisplayName("帳號")]
+        public string Account
+        {
+            get { return _admin.Account; }
+            set { _admin.Account = value; }
+        }
         [DisplayName("密碼")]
         public string Password
         {

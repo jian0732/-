@@ -13,16 +13,22 @@
     <div class="col-md-4">
         <form asp-action="Edit" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group"> 
-                <input asp-for="AdminId" type="hidden" class="form-control" name="AdminId"/>
+            <div class="form-group">
+                <input asp-for="AdminId" type="hidden" class="form-control" name="AdminId" />
             </div>
             <div class="form-group">
                 <label asp-for="AdminName" class="control-label"></label>
                 <input asp-for="AdminName" class="form-control" name="AdminName" />
             </div>
             <div class="form-group">
+
+                <label asp-for="Account" class="control-label"></label>
+                <input asp-for="Account" class="form-control" name="Account" id="Account" />
+                <small id="NameHelp" class="form-text text-muted"></small>
+            </div>
+            <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" name="Password"/>
+                <input asp-for="Password" class="form-control" name="Password" />
             </div>
 
             <div class="form-group">
@@ -33,7 +39,7 @@
                 <label asp-for="ProductStatus" class="control-label"></label>
                 <input asp-for="ProductStatus" type="checkbox" name="ProductStatus" />&nbsp;
                 <label asp-for="AdminStatus1" class="control-label"></label>
-                <input asp-for="AdminStatus1" type="checkbox" name="AdminStatus1"/>
+                <input asp-for="AdminStatus1" type="checkbox" name="AdminStatus1" />
             </div>
             <div class="form-group">
                 <input type="submit" value="確認修改" class="btn btn-primary" />
@@ -47,5 +53,13 @@
 
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script>
+        const Account = document.querySelector("#Account")
+        const Help = document.querySelector("#NameHelp")
+    Account.addEventListener("blur",async () => {
+        let rp = await fetch('@Url.Content("~/Admin/Cy")' + `?Account=${Account.val()}`)
+    let data = await rp.text();
+    Help.txtAccount = data;
+    })
+    </script>
 }

@@ -4,19 +4,19 @@
 @{
     ViewData["Title"] = "管理員";
 }
-
-
-
 <div id="divA">
     <h1>管理員管理</h1>
     <p>
-        <button id="Newbtn" class="btn btn-primary">新增管理員</button>
+        @Html.ActionLink("新增管理員", "Create","Admin",null,new{@class = "btn btn-primary" })
     </p>
     <table class="table">
         <thead>
             <tr>
                 <th>
                     @Html.DisplayNameFor(model => model.FirstOrDefault().AdminName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Account)
                 </th>
                 <th>
                     @Html.DisplayNameFor(model => model.FirstOrDefault().Password)
@@ -39,41 +39,42 @@
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AdminName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Password)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CommentStatus)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MemberStatus)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.ProductStatus)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.AdminStatus1)
-                    </td>
-                    <td>
-                        <a asp-action="Edit" asp-route-id="@item.AdminId" class="btn btn-success">修改</a>
-                        <a asp-action="Delete" asp-route-id="@item.AdminId" class="btn btn-danger" onclick="check()">刪除</a>
-                    </td>
-                </tr>
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdminName)
+                </td>
+                <td>                   
+                    @Html.DisplayFor(modelItem => item.Account)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CommentStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MemberStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdminStatus1)
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.AdminId" class="btn btn-success">修改</a>
+                    <a asp-action="Delete" asp-route-id="@item.AdminId" class="btn btn-danger" onclick="check()">刪除</a>
+                </td>
+            </tr>
             }
         </tbody>
     </table>
 </div>
 @section Scripts{
     <script>
-    $("#Newbtn").click(function () {
-        $("#divA").load('@Url.Content("~/Admin/Create")')
-    })
-        function check() {
+    function check() {
             return confirm("確定刪除?");
         }
+       
     </script>
 }

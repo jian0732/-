@@ -57,6 +57,8 @@ namespace prj認真版嗎.Models
 
                 entity.Property(e => e.AdminId).HasColumnName("AdminID");
 
+                entity.Property(e => e.Account).HasMaxLength(50);
+
                 entity.Property(e => e.AdminName)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -237,6 +239,12 @@ namespace prj認真版嗎.Models
                 entity.Property(e => e.MembersId).HasColumnName("MembersID");
 
                 entity.Property(e => e.TravelProductId).HasColumnName("TravelProductID");
+
+                entity.HasOne(d => d.Members)
+                    .WithMany(p => p.Myfavorites)
+                    .HasForeignKey(d => d.MembersId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Myfavorites_Members");
             });
 
             modelBuilder.Entity<Order>(entity =>
