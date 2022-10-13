@@ -32,24 +32,20 @@ namespace prjMvcCoreModel.ViewModel
             get { return _product.TravelProductName; }
             set { _product.TravelProductName = value; }
         }
-        [DisplayName("成本")]
-        public int Cost
-        {
-            get { return _product.Cost; }
-            set { _product.Cost = value; }
-        }
-        //[DisplayName("庫存")]
-        //public int Qty
-        //{
-        //    get { return _product.Qty; }
-        //    set { _product.Qty = value; }
-        //}
+
         [DisplayName("單價")]
         public decimal Price
         {
             get { return _product.Price; }
             set { _product.Price = value; }
         }
+        [DisplayName("成本")]
+        public int Cost
+        {
+            get { return _product.Cost; }
+            set { _product.Cost = value; }
+        }
+
         //public string FimagePath
         //{
         //    get { return _product.FimagePath; }

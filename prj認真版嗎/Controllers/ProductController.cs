@@ -30,7 +30,7 @@ namespace prj認真版嗎.Controllers
         [HttpGet]
         public ActionResult Create()
         {
-            return PartialView();
+            return View();
         }
 
         [HttpPost]
