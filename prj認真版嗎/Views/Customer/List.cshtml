@@ -8,9 +8,9 @@
     <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
     <div class="input-group">
         <input type="text" class="form-control bg-light border-0 small" placeholder="關鍵字查詢"
-               aria-label="Search" aria-describedby="basic-addon2" name="keyword">
+               aria-label="Search" aria-describedby="basic-addon2" name="txtkeyword">
         <div class="input-group-append">
-            <button class="btn btn-primary" type="button">
+            <button class="btn btn-primary" type="submit">
                 <i class="fas fa-search fa-sm"></i>
             </button>
         </div>
@@ -86,10 +86,14 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.MemberStatusName)
                     </td>
-                    <td>
-                        @*<button class = "btn btn-success" id="Edit">修改</button>*@
-                        @Html.ActionLink("修改", "Edit", "Customer", new { id = item.MembersId }, new { @class = "btn btn-success",id=""})
-                    </td>
+                    @if(item.MemberName != "查無相關資料")
+                {
+                <td>
+                    @*<button class = "btn btn-success" id="Edit">修改</button>*@
+                    @Html.ActionLink("修改", "Edit", "Customer", new { id = item.MembersId }, new { @class = "btn btn-success", id = "" })
+                </td>
+                }
+                    
                 </tr>
             }
         </tbody>

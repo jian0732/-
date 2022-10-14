@@ -22,7 +22,10 @@
 </head>
 
 <body id="page-top">
-
+    @using Microsoft.AspNetCore.Http
+    @using System.Text.Json;
+    @using prj認真版嗎.ViewModel
+    @inject IHttpContextAccessor Accessor
     <!-- Page Wrapper -->
     <div id="wrapper">
 
@@ -41,47 +44,74 @@
             <br />
 
             <!-- Nav Item - Dashboard -->
-            <li class="nav-item active ">
-                <div class="nav-link ">
-                    <i class=" fas fa-fw fa-tachometer-alt" id="Jimg"></i>
-                    @Html.ActionLink("儀錶板", "Index", "Home", null, new { @class = "nav-link 超連結", style = "display:inline" })
-                </div>
-            </li>
+            @{
+                if (Accessor.HttpContext.Session.Keys.Contains(CDictionary.SK_Admin_Login))
+                {
 
-            <li class="nav-item active ">
-                <div class="nav-link ">
-                    <i class=" fas fa-fw fa-wrench" id="Jimg"></i>
-                    @Html.ActionLink("商品管理", "List", "Product", null, new { @class = "nav-link 超連結", style = "display:inline" })
-                </div>
-            </li>
+                    var id = Accessor.HttpContext.Session.GetString(CDictionary.SK_Admin_Login);
+                    var data = JsonSerializer.Deserialize<CAdminViewModel>(id);
+                    if (data.ProductStatus == true)
+                    {
+                        <li class="nav-item active">
+                            <div class="nav-link ">
+                                <i class=" fas fa-fw fa-tachometer-alt" id="Jimg"></i>
+                                @Html.ActionLink("儀錶板", "Index", "Home", null, new { @class = "nav-link 超連結", style = "display:inline" })
+                            </div>
+                        </li>
+                    }
 
-            <li class="nav-item active ">
-                <div class="nav-link ">
-                    <i class=" fas fa-fw fa-users" id="Jimg"></i>
-                    @Html.ActionLink("會員管理", "List", "Customer", null, new { @class = "nav-link 超連結", style = "display:inline" })
-                </div>
-            </li>
 
-            <li class="nav-item active ">
-                <div class="nav-link ">
-                    <i class=" fas fa-fw fa-comment " id="Jimg"></i>
-                    @Html.ActionLink("評論管理", "List", "", null, new { @class = "nav-link 超連結", style = "display:inline" })
-                </div>
-            </li>
+                    if (data.ProductStatus == true)
+                    {
+                        <li class="nav-item active ">
+                            <div class="nav-link ">
+                                <i class=" fas fa-fw fa-wrench" id="Jimg"></i>
+                                @Html.ActionLink("商品管理", "IndexHome", "Product", null, new { @class = "nav-link 超連結", style = "display:inline" })
+                            </div>
+                        </li>
+                    }
 
-            <li class="nav-item active ">
-                <div class="nav-link ">
-                    <i class=" fas fa-fw fa-users" id="Jimg"></i>
-                    @Html.ActionLink("權限管理", "List", "Admin", null, new { @class = "nav-link 超連結", style = "display:inline" })
-                </div>
-            </li>
+                    if (data.MemberStatus == true)
+                    {
+                        <li class="nav-item active ">
+                            <div class="nav-link ">
+                                <i class=" fas fa-fw fa-users" id="Jimg"></i>
+                                @Html.ActionLink("會員管理", "List", "Customer", null, new { @class = "nav-link 超連結", style = "display:inline" })
+                            </div>
+                        </li>
+                    }
 
-            <li class="nav-item active ">
-                <div class="nav-link ">
-                    <i class=" fas fa-fw fa-wallet" id="Jimg"></i>
-                    @Html.ActionLink("優惠券管理", "List", "", null, new { @class = "nav-link 超連結", style = "display:inline" })
-                </div>
-            </li>
+                    if (data.CommentStatus == true)
+                    {
+                        <li class="nav-item active ">
+                            <div class="nav-link ">
+                                <i class=" fas fa-fw fa-comment " id="Jimg"></i>
+                                @Html.ActionLink("評論管理", "List", "", null, new { @class = "nav-link 超連結", style = "display:inline" })
+                            </div>
+                        </li>
+                    }
+
+                    if (data.AdminStatus1 == true)
+                    {
+                        <li class="nav-item active ">
+                            <div class="nav-link ">
+                                <i class=" fas fa-fw fa-users" id="Jimg"></i>
+                                @Html.ActionLink("權限管理", "List", "Admin", null, new { @class = "nav-link 超連結", style = "display:inline" })
+                            </div>
+                        </li>
+                    }
+
+                    if (data.ProductStatus == true)
+                    {
+                        <li class="nav-item active ">
+                            <div class="nav-link ">
+                                <i class=" fas fa-fw fa-wallet" id="Jimg"></i>
+                                @Html.ActionLink("優惠券管理", "List", "", null, new { @class = "nav-link 超連結", style = "display:inline" })
+                            </div>
+                        </li>
+                    }
+                }
+            }
             <!-- Divider -->
 
 
@@ -94,7 +124,7 @@
             <div id="content">
 
                 <!-- Topbar -->
-                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                <nav class="navbar navbar-expand navbar-light topbar static-top shadow" style="background-color:black">
 
                     <!-- Sidebar Toggle (Topbar) -->
                     <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
@@ -102,17 +132,17 @@
                     </button>
 
                     <!-- Topbar Search -->
-                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                        <div class="input-group">
-                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
-                                   aria-label="Search" aria-describedby="basic-addon2">
-                            <div class="input-group-append">
-                                <button class="btn btn-primary" type="button">
-                                    <i class="fas fa-search fa-sm"></i>
-                                </button>
+                    @*<form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                            <div class="input-group">
+                                <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..."
+                                       aria-label="Search" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <button class="btn btn-primary" type="button">
+                                        <i class="fas fa-search fa-sm"></i>
+                                    </button>
+                                </div>
                             </div>
-                        </div>
-                    </form>
+                        </form>*@
 
                     <!-- Topbar Navbar -->
                     <ul class="navbar-nav ml-auto">
@@ -265,11 +295,20 @@
                                 <a class="dropdown-item text-center small text-gray-500" href="#">Read More Messages</a>
                             </div>
                         </li>
-
-                        <li class="nav-item dropdown no-arrow mx-1">
-                            @Html.ActionLink("登入","Login","Home",null,new { @class = "btn btn-outline-dark" })
-                        </li>
-
+                        @{
+                            if (Accessor.HttpContext.Session.Keys.Contains(CDictionary.SK_Admin_Login))
+                            {
+                                <li class="nav-item dropdown no-arrow mx-1">
+                                    @Html.ActionLink("登出", "Logout", "Home", null, new { @class = "btn btn-outline-dark" })
+                                </li>
+                            }
+                            else
+                            {
+                                <li class="nav-item dropdown no-arrow mx-1">
+                                    @Html.ActionLink("登入", "Login", "Home", null, new { @class = "btn btn-outline-dark" })
+                                </li>
+                            }
+                        }
                         <!-- Nav Item - User Information -->
                         <li class="nav-item dropdown no-arrow">
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
@@ -311,12 +350,12 @@
             </div>
             <!-- End of Main Content -->
             <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
+            @*<footer class="sticky-footer" style="background-color:black">
+                    <div class="container my-auto">
+                        <div class="copyright text-center my-auto">
+                        </div>
                     </div>
-                </div>
-            </footer>
+                </footer>*@
             <!-- End of Footer -->
 
         </div>
@@ -350,13 +389,13 @@
     </div>
     <!--註冊光相-->
     @*<div class="modal fade" id="LOGIN" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">                   
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>*@
+        </div>*@
     <!-- Bootstrap core JavaScript-->
     <script src="~/lib/jquery/jquery.min.js"></script>
     <script src="~/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -372,6 +411,10 @@
         <script src="~/js/demo/chart-pie-demo.js"></script>*@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
     @await RenderSectionAsync("Scripts", required: false)
+    <script>
+
+
+    </script>
 </body>
 
 </html>

@@ -38,7 +38,7 @@
                 <input asp-for="MemberStatus" type="checkbox" name="MemberStatus" />&nbsp;
                 <label asp-for="ProductStatus" class="control-label"></label>
                 <input asp-for="ProductStatus" type="checkbox" name="ProductStatus" />&nbsp;
-                <label asp-for="AdminStatus1" class="control-label"></label>
+                <label asp-for="AdminStatus1" class="control-label"></label>              
                 <input asp-for="AdminStatus1" type="checkbox" name="AdminStatus1" />
             </div>
             <div class="form-group">
@@ -61,5 +61,7 @@
     let data = await rp.text();
     Help.txtAccount = data;
     })
+
+       
     </script>
 }
