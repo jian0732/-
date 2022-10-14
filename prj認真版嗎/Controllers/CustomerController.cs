@@ -19,20 +19,37 @@ namespace prj認真版嗎.Controllers
             _db = q;
             _enviro = p;
         }
-        public IActionResult List(string keyword)
+        public IActionResult List(CKeyword keyword)
         {
-            if (!string.IsNullOrEmpty(keyword))
+            List<CMember> datas = null;
+            if (string.IsNullOrEmpty(keyword.txtKeyword))
             {
+                datas = _db.Members.Select(s => new CMember
+                {
+                    member = s,
+                    CityName = s.City.CityName,
+                    MemberStatusName = s.MemberStatus.MemberStatusName
+                }).ToList();
 
             }
-            List<CMember> qq = _db.Members.Select(s => new CMember
+            else
             {
-                member=s,
-                CityName = s.City.CityName,
-                MemberStatusName = s.MemberStatus.MemberStatusName
-            }).ToList();
-
-            return View(qq);
+                datas = _db.Members.Where
+                (a => a.Address.Contains(keyword.txtKeyword) || a.Email.Contains(keyword.txtKeyword) ||
+                a.MemberName.Contains(keyword.txtKeyword) || a.BirthDay.Contains(keyword.txtKeyword) ||
+                a.Gender.Contains(keyword.txtKeyword) || a.MemberStatus.MemberStatusName.Contains(keyword.txtKeyword))
+                 .Select(s => new CMember
+                 {
+                     member = s,
+                     CityName = s.City.CityName,
+                     MemberStatusName = s.MemberStatus.MemberStatusName
+                 }).ToList();
+                if (datas.Count == 0)
+                {
+                    datas.Add(new CMember() { MemberName = "查無相關資料" });
+                }                    
+            }
+            return View(datas);
         }
 
         //public IActionResult Create()
@@ -73,7 +90,7 @@ namespace prj認真版嗎.Controllers
         {
             if (id != null)
             {
-                CMember qq = _db.Members.Where(p => p.MembersId == id).Select(s =>new CMember
+                CMember qq = _db.Members.Where(p => p.MembersId == id).Select(s => new CMember
                 {
                     member = s,
                     CityName = s.City.CityName,
@@ -96,14 +113,22 @@ namespace prj認真版嗎.Controllers
                 //    inPord.photo.SaveAs(Server.MapPath("../../images/" + photoname));
                 //    prod.PhotoPath = photoname;
                 //}
+                prod.BirthDay = inPord.BirthDay;
+                prod.Address = inPord.Address;
                 prod.Email = inPord.Email;
                 prod.MemberName = inPord.MemberName;
                 prod.Password = inPord.Password;
                 prod.Phone = inPord.Phone;
-                prod.CityId =_db.MemberStatuses.FirstOrDefault(p=>p.MemberStatusName==inPord.MemberStatusName).MemberStatusId;
+                prod.CityId = _db.Cities.FirstOrDefault(p => p.CityName == inPord.CityName).CityId;
+                prod.MemberStatusId = _db.MemberStatuses.FirstOrDefault(p => p.MemberStatusName == inPord.MemberStatusName).MemberStatusId;
                 _db.SaveChanges();
             }
             return RedirectToAction("List");
+        }
+        public IActionResult Status()
+        {
+            var cities = _db.MemberStatuses.Select(a => a.MemberStatusName);
+            return Json(cities);
         }
     }
 }

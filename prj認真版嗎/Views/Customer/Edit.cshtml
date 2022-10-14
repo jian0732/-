@@ -42,20 +42,21 @@
                 <div class="form-group">
                     <label asp-for="BirthDay" class="control-label"></label>
                     <input asp-for="BirthDay" class="form-control" />
-                    <span asp-validation-for="BirthDay" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="PhotoPath" class="control-label"></label>
                     <input asp-for="PhotoPath" class="form-control" />
-                    <span asp-validation-for="PhotoPath" class="text-danger"></span>
                 </div>
+
                 <div class="form-group">
                     <label for="InputFile">選擇檔案</label>
                     <input type="file" class="form-control-file" id="InputFile" name="photo">
                 </div>
+
                 <div class="form-group">
                     <label asp-for="MemberStatusId" class="control-label"></label>
-                    <input asp-for="MemberStatusName" class="form-control">
+                    <select id="Status" name="MemberStatusName"></select>
+                    @*<input asp-for="MemberStatusName" class="form-control">*@
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
@@ -68,5 +69,27 @@
         <a asp-action="Index">回列表</a>
     </div>
 </div>
-
+@section Scripts{
+    <script>
+     const selStatus = document.querySelector("#Status");
+        (async function () {
+            await loadStatus()
+        }())
+        async function loadStatus() {
+            await ajaxCall("@Url.Content("~/customer/Status")", rendering, selStatus)
+        }
+        async function ajaxCall(url, rendering, sel) {
+            let response = await fetch(url)
+            let datas = await response.json()
+            rendering(sel, datas)
+        }
+        function rendering(sel, datas) {
+            sel.options.length = 0
+            datas.forEach(S => {
+                const opt = new Option(S, S)
+                sel.options.add(opt)
+            })
+        }
+    </script>
+}
 

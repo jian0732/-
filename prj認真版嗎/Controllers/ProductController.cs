@@ -23,6 +23,7 @@ namespace prj認真版嗎.Controllers
         }
         public IActionResult List()
         {
+
             var qq = from p in _db.TravelProducts
                      select p;
             return View(qq);

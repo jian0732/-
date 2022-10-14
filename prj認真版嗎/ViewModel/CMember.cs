@@ -44,7 +44,7 @@ namespace prj認真版嗎.ViewModel
             get { return _member.Phone; }
             set { _member.Phone = value; }
         }
-        [DisplayName("區")]
+        [DisplayName("地址")]
         public string Address
         {
             get { return _member.Address; }
