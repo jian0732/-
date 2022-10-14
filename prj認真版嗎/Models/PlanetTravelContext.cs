@@ -38,8 +38,6 @@ namespace prj認真版嗎.Models
         public virtual DbSet<TravelProductType> TravelProductTypes { get; set; }
         public virtual DbSet<View> Views { get; set; }
 
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Chinese_Taiwan_Stroke_CI_AS");

@@ -23,9 +23,10 @@ namespace prj認真版嗎.Controllers
         }
         public IActionResult List()
         {
-            var qq = from p in _db.TravelProducts
-                     select p;
-            return View(qq);
+            //var qq = from p in _db.TravelProducts
+            //         select p;
+            var products_list = _db.TravelProducts.Select(p => p);
+            return View(products_list);
         }
         [HttpGet]
         public ActionResult Create()

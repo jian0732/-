@@ -13,14 +13,20 @@ namespace prjMvcCoreModel.ViewModel
         public CProductViewModel()
         {
             _product = new TravelProduct();
+            _productpic = new TravelPicture();
         }
         private TravelProduct _product;
+        private TravelPicture _productpic;
         public TravelProduct product
         {
             get { return _product; }
             set { _product = value; }
         }
-
+        public TravelPicture productpic
+        {
+            get { return _productpic; }
+            set { _productpic = value; }
+        }
         public int TravelProductId
         {
             get { return _product.TravelProductId; }
@@ -39,13 +45,43 @@ namespace prjMvcCoreModel.ViewModel
             get { return _product.Price; }
             set { _product.Price = value; }
         }
+        public int TravelProductTypeId
+        {
+            get { return _product.TravelProductTypeId; }
+            set { _product.TravelProductTypeId = value; }
+        }
+        public int Stocks
+        {
+            get { return _product.Stocks; }
+            set { _product.Stocks = value; }
+        }
+        public string Description
+        {
+            get { return _product.Description; }
+            set { _product.Description = value; }
+        }
+        public int CountryId
+        {
+            get { return _product.CountryId; }
+            set { _product.CountryId = value; }
+        }
         [DisplayName("成本")]
         public int Cost
         {
             get { return _product.Cost; }
             set { _product.Cost = value; }
         }
+        public string EventIntroduction
+        {
+            get { return _product.EventIntroduction; }
+            set { _product.EventIntroduction = value; }
+        }
 
+        public string PreparationDescription
+        {
+            get { return _product.PreparationDescription; }
+            set { _product.PreparationDescription = value; }
+        }
         //public string FimagePath
         //{
         //    get { return _product.FimagePath; }
