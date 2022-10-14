@@ -42,7 +42,9 @@
             <th>
                 @Html.DisplayNameFor(model => model.PreparationDescription)
             </th>
-            <th></th>
+            <th>
+                @* @Html.DisplayNameFor(model => model.TravelPictures.Where(p=>p.TravelProductId == model.TravelProductId))*@
+            </th>
         </tr>
     </thead>
     <tbody>
@@ -79,7 +81,11 @@
                 @Html.DisplayFor(modelItem => item.PreparationDescription)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new {  id=item.TravelProductId }) |
+                <img style="width:100px;height:100px" src="@Url.Content("~/images/TravelProductPictures/")d76afc3e-b9f0-495a-97d5-c2788e096483.jpg"/>
+                @*<img src="@Url.Content("~/images/TravelProductPictures/")@item.TravelPictures.Where(p=>p.TravelProductId == item.TravelProductId).FirstOrDefault().TravelPictureText" />*@
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.TravelProductId }) |
                 @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
                 @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
             </td>

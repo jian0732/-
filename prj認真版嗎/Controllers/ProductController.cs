@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using prjMvcCoreModel.ViewModel;
 using prj認真版嗎.Models;
+using prj認真版嗎.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,7 +14,7 @@ namespace prj認真版嗎.Controllers
 {
     public class ProductController : Controller
     {
-        //編輯測試-by兆倫
+        //1014-product edit
         private IWebHostEnvironment _enviro;
         private PlanetTravelContext _db;
         public ProductController(IWebHostEnvironment p, PlanetTravelContext q)
@@ -45,9 +46,26 @@ namespace prj認真版嗎.Controllers
         {
             if (id != null)
             {
-                TravelProduct prod = _db.TravelProducts.FirstOrDefault(p => p.TravelProductId == id);
+                //TravelProduct prod = _db.TravelProducts.FirstOrDefault(p => p.TravelProductId == id);
+                CProductViewModel prod = _db.TravelProducts.Where(p => p.TravelProductId == id)
+                                           .Select(s => new CProductViewModel
+                                           {
+                                               product = s,
+                                               TravelProductId = s.TravelProductId,
+                                               TravelProductName = s.TravelProductName,
+                                               Price = s.Price,
+                                               TravelProductTypeId = s.TravelProductTypeId,
+                                               Stocks = s.Stocks,
+                                               Description =s.Description,
+                                               CountryId = s.CountryId,
+                                               Cost = s.Cost,
+                                               EventIntroduction = s.EventIntroduction,
+                                               PreparationDescription =s.PreparationDescription,
+                                               TravelPictureText = s.TravelPictures.Where(pic=>pic.TravelProductId==id).FirstOrDefault().TravelPictureText,
+                                           }).FirstOrDefault();
                 if (prod != null)
                 {
+
                     return View(prod);
                 }
             }
@@ -59,19 +77,29 @@ namespace prj認真版嗎.Controllers
             TravelProduct c = _db.TravelProducts.FirstOrDefault(p => p.TravelProductId == inPord.TravelProductId);
             if (c != null)
             {
-                if (inPord.photo != null)
-                {
-                    string pname = Guid.NewGuid().ToString() + ".jpg";
-                    //c.FimagePath = pname;
-                    string path = _enviro.WebRootPath + "/images/" + pname;
-                    inPord.photo.CopyTo(new FileStream(path, FileMode.Create));
-                }
-                c.Cost = inPord.Cost;
                 c.TravelProductName = inPord.TravelProductName;
                 c.Price = inPord.Price;
-                //c.FQty = inPord.FQty;
+                c.TravelProductTypeId = inPord.TravelProductTypeId;
+                c.Stocks = inPord.Stocks;
+                c.Description = inPord.Description;
+                c.CountryId = inPord.CountryId;
+                c.Cost = inPord.Cost;
+                c.EventIntroduction = inPord.EventIntroduction;
+                c.PreparationDescription = inPord.PreparationDescription;
                 _db.SaveChanges();
+                if (inPord.photo != null)
+                {
+                    var TraPicture = _db.TravelPictures.Where(pic => pic.TravelProductId == c.TravelProductId).FirstOrDefault();                    
+                    TraPicture.TravelPictureText = inPord.TravelPictureText;
+
+                    string pname = Guid.NewGuid().ToString() + ".jpg";
+                    TraPicture.TravelPicture1 = pname;
+                    string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
+                    inPord.photo.CopyTo(new FileStream(path, FileMode.Create));
+                    _db.SaveChanges();
+                }
             }
+
             return RedirectToAction("List");
         }
         public IActionResult IndexHome()

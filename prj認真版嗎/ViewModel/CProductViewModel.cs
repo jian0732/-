@@ -6,27 +6,33 @@ using System.ComponentModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace prjMvcCoreModel.ViewModel
+namespace prj認真版嗎.ViewModel
 {
     public class CProductViewModel
     {
         public CProductViewModel()
         {
-            _product = new TravelProduct();
-            _productpic = new TravelPicture();
+            _product = new TravelProduct();           
         }
         private TravelProduct _product;
-        private TravelPicture _productpic;
+        
         public TravelProduct product
         {
             get { return _product; }
             set { _product = value; }
-        }
-        public TravelPicture productpic
+        }      
+        public IFormFile photo { get; set; } //圖片的檔案
+        public string TravelPicturePath //圖片的路徑
         {
-            get { return _productpic; }
-            set { _productpic = value; }
+            get;
+            set;
         }
+        public string TravelPictureText //圖片描述
+        {
+            get;
+            set;
+        }
+
         public int TravelProductId
         {
             get { return _product.TravelProductId; }
@@ -82,11 +88,6 @@ namespace prjMvcCoreModel.ViewModel
             get { return _product.PreparationDescription; }
             set { _product.PreparationDescription = value; }
         }
-        //public string FimagePath
-        //{
-        //    get { return _product.FimagePath; }
-        //    set { _product.FimagePath = value; }
-        //}
-        public IFormFile photo { get; set; }
+
     }
 }
