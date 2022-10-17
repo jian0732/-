@@ -69,6 +69,7 @@
             }
         </tbody>
     </table>
+
     <div>
         <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
             <div class="btn-group me-2" role="group" aria-label="First group">
@@ -93,14 +94,15 @@
         }())
         async function btn() {
             
-          await let response = await fetch("@Url.Content("~/Admin/List")")
-            let results = await response.json()  //["Chai","Chang","Chartreuse verte"]
-            
+         let response = await fetch("@Url.Content("~/Admin/List")")
+         let results = await response.json()  //["Chai","Chang","Chartreuse verte"]
+
+
           let htmlDatas = results.map(data => {
             return (
                 `<button type="button" onclick="read(event)" class="list-group-item list-group-item-action">${data}</button>`
               )
-              let dd = htmlDatas.count
+              
         })
         }
     </script>
