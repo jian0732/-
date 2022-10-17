@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace prj認真版嗎.ViewModel
 {
-    public class CProductViewModel
+    public class CCreateTravelProductViewModel
     {
-        public CProductViewModel()
+        public CCreateTravelProductViewModel()
         {
             _product = new TravelProduct();
         }
@@ -88,6 +88,5 @@ namespace prj認真版嗎.ViewModel
             get { return _product.PreparationDescription; }
             set { _product.PreparationDescription = value; }
         }
-
     }
 }

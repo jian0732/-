@@ -1,22 +1,15 @@
-﻿@model prj認真版嗎.Models.TravelProduct
+﻿@model prj認真版嗎.ViewModel.CCreateTravelProductViewModel
 
-@{
-    ViewData["Title"] = "Create";
-}
+@{ ViewData["Title"] = "建立行程資訊"; }
 
-<h1>Create</h1>
+<h1>建立行程資訊作業</h1>
 
-<h4>TravelProduct</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Create">
+        <form asp-action="Create" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TravelProductId" class="control-label"></label>
-                <input asp-for="TravelProductId" class="form-control" />
-                <span asp-validation-for="TravelProductId" class="text-danger"></span>
-            </div>
             <div class="form-group">
                 <label asp-for="TravelProductName" class="control-label"></label>
                 <input asp-for="TravelProductName" class="form-control" />
@@ -63,6 +56,15 @@
                 <span asp-validation-for="PreparationDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
+                <label class="control-label">旅遊產品介紹照片</label>
+                <input type="file" name="photo" />
+            </div>
+            <div class="form-group">
+                <label asp-for="TravelPictureText" class="control-label"></label>
+                <input asp-for="TravelPictureText" class="form-control" />
+                <span asp-validation-for="TravelPictureText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
         </form>
@@ -70,7 +72,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="list">回到產品一覽表</a>
 </div>
 
 @section Scripts {

@@ -1,7 +1,7 @@
-﻿@model IEnumerable<prj認真版嗎.Models.TravelProduct>
+﻿@model prj認真版嗎.ViewModel.CTravelProduct_Picture_List
+@{ ViewData["Title"] = "List";
 
-@{
-    ViewData["Title"] = "List";
+
 }
 
 <h1>List</h1>
@@ -11,85 +11,89 @@
 </p>
 <table class="table">
     <thead>
+
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.TravelProductId)
+                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().TravelProductName)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TravelProductName)
+                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().TravelProductId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().Price)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.TravelProductTypeId)
+                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().TravelProductTypeId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Stocks)
+                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().Stocks)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Description)
+                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().Description)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.CountryId)
+                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().CountryId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Cost)
+                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().Cost)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.EventIntroduction)
+                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().EventIntroduction)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.PreparationDescription)
+                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().PreparationDescription)
             </th>
             <th>
-                @* @Html.DisplayNameFor(model => model.TravelPictures.Where(p=>p.TravelProductId == model.TravelProductId))*@
+                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().TravelPicture1)
             </th>
         </tr>
+
+
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.TravelProductId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TravelProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TravelProductTypeId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stocks)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CountryId)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cost)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.EventIntroduction)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PreparationDescription)
-            </td>
-            <td>
-                <img style="width:100px;height:100px" src="@Url.Content("~/images/TravelProductPictures/")d76afc3e-b9f0-495a-97d5-c2788e096483.jpg"/>
-                @*<img src="@Url.Content("~/images/TravelProductPictures/")@item.TravelPictures.Where(p=>p.TravelProductId == item.TravelProductId).FirstOrDefault().TravelPictureText" />*@
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.TravelProductId }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
+        @foreach (var item in Model.產品列表)
+        {
+
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TravelProductName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TravelProductId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TravelProductTypeId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Stocks)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Description)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CountryId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Cost)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.EventIntroduction)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.PreparationDescription)
+                </td>
+                <td>
+                    <img style="width:100px;height:100px" src="@Url.Content("~/images/TravelProductPictures/")@item.TravelPicture1" />
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "Edit", new { id = item.TravelProductId }) |
+                    @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
+                    @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+                </td>
+            </tr>
 }
     </tbody>
 </table>

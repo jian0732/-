@@ -24,10 +24,25 @@ namespace prj認真版嗎.Controllers
         }
         public IActionResult List()
         {
-            //var qq = from p in _db.TravelProducts
-            //         select p;
-            var products_list = _db.TravelProducts.Select(p => p);
-            return View(products_list);
+            CTravelProduct_Picture_List result = new CTravelProduct_Picture_List();
+            result.產品列表 = (from c in _db.TravelProducts
+                           select new 產品格式
+                           {
+                               TravelProductName = c.TravelProductName,
+                               TravelProductId = c.TravelProductId,
+                               Price = c.Price,
+                               TravelProductTypeId = c.TravelProductId,
+                               Stocks = c.Stocks,
+                               Description = c.Description,
+                               CountryId = c.CountryId,
+                               Cost = c.Cost,
+                               EventIntroduction = c.EventIntroduction,
+                               PreparationDescription = c.PreparationDescription,
+                               TravelPicture1 = _db.TravelPictures.Where(pic => pic.TravelProductId == c.TravelProductId).FirstOrDefault().TravelPicture1,
+                               //Q: 有辦法不用再開啟一次資料庫做where?
+                           }).ToList();
+
+            return View(result);
         }
         [HttpGet]
         public ActionResult Create()
@@ -36,10 +51,41 @@ namespace prj認真版嗎.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(TravelProduct p)
+        public ActionResult Create(CCreateTravelProductViewModel newProduct)
         {
-            _db.TravelProducts.Add(p);
-            _db.SaveChanges();
+            if (newProduct != null)
+            {
+                TravelProduct tp = new TravelProduct
+                {
+                    TravelProductName = newProduct.TravelProductName,
+                    Price = newProduct.Price,
+                    TravelProductTypeId = newProduct.TravelProductTypeId,
+                    Stocks = newProduct.Stocks,
+                    Description = newProduct.Description,
+                    CountryId = newProduct.CountryId,
+                    Cost = newProduct.Cost,
+                    EventIntroduction = newProduct.EventIntroduction,
+                    PreparationDescription = newProduct.PreparationDescription,
+                };
+
+                _db.TravelProducts.Add(tp);
+                _db.SaveChanges();
+
+                if (newProduct.photo != null)
+                {
+                    TravelPicture pic = new TravelPicture();
+                    pic.TravelPictureText = newProduct.TravelPictureText;
+                    pic.TravelProductId = _db.TravelProducts.OrderBy(e => e.TravelProductId).LastOrDefault().TravelProductId;
+
+                    string pname = Guid.NewGuid().ToString() + ".jpg";
+                    pic.TravelPicture1 = pname;
+                    string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
+                    newProduct.photo.CopyTo(new FileStream(path, FileMode.Create));
+                    _db.TravelPictures.Add(pic);
+                    _db.SaveChanges();
+                }
+            }
+
             return RedirectToAction("List");
         }
         public ActionResult Edit(int? id)
