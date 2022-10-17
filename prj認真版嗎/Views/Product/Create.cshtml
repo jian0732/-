@@ -55,19 +55,32 @@
                 <input asp-for="PreparationDescription" class="form-control" />
                 <span asp-validation-for="PreparationDescription" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label class="control-label">旅遊產品介紹照片</label>
-                <input type="file" name="photo" />
+
+            <div id="pic_group">                
+                <div class="form-group">
+                    <label class="control-label">旅遊產品介紹照片</label>
+                    <p>Tips:按住ctrl可進行多筆上傳</p>
+                    <input type="file" name="photo" multiple/>
+                </div>
+                <div class="form-group">
+                    <label asp-for="TravelPictureText" class="control-label"></label>
+                    <input asp-for="TravelPictureText" class="form-control" />
+                    <span asp-validation-for="TravelPictureText" class="text-danger"></span>
+                </div>
             </div>
             <div class="form-group">
-                <label asp-for="TravelPictureText" class="control-label"></label>
-                <input asp-for="TravelPictureText" class="form-control" />
-                <span asp-validation-for="TravelPictureText" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="建立新行程" class="btn btn-primary" />
             </div>
         </form>
+        @*<div id="btnControl">
+            <button id="plus" onclick="plus()">新增圖片上傳欄位</button>
+
+            <button id="minus" onclick="minus()">減少圖片上傳欄位</button>
+        </div>*@
+
+
+
+
     </div>
 </div>
 
@@ -77,4 +90,35 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+@*<script>
+    let num = 1;
+    let pic_div = '<div class="form-group"><label class="control-label">旅遊產品介紹照片</label ><input type="file" name="photo" /></div ><div class="form-group"><label asp-for="TravelPictureText" class="control-label">圖片描述</label><input name="TravelPictureText" class="form-control" /><span asp-validation-for="TravelPictureText" class="text-danger"></span></div>';
+    const abc = document.querySelector("#pic_group");
+    let test = ""
+    
+    function plus() {
+        num++;
+        if (num < 11) {
+            test = `<p>第${num}張圖</p>`
+            let p = document.createElement("div")
+            p.id = "testID";
+
+            p.innerHTML = test;
+            p.innerHTML += pic_div;
+            abc.appendChild(p)
+        } else
+            num = 10;
+
+    }
+    function minus() {
+        num--;
+        if (num > 0) {
+            $('#pic_group').children().last().remove();
+        } else
+            num = 1;
+       
+    }
+</script>*@
+
+
 }

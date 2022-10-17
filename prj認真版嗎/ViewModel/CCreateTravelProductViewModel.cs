@@ -21,7 +21,7 @@ namespace prj認真版嗎.ViewModel
             get { return _product; }
             set { _product = value; }
         }
-        public IFormFile photo { get; set; } //圖片的檔案
+        public List<IFormFile> photo { get; set; } //圖片的檔案
         public string TravelPicturePath //圖片的路徑
         {
             get;

@@ -6,9 +6,9 @@ namespace prj認真版嗎.ViewModel
 {
     public class CTravelProduct_Picture_List
     {
-        public List<產品格式> 產品列表;     
+        public List<產品格式> 產品列表;
+        //public List<TravelProduct> pro { get; set; }
     }
-
     public class 產品格式
     {
         public int TravelPictureId { get; set; }

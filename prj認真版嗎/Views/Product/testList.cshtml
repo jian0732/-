@@ -1,0 +1,25 @@
+﻿@*@model prj認真版嗎.ViewModel.CTravelProduct_Picture_List
+
+@{
+    ViewData["Title"] = "testList";
+}
+
+<h1>測試用，無視他</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <tbody>
+    @foreach (var item in Model.pro)
+    {
+        <tr>
+            <td>
+                @item.TravelProductName
+            </td>
+        </tr>
+        
+
+    }
+    </tbody>
+</table>*@
