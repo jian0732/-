@@ -19,17 +19,24 @@ namespace prj認真版嗎.Controllers
             _db = q;
             _enviro = p;
         }
-        public IActionResult List(CKeyword keyword)
+
+        public IActionResult List(CKeyword keyword, int? ya)
         {
             List<CMember> datas = null;
+            if (ya == null)
+                ya = 0;
+            else
+                ya-=1;
+            int dd = 0;
             if (string.IsNullOrEmpty(keyword.txtKeyword))
             {
+                dd = _db.Members.Select(p => p).ToList().Count();
                 datas = _db.Members.Select(s => new CMember
                 {
                     member = s,
                     CityName = s.City.CityName,
                     MemberStatusName = s.MemberStatus.MemberStatusName
-                }).ToList();
+                }).Skip((int)ya * 10).Take(10).ToList();
 
             }
             else
@@ -47,9 +54,11 @@ namespace prj認真版嗎.Controllers
                 if (datas.Count == 0)
                 {
                     datas.Add(new CMember() { MemberName = "查無相關資料" });
-                }                    
+                }
             }
+            ViewBag.count = dd;
             return View(datas);
+
         }
 
         //public IActionResult Create()

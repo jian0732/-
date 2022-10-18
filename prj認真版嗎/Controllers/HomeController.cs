@@ -62,19 +62,23 @@ namespace prj認真版嗎.Controllers
             {
                 if(x.Password.Equals(ps.txt密碼))
                 {
-                    CAdminViewModel qq = _db.Admins.Where(p=>p.AdminId==x.AdminId).Select(s => new CAdminViewModel
-                    {
+                    CAdminViewModel qq = _db.Admins.Where(p => p.AdminId == x.AdminId).Select(s => new CAdminViewModel
+                    { 
                         admin = x,
                         CommentStatus = s.AdminStatuses.Select(s => s.CommentStatus).FirstOrDefault(),
                         MemberStatus = s.AdminStatuses.Select(s => s.MemberStatus).FirstOrDefault(),
                         AdminStatus1 = s.AdminStatuses.Select(s => s.AdminStatus1).FirstOrDefault(),
                         ProductStatus = s.AdminStatuses.Select(s => s.ProductStatus).FirstOrDefault(),
                     }).FirstOrDefault();
-                  
+
+                    if (qq != null) 
+                    { 
                     string jsonUser = JsonSerializer.Serialize(qq);
                     HttpContext.Session.SetString(CDictionary.SK_Admin_Login, jsonUser);
-                    
-                    return RedirectToAction("page");                   
+                        return RedirectToAction("page");
+                    }
+                    else
+                    return RedirectToAction("Login");                   
                 }
             }
             return View("Login");

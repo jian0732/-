@@ -31,6 +31,7 @@ namespace prj認真版嗎
                 options.UseSqlServer(Configuration.GetConnectionString("PlanetTravelConnection"));
             });
             services.AddMvc();
+
             services.AddHttpContextAccessor();
 
             services.AddSession();

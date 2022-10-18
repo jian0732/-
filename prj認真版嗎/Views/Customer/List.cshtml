@@ -1,116 +1,158 @@
-﻿@using prj認真版嗎.ViewModel
-@model List<CMember>
+﻿
+    
 
-@{
-    ViewData["Title"] = "List";
-}
-<div id="pa">
-    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-    <div class="input-group">
-        <input type="text" class="form-control bg-light border-0 small" placeholder="關鍵字查詢"
-               aria-label="Search" aria-describedby="basic-addon2" name="txtkeyword">
-        <div class="input-group-append">
-            <button class="btn btn-primary" type="submit">
-                <i class="fas fa-search fa-sm"></i>
-            </button>
+
+
+    @section Scripts{
+        <script>
+            const div = document.querySelector("#pp");
+            $("#pp").load()
+        </script>
+    }
+
+
+
+
+        @using prj認真版嗎.ViewModel
+        @model List<CMember>
+
+        @{
+            ViewData["Title"] = "List";
+        }
+        <div id="pa">
+            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                <div class="input-group">
+                    <input type="text" class="form-control bg-light border-0 small" placeholder="關鍵字查詢"
+                           aria-label="Search" aria-describedby="basic-addon2" name="txtkeyword">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary" type="submit">
+                            <i class="fas fa-search fa-sm"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().MemberName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().PhotoPath)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().Password)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().Phone)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().Gender)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().BirthDay)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().Address)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().CityId)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.First().MemberStatusId)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="aa">
+
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MemberName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PhotoPath)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Password)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Phone)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Gender)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.BirthDay)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Address)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.CityName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.MemberStatusName)
+                            </td>
+                            @if (item.MemberName != "查無相關資料")
+                            {
+                                <td>
+        <button class="btn btn-success" id="Edit">修改</button>
+        @Html.ActionLink("修改", "Edit", "Customer", new { id = item.MembersId }, new { @class = "btn btn-success", id = "" })
+                                </td>
+                            }
+
+                        </tr>
+                    }
+                </tbody>
+            </table>
+            <div>
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group me-2" role="group" aria-label="First group" id="di">
+                    </div>
+                </div>
+            </div>
         </div>
-    </div>
-    </form>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().MemberName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().PhotoPath)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().Password)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().Phone)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().Email)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().Gender)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().BirthDay)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().Address)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().CityId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().MemberStatusId)
-                </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-                <tr class="aa">
 
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MemberName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.PhotoPath)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Password)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Phone)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Email)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Gender)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BirthDay)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CityName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MemberStatusName)
-                    </td>
-                    @if(item.MemberName != "查無相關資料")
-                {
-                <td>
-                    @*<button class = "btn btn-success" id="Edit">修改</button>*@
-                    @Html.ActionLink("修改", "Edit", "Customer", new { id = item.MembersId }, new { @class = "btn btn-success", id = "" })
-                </td>
+        @section Scripts{
+            <script>
+             (async function () {
+                    await btn()
+                }())
+
+                const div5 = document.querySelector("#di")
+                async function btn() {
+                    let con = (@ViewBag.count) / 10
+                    let htmlDatas = "";
+                    for (let i = 1; i <= con; i++)
+                    {
+                        htmlDatas += `<button type="button" class="btn btn-primary" onclick="getdata">${i}</button>`
+                    }
+                    div5.innerHTML = htmlDatas;
                 }
-                    
-                </tr>
-            }
-        </tbody>
-    </table>
-</div>
-@*@section Scripts{
-    <script>
+                btn();
+                function getdata() {
 
-        let trs = document.getElementsByClassName('btn')
-        let A = 0;
-        for (let item of trs) {
-            item.addEventListener('click', event => {
-                A = $(event.currentTarget).parents("tr").find("td")[0].innerText
-                $('#pa').load('@Url.Content("~/Customer/Edit")?id='+A)
-            })
+
+
+                }
+                 let response = await fetch("@Url.Content("~/Admin/List")")
+                 let results = await response.json()  //["Chai","Chang","Chartreuse verte"]
+
+                  let htmlDatas = results.map(data => {
+                      return (
+                          `<button type="button" class="btn btn-primary">${con}</button>`
+                        /*`<button type="button" onclick="read(event)" class="list-group-item list-group-item-action">${data}</button>`*/
+                      )
+
+                  })
+        </script>
         }
 
-    </script>
-
-}*@
