@@ -22,16 +22,9 @@ namespace prj認真版嗎.Controllers
             _db = q;
             _enviro = p;
         }
-        //public ActionResult testList()
-        //{
-        //    CTravelProduct_Picture_List abc = new CTravelProduct_Picture_List();
-        //    abc.pro = _db.TravelProducts.Select(p=>p).ToList();
-        //    return View(abc);
-        //}
         public IActionResult List()
         {
-
-               CTravelProduct_Picture_List result = new CTravelProduct_Picture_List();
+            CTravelProduct_Picture_List result = new CTravelProduct_Picture_List();
             result.產品列表 = (from c in _db.TravelProducts
                            select new 產品格式
                            {
@@ -45,8 +38,9 @@ namespace prj認真版嗎.Controllers
                                Cost = c.Cost,
                                EventIntroduction = c.EventIntroduction,
                                PreparationDescription = c.PreparationDescription,
-                               TravelPicture1 = c.TravelPictures.Where(pic => pic.TravelProductId == c.TravelProductId).FirstOrDefault().TravelPicture1,
-                               
+                               TravelPicture1 =c.TravelPictures.Where(p => p.TravelProductId==c.TravelProductId).Select(p=>p.TravelPicture1).FirstOrDefault()
+                               /* _dbTravelPictures.Where(pic => pic.TravelProductId == c.TravelProductId).FirstOrDefault().TravelPicture1,*/
+                               //Q: 有辦法不用再開啟一次資料庫做where?
                            }).ToList();
 
             return View(result);
@@ -78,27 +72,19 @@ namespace prj認真版嗎.Controllers
                 _db.TravelProducts.Add(tp);
                 _db.SaveChanges();
 
-               
-                    if (newProduct.photo != null)
-                    {
-                    foreach (IFormFile travel_pictures in newProduct.photo)
-                    {
-                        TravelPicture pic = new TravelPicture();
-                        pic.TravelPictureText = newProduct.TravelPictureText;
-                        pic.TravelProductId = _db.TravelProducts.OrderBy(e => e.TravelProductId).LastOrDefault().TravelProductId;
+                if (newProduct.photo != null)
+                {
+                    TravelPicture pic = new TravelPicture();
+                    pic.TravelPictureText = newProduct.TravelPictureText;
+                    pic.TravelProductId = _db.TravelProducts.OrderBy(e => e.TravelProductId).LastOrDefault().TravelProductId;
 
-                        string pname = Guid.NewGuid().ToString() + ".jpg";
-                        pic.TravelPicture1 = pname;
-                        string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
-
-                        travel_pictures.CopyTo(new FileStream(path, FileMode.Create));
-                        _db.TravelPictures.Add(pic);
-                        _db.SaveChanges();
-                    }
-
+                    string pname = Guid.NewGuid().ToString() + ".jpg";
+                    pic.TravelPicture1 = pname;
+                    string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
+                    newProduct.photo.CopyTo(new FileStream(path, FileMode.Create));
+                    _db.TravelPictures.Add(pic);
+                    _db.SaveChanges();
                 }
-                
-               
             }
 
             return RedirectToAction("List");
@@ -156,7 +142,7 @@ namespace prj認真版嗎.Controllers
                     string pname = Guid.NewGuid().ToString() + ".jpg";
                     TraPicture.TravelPicture1 = pname;
                     string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
-                    //inPord.photo.CopyTo(new FileStream(path, FileMode.Create));
+                    inPord.photo.CopyTo(new FileStream(path, FileMode.Create));
                     _db.SaveChanges();
                 }
             }

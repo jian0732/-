@@ -1,109 +1,82 @@
-﻿@using prj認真版嗎.ViewModel
-@model List<CAdminViewModel>
+﻿
+    @using prj認真版嗎.ViewModel
+    @model List<CAdminViewModel>
 
-@{
-    ViewData["Title"] = "管理員";
-}
-<div id="divA">
-    <h1>管理員管理</h1>
-    <p>
-        @Html.ActionLink("新增管理員", "Create","Admin",null,new{@class = "btn btn-primary" })
-    </p>
-    <table class="table">
-        <thead>
-            <tr>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().AdminName)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().Account)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().Password)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().CommentStatus)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().MemberStatus)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().ProductStatus)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.FirstOrDefault().AdminStatus1)
-                </th>
-                <th></th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var item in Model)
-            {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AdminName)
-                </td>
-                <td>                   
-                    @Html.DisplayFor(modelItem => item.Account)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.Password)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CommentStatus)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.MemberStatus)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ProductStatus)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.AdminStatus1)
-                </td>
-                <td>
-                    <a asp-action="Edit" asp-route-id="@item.AdminId" class="btn btn-success">修改</a>
-                    <a asp-action="Delete" asp-route-id="@item.AdminId" class="btn btn-danger" onclick="check()">刪除</a>
-                </td>
-            </tr>
-            }
-        </tbody>
-    </table>
+    @{
+        ViewData["Title"] = "管理員";
+    }
+    <div id="divA">
+        <h1>管理員管理</h1>
+        <p>
+            @Html.ActionLink("新增管理員", "Create","Admin",null,new{@class = "btn btn-primary" })
+        </p>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().AdminName)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Account)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().Password)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().CommentStatus)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().MemberStatus)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().ProductStatus)
+                    </th>
+                    <th>
+                        @Html.DisplayNameFor(model => model.FirstOrDefault().AdminStatus1)
+                    </th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AdminName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Account)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CommentStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MemberStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AdminStatus1)
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.AdminId" class="btn btn-success">修改</a>
+                        <a asp-action="Delete" asp-route-id="@item.AdminId" class="btn btn-danger" onclick="check()">刪除</a>
+                    </td>
+                </tr>
+                }
+            </tbody>
+        </table>
 
-    <div>
-        <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-            <div class="btn-group me-2" role="group" aria-label="First group">
-                <button type="button" class="btn btn-primary">1</button>
-                <button type="button" class="btn btn-primary">2</button>
-                <button type="button" class="btn btn-primary">3</button>
-                <button type="button" class="btn btn-primary">5</button>
-                <button type="button" class="btn btn-primary">6</button>
-                <button type="button" class="btn btn-primary">7</button>
-                <button type="button" class="btn btn-primary">8</button>
-            </div>         
-        </div>
+
     </div>
-</div>
-@section Scripts{
-    <script>
-    function check() {
-            return confirm("確定刪除?");
-        }
-        (async function () {
-            await btn()
-        }())
-        async function btn() {
-            
-         let response = await fetch("@Url.Content("~/Admin/List")")
-         let results = await response.json()  //["Chai","Chang","Chartreuse verte"]
-
-
-          let htmlDatas = results.map(data => {
-            return (
-                `<button type="button" onclick="read(event)" class="list-group-item list-group-item-action">${data}</button>`
-              )
-              
-        })
-        }
-    </script>
-}
+    @section Scripts{
+        <script>
+        function check() {
+                return confirm("確定刪除?");
+            }
+        </script>
+    }

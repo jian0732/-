@@ -27,7 +27,7 @@ namespace prj認真版嗎.Controllers
                 AdminStatus1 = s.AdminStatuses.Select(s => s.AdminStatus1).FirstOrDefault(),
                 ProductStatus = s.AdminStatuses.Select(s => s.ProductStatus).FirstOrDefault(),
             }).ToList();
-
+            
             return View(qq);
         }
         public IActionResult Create()
