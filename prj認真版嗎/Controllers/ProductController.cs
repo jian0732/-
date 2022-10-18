@@ -83,6 +83,7 @@ namespace prj認真版嗎.Controllers
                     {
                     foreach (IFormFile travel_pictures in newProduct.photo)
                     {
+                        //測試測試
                         TravelPicture pic = new TravelPicture();
                         pic.TravelPictureText = newProduct.TravelPictureText;
                         pic.TravelProductId = _db.TravelProducts.OrderBy(e => e.TravelProductId).LastOrDefault().TravelProductId;
