@@ -74,6 +74,8 @@ namespace prj認真版嗎.Controllers
 
                 if (newProduct.photo != null)
                 {
+                    foreach (var item in newProduct.photo)
+                    {
                     TravelPicture pic = new TravelPicture();
                     pic.TravelPictureText = newProduct.TravelPictureText;
                     pic.TravelProductId = _db.TravelProducts.OrderBy(e => e.TravelProductId).LastOrDefault().TravelProductId;
@@ -81,9 +83,11 @@ namespace prj認真版嗎.Controllers
                     string pname = Guid.NewGuid().ToString() + ".jpg";
                     pic.TravelPicture1 = pname;
                     string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
-                    newProduct.photo.CopyTo(new FileStream(path, FileMode.Create));
+                    item.CopyTo(new FileStream(path, FileMode.Create));
                     _db.TravelPictures.Add(pic);
                     _db.SaveChanges();
+                    }
+                
                 }
             }
 
