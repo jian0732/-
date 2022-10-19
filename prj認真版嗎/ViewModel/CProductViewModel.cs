@@ -21,14 +21,24 @@ namespace prj認真版嗎.ViewModel
             get { return _product; }
             set { _product = value; }
         }
-        public List<產品圖片> 產品圖片列表;
-        public IFormFile photo { get; set; } //圖片的檔案
-        public string TravelPicturePath //圖片的路徑
+
+        public List<IFormFile> photo { get; set; } //圖片的檔案
+        public List<string> TravelPicturePath //圖片的路徑
         {
             get;
             set;
         }
-        public string TravelPictureText //圖片描述
+        public List<string> TravelPictureText //圖片描述
+        {
+            get;
+            set;
+        }
+        public List<int> TravelPictureId //圖片ID
+        {
+            get;
+            set;
+        }
+        public List<int> PictureCount //紀錄View的圖片位於第幾個欄位
         {
             get;
             set;
@@ -90,11 +100,5 @@ namespace prj認真版嗎.ViewModel
         }
 
     }
-    public class 產品圖片
-    {
-        public int TravelPictureId { get; set; }
-        public string TravelPicture1 { get; set; }
-        public string TravelPictureText { get; set; }
-        public int TravelProductId { get; set; }
-    }
+
 }

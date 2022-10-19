@@ -3,8 +3,7 @@
     
 @{
     ViewData["Title"] = "商品編輯";
-    int count = -1;
-
+    int Count = 0;
 }
 
 <h1>修改商品作業</h1>
@@ -13,14 +12,14 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit" enctype="multipart/form-data" >
+        <form asp-action="Edit" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" name="TravelProductId" value="@Model.TravelProductId" />
 
             <div class="form-group">
                 <label asp-for="@Model.TravelProductName" class="control-label"></label>
-                <input asp-for="@Model.TravelProductName" class="form-control"/>
-                <span asp-validation-for="@Model.TravelProductName"  class="text-danger"></span>
+                <input asp-for="@Model.TravelProductName" class="form-control" />
+                <span asp-validation-for="@Model.TravelProductName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Price" class="control-label"></label>
@@ -63,23 +62,25 @@
                 <span asp-validation-for="PreparationDescription" class="text-danger"></span>
             </div>
 
-            @foreach (var item in Model.產品圖片列表)
-                    {
-                        count++;
-                        string aaa = $"inProd1.產品圖片列表[{count}].TravelPictureText";
+            @for (int i = 0; i < Model.TravelPictureId.Count; i++)
+            {                
+                <img src="~/images/TravelProductPictures/@Model.TravelPicturePath[i]" />
+                <div class="form-group">
+                    <input type="hidden" asp-for="TravelPictureId" value="@Model.TravelPictureId[i]" />
+                    <input asp-for="PictureCount" value="0" id="test[@i]"/>
+                    <label class="control-label">更改行程照片</label>
+                    <input asp-for="photo" type="file" id="photoTest[@i]">
+                    <button type="button" value="測試按鍵" id="testBtn[@i]">test</button>
+                </div>
+                <div class="form-group">
+                    <label class="control-label"></label>
+                    <input class="form-control" asp-for="TravelPictureText" value="@Model.TravelPictureText[i]" type="text" />
+                    <span class="text-danger"></span>
+                </div>
 
-            <img src="~/images/TravelProductPictures/@item.TravelPicture1"/>
-            <div class="form-group">
-                <label class="control-label">更改行程照片</label>
-                <input type="file" />
-            </div>
-            <div class="form-group">
-                <label class="control-label"></label>
-                <input class="form-control" name="@aaa" value="@item.TravelPictureText" type="text"/>
-                <span  class="text-danger"></span>
-            </div>
-        }
-
+                Count++;
+            }
+           
             <div class="form-group">
                 <input type="submit" value="修改並儲存" class="btn btn-primary" />
             </div>
@@ -93,4 +94,20 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script>
+    for (var i = 0; i < @Model.TravelPictureId.Count; i++) {
+     let aaa = document.getElementById(`photoTest[${i}]`)
+     let bbb = document.getElementById(`test[${i}]`);
+     let ccc = document.getElementById(`testBtn[${i}]`);
+    aaa.addEventListener("click", () => {
+        bbb.value = 1;
+    })
+    ccc.addEventListener("click", () => {
+        bbb.value = 1;
+        console.log("AAA");
+    })
+    }
+
+</script>
+    
 }

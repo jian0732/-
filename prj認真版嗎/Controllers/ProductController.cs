@@ -124,12 +124,9 @@ namespace prj認真版嗎.Controllers
                                                Cost = s.Cost,
                                                EventIntroduction = s.EventIntroduction,
                                                PreparationDescription = s.PreparationDescription,
-                                               產品圖片列表 = s.TravelPictures.Select(pic => new 產品圖片 {
-                                                   TravelPictureId=pic.TravelPictureId,
-                                                   TravelPicture1 = pic.TravelPicture1,
-                                                   TravelPictureText = pic.TravelPictureText,
-                                                   TravelProductId=pic.TravelProductId,
-                                               }).ToList(),
+                                               TravelPictureId = s.TravelPictures.Select(p=>p.TravelPictureId).ToList(),
+                                               TravelPicturePath= s.TravelPictures.Select(p => p.TravelPicture1).ToList(),
+                                               TravelPictureText= s.TravelPictures.Select(p => p.TravelPictureText).ToList(),                                       
                                            }).FirstOrDefault();
                 if (prod != null)
                 {                   
@@ -153,18 +150,35 @@ namespace prj認真版嗎.Controllers
                 c.Cost = inProd.Cost;
                 c.EventIntroduction = inProd.EventIntroduction;
                 c.PreparationDescription = inProd.PreparationDescription;
-                //_db.SaveChanges();
+                _db.SaveChanges();
                 if (inProd.photo != null)
                 {
-                    var TraPicture = _db.TravelPictures.Where(pic => pic.TravelProductId == c.TravelProductId).FirstOrDefault();
-                    TraPicture.TravelPictureText = inProd.TravelPictureText;
-
-                    string pname = Guid.NewGuid().ToString() + ".jpg";
-                    TraPicture.TravelPicture1 = pname;
-                    string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
-                    //inPord.photo.CopyTo(new FileStream(path, FileMode.Create));
-                    //_db.SaveChanges();
-                   
+                    int tempCount = 0;
+                    for (int i = 0; i < inProd.PictureCount.Count; i++)
+                    {
+                        if (inProd.PictureCount[i] != 0)
+                        {
+                            var TraPicture = _db.TravelPictures.Where(pic => pic.TravelPictureId == inProd.TravelPictureId[i]).FirstOrDefault();
+                            string pname = Guid.NewGuid().ToString() + ".jpg";
+                            TraPicture.TravelPicture1 = pname;
+                            string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
+                            if (inProd.photo[tempCount] != null)
+                            {
+                                inProd.photo[tempCount].CopyTo(new FileStream(path, FileMode.Create));
+                                _db.SaveChanges();
+                                tempCount++;
+                            }                              
+                        }
+                    }
+                }
+                if (inProd.TravelPictureText != null)
+                {
+                    for (int i = 0; i < inProd.TravelPictureText.Count; i++)
+                    {
+                        var TraPicture = _db.TravelPictures.Where(pic => pic.TravelPictureId == inProd.TravelPictureId[i]).FirstOrDefault();
+                        TraPicture.TravelPictureText = inProd.TravelPictureText[i];                       
+                        _db.SaveChanges();
+                    }
                 }
             }
 
@@ -194,7 +208,7 @@ namespace prj認真版嗎.Controllers
         //            string pname = Guid.NewGuid().ToString() + ".jpg";
         //            TraPicture.TravelPicture1 = pname;
         //            string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
-        //            //var temp = inPord["photo"] as IFormFile;
+        //            var temp = inPord["photo"] as IFormFile;
         //            //temp.CopyTo(new FileStream(path, FileMode.Create));
         //            //_db.SaveChanges();
         //        }
