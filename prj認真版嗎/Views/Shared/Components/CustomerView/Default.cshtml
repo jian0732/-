@@ -16,10 +16,14 @@
         }
     </style>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
-    @*<link href="~/css/jiancustomer.css" rel="stylesheet" />*@
+    <link href="~/css/jiancustomer.css" rel="stylesheet" />
+}
+@{
+    ViewData["Title"] = "List";
 }
 
-<div class="justify-content-center" style="margin-top:100px;">
+
+<div>
     <table id="myTable" class="display hover cell-border compact stripe">
         <thead>
             <tr>
@@ -370,8 +374,10 @@
                 }
             });
         });
+ 
     </script>
     <script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="~/js/JS.js"></script>
+   
 }
 

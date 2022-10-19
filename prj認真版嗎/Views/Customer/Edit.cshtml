@@ -2,19 +2,24 @@
 @model CMember
 @{
     ViewData["Title"] = "Edit";
+    Layout = null;
 }
 <div id="">
     <h1>會員修改資料</h1>
     <hr />
     <div class="row">
-        <div class="col-md-4">
+        <div class="col-md-12">
             <form asp-action="Edit" enctype="multipart/form-data">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <input type="hidden" asp-for="MembersId" />
+
+
                 <div class="form-group">
                     <label asp-for="MemberName" class="control-label"></label>
                     <input asp-for="MemberName" class="form-control" />
                 </div>
+
+
                 <div class="form-group">
                     <label asp-for="Password" class="control-label"></label>
                     <input asp-for="Password" class="form-control" />
@@ -55,47 +60,40 @@
 
                 <div class="form-group">
                     <label asp-for="MemberStatusId" class="control-label"></label>
-                    <input type="text" hidden value="@Model.MemberStatusId" id="in"/>
+                    <input type="text" hidden value="@Model.MemberStatusId" id="in" />
                     <select id="Status" name="MemberStatusName">
                         <option value="@Model.MemberStatusName" selected>@Model.MemberStatusName</option>
                     </select>
                 </div>
                 <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value="修改" class="btn btn-primary" />
                 </div>
             </form>
         </div>
     </div>
-
-    <div>
-        <a asp-action="Index">回列表</a>
-    </div>
 </div>
-@section Scripts{
-    <script>
-        
-        const selStatus = document.querySelector("#Status");
-        const hid = document.querySelector("#in");
-       
-        (async function () {      
-            await loadStatus()    
+<script>
+        var selStatus = document.querySelector("#Status");
+        var hid = document.querySelector("#in");
+
+        (async function () {
+            await loadStatus()
         }())
 
         async function loadStatus() {
-            /*const id = hid.value*/
-            console.log(hid)
-            await ajaxCall("@Url.Content("~/customer/Status?id=")" + hid.value, rendering, selStatus)           
+            await ajaxCall("@Url.Content("~/customer/Status?id=")" + hid.value, rendering, selStatus)
         }
         async function ajaxCall(url, rendering, sel) {
             let response = await fetch(url)
-            let datas = await response.text()
+            let datas = await response.json()
             rendering(sel, datas)
         }
+
         function rendering(sel, datas) {
-            const opt = new Option(datas, datas)
-            sel.options.add(opt)
-        
+        datas.forEach(da=>{
+            const opt = new Option(da, da)
+         sel.options.add(opt)
+          })
         }
-    </script>
-}
+</script>
 

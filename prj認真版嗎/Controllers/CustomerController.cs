@@ -21,38 +21,39 @@ namespace prj認真版嗎.Controllers
             _enviro = p;
         }
 
-        public IActionResult List(CKeyword keyword)
+        public IActionResult List()
         {
             List<CMember> datas = null;
-            if (string.IsNullOrEmpty(keyword.txtKeyword))
+            datas = _db.Members.Select(s => new CMember
             {
-                datas = _db.Members.Select(s => new CMember
-                {
-                    member = s,
-                    CityName = s.City.CityName,
-                    MemberStatusName = s.MemberStatus.MemberStatusName
-                }).ToList();
+                member = s,
+                CityName = s.City.CityName,
+                MemberStatusName = s.MemberStatus.MemberStatusName
+            }).ToList();
 
-            }
-            else
-            {
-                datas = _db.Members.Where
-                (a => a.Address.Contains(keyword.txtKeyword) || a.Email.Contains(keyword.txtKeyword) ||
-                a.MemberName.Contains(keyword.txtKeyword) || a.BirthDay.Contains(keyword.txtKeyword) ||
-                a.Gender.Contains(keyword.txtKeyword) || a.MemberStatus.MemberStatusName.Contains(keyword.txtKeyword))
-                 .Select(s => new CMember
-                 {
-                     member = s,
-                     CityName = s.City.CityName,
-                     MemberStatusName = s.MemberStatus.MemberStatusName
-                 }).ToList();
-                if (datas.Count == 0)
-                {
-                    datas.Add(new CMember() { MemberName = "查無相關資料" });
-                }
-            }
+            //if (string.IsNullOrEmpty(keyword.txtKeyword))
+            //{
+               
+            //}
+            //else
+            //{
+            //    datas = _db.Members.Where
+            //    (a => a.Address.Contains(keyword.txtKeyword) || a.Email.Contains(keyword.txtKeyword) ||
+            //    a.MemberName.Contains(keyword.txtKeyword) || a.BirthDay.Contains(keyword.txtKeyword) ||
+            //    a.Gender.Contains(keyword.txtKeyword) || a.MemberStatus.MemberStatusName.Contains(keyword.txtKeyword))
+            //     .Select(s => new CMember
+            //     {
+            //         member = s,
+            //         CityName = s.City.CityName,
+            //         MemberStatusName = s.MemberStatus.MemberStatusName
+            //     }).ToList();
+            //    if (datas.Count == 0)
+            //    {
+            //        datas.Add(new CMember() { MemberName = "查無相關資料" });
+            //    }
+            //}
+            //return View(datas);
             return View(datas);
-
         }
 
         //public IActionResult Create()
@@ -99,7 +100,7 @@ namespace prj認真版嗎.Controllers
                     CityName = s.City.CityName,
                     MemberStatusName = s.MemberStatus.MemberStatusName
                 }).FirstOrDefault();
-                return Json(qq);
+                return View(qq);
             }
             return RedirectToAction("List");
         }
@@ -133,9 +134,9 @@ namespace prj認真版嗎.Controllers
         public IActionResult Status(int id)
         {
             
-            var cities = _db.MemberStatuses.FirstOrDefault(p=>p.MemberStatusId!=id).MemberStatusName;
+            var Status = _db.MemberStatuses.Where(p=>p.MemberStatusId!=id).Select(p=>p.MemberStatusName);
             
-            return Content(cities, "text/plain", System.Text.Encoding.UTF8);
+            return Json(Status);
         }
     }
 }
