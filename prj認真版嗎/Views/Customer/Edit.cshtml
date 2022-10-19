@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "Edit";
 }
-<div id="pa">
+<div id="">
     <h1>會員修改資料</h1>
     <hr />
     <div class="row">
@@ -55,8 +55,10 @@
 
                 <div class="form-group">
                     <label asp-for="MemberStatusId" class="control-label"></label>
-                    <select id="Status" name="MemberStatusName"></select>
-                    @*<input asp-for="MemberStatusName" class="form-control">*@
+                    <input type="text" hidden value="@Model.MemberStatusId" id="in"/>
+                    <select id="Status" name="MemberStatusName">
+                        <option value="@Model.MemberStatusName" selected>@Model.MemberStatusName</option>
+                    </select>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
@@ -71,24 +73,28 @@
 </div>
 @section Scripts{
     <script>
-     const selStatus = document.querySelector("#Status");
-        (async function () {
-            await loadStatus()
+        
+        const selStatus = document.querySelector("#Status");
+        const hid = document.querySelector("#in");
+       
+        (async function () {      
+            await loadStatus()    
         }())
+
         async function loadStatus() {
-            await ajaxCall("@Url.Content("~/customer/Status")", rendering, selStatus)
+            /*const id = hid.value*/
+            console.log(hid)
+            await ajaxCall("@Url.Content("~/customer/Status?id=")" + hid.value, rendering, selStatus)           
         }
         async function ajaxCall(url, rendering, sel) {
             let response = await fetch(url)
-            let datas = await response.json()
+            let datas = await response.text()
             rendering(sel, datas)
         }
         function rendering(sel, datas) {
-            sel.options.length = 0
-            datas.forEach(S => {
-                const opt = new Option(S, S)
-                sel.options.add(opt)
-            })
+            const opt = new Option(datas, datas)
+            sel.options.add(opt)
+        
         }
     </script>
 }

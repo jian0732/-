@@ -25,7 +25,7 @@ namespace prj認真版嗎.ViewModel
             get { return _member.MembersId; }
             set { _member.MembersId = value; }
         }
-        [DisplayName("品名")]
+        [DisplayName("會員名稱")]
         public string MemberName
         {
             get { return _member.MemberName; }

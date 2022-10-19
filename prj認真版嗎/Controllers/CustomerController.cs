@@ -5,6 +5,7 @@ using prj認真版嗎.Models;
 using prj認真版嗎.ViewModel;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,23 +21,17 @@ namespace prj認真版嗎.Controllers
             _enviro = p;
         }
 
-        public IActionResult List(CKeyword keyword, int? ya)
+        public IActionResult List(CKeyword keyword)
         {
             List<CMember> datas = null;
-            if (ya == null)
-                ya = 0;
-            else
-                ya-=1;
-            int dd = 0;
             if (string.IsNullOrEmpty(keyword.txtKeyword))
             {
-                dd = _db.Members.Select(p => p).ToList().Count();
                 datas = _db.Members.Select(s => new CMember
                 {
                     member = s,
                     CityName = s.City.CityName,
                     MemberStatusName = s.MemberStatus.MemberStatusName
-                }).Skip((int)ya * 10).Take(10).ToList();
+                }).ToList();
 
             }
             else
@@ -56,7 +51,6 @@ namespace prj認真版嗎.Controllers
                     datas.Add(new CMember() { MemberName = "查無相關資料" });
                 }
             }
-            ViewBag.count = dd;
             return View(datas);
 
         }
@@ -105,7 +99,7 @@ namespace prj認真版嗎.Controllers
                     CityName = s.City.CityName,
                     MemberStatusName = s.MemberStatus.MemberStatusName
                 }).FirstOrDefault();
-                return View(qq);
+                return Json(qq);
             }
             return RedirectToAction("List");
         }
@@ -116,12 +110,14 @@ namespace prj認真版嗎.Controllers
             Member prod = _db.Members.FirstOrDefault(p => p.MembersId == inPord.MembersId);
             if (prod != null)
             {
-                //if (inPord.PhotoPath != null)
-                //{
-                //    string photoname = Guid.NewGuid().ToString() + ".jpg";
-                //    inPord.photo.SaveAs(Server.MapPath("../../images/" + photoname));
-                //    prod.PhotoPath = photoname;
-                //}
+                if (inPord.photo != null)
+                {
+                    string photoname = Guid.NewGuid().ToString() + ".jpg";
+                    prod.PhotoPath = photoname;
+                    string path = _enviro.WebRootPath + "/images/" + photoname;
+                    inPord.photo.CopyTo(new FileStream(path, FileMode.Create));
+                    
+                }
                 prod.BirthDay = inPord.BirthDay;
                 prod.Address = inPord.Address;
                 prod.Email = inPord.Email;
@@ -134,10 +130,12 @@ namespace prj認真版嗎.Controllers
             }
             return RedirectToAction("List");
         }
-        public IActionResult Status()
+        public IActionResult Status(int id)
         {
-            var cities = _db.MemberStatuses.Select(a => a.MemberStatusName);
-            return Json(cities);
+            
+            var cities = _db.MemberStatuses.FirstOrDefault(p=>p.MemberStatusId!=id).MemberStatusName;
+            
+            return Content(cities, "text/plain", System.Text.Encoding.UTF8);
         }
     }
 }
