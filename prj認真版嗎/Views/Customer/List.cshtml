@@ -1,158 +1,532 @@
 ﻿
-    
+@using prj認真版嗎.ViewModel
+@model List<CMember>
+@section Styles{
+    <link href="~/css/jiancustomer.css" rel="stylesheet" />
+    <link href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" rel="stylesheet" />
+}
 
+@{
+    ViewData["Title"] = "List";
+}
+<div>
+    <table id="myTable" class="display compact hover cell-border compact stripe">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().MemberName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().PhotoPath)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Password)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Phone)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Gender)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().BirthDay)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().Address)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().CityId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.First().MemberStatusId)
+                </th>
+                <th>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr class="aa">
 
-
-    @section Scripts{
-        <script>
-            const div = document.querySelector("#pp");
-            $("#pp").load()
-        </script>
-    }
-
-
-
-
-        @using prj認真版嗎.ViewModel
-        @model List<CMember>
-
-        @{
-            ViewData["Title"] = "List";
-        }
-        <div id="pa">
-            <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                <div class="input-group">
-                    <input type="text" class="form-control bg-light border-0 small" placeholder="關鍵字查詢"
-                           aria-label="Search" aria-describedby="basic-addon2" name="txtkeyword">
-                    <div class="input-group-append">
-                        <button class="btn btn-primary" type="submit">
-                            <i class="fas fa-search fa-sm"></i>
-                        </button>
-                    </div>
-                </div>
-            </form>
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th>
-                            @Html.DisplayNameFor(model => model.First().MemberName)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.First().PhotoPath)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.First().Password)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.First().Phone)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.First().Email)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.First().Gender)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.First().BirthDay)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.First().Address)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.First().CityId)
-                        </th>
-                        <th>
-                            @Html.DisplayNameFor(model => model.First().MemberStatusId)
-                        </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach (var item in Model)
+                <td>
+                    @Html.DisplayFor(modelItem => item.MemberName)
+                </td>
+                <td>
+                    @if (@item.PhotoPath != null)
                     {
-                        <tr class="aa">
-
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MemberName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.PhotoPath)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Password)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Phone)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Email)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Gender)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.BirthDay)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Address)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.CityName)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.MemberStatusName)
-                            </td>
-                            @if (item.MemberName != "查無相關資料")
-                            {
-                                <td>
-        <button class="btn btn-success" id="Edit">修改</button>
-        @Html.ActionLink("修改", "Edit", "Customer", new { id = item.MembersId }, new { @class = "btn btn-success", id = "" })
-                                </td>
-                            }
-
-                        </tr>
+                        <img src="~/images/@item.PhotoPath" class="w-25 h-25" />
                     }
-                </tbody>
-            </table>
-            <div>
-                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
-                    <div class="btn-group me-2" role="group" aria-label="First group" id="di">
-                    </div>
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Phone)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Email)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.BirthDay)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Address)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CityName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MemberStatusName)
+                </td>
+                <td>
+                    <button class="btn btn-success getbtn" onclick="showmodal(`@Url.Content("~/Customer/Edit?id=")@item.MembersId`,null)">修改</button>
+                </td>
+                @* value="@item.MembersId" data-bs-target="#exampleModal" data-bs-toggle="modal"  @Context.Request.Scheme*@
+            </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+<!--註冊光相-->
+<div class="modal fade" id="newstaticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
                 </div>
             </div>
         </div>
+    </div>
+@*<div class="modal fade" id="newstaticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New message</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
 
-        @section Scripts{
-            <script>
-             (async function () {
-                    await btn()
-                }())
+                    <div id="pa">
+                        <h1>會員修改資料</h1>
+                        <hr />
+                         <div class="row">
+                            <div class="col-md-4">
+                                        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                                        <input type="hidden" id="MembersId" />
+                                        <div class="form-group">
+                                            <label id="MemberName" class="control-label"></label>
+                                            <input id="MemberNameinput" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="Password" class="control-label"></label>
+                                            <input id="Passwordinput" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="Phone" class="control-label"></label>
+                                            <input id="Phoneinput" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="Address" class="control-label"></label>
+                                            <input id="Addressinput" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="Email" class="control-label"></label>
+                                            <input id="Emailinput" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="Gender" class="control-label"></label>
+                                            <input id="Genderinput" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="CityId" class="control-label"></label>
+                                            <input id="CityNameinput" class="form-control">
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="BirthDay" class="control-label"></label>
+                                            <input id="BirthDayinput" class="form-control" />
+                                        </div>
+                                        <div class="form-group">
+                                            <label id="PhotoPath" class="control-label"></label>
+                                            <input id="PhotoPathinput" class="form-control" />
+                                        </div>
 
-                const div5 = document.querySelector("#di")
-                async function btn() {
-                    let con = (@ViewBag.count) / 10
-                    let htmlDatas = "";
-                    for (let i = 1; i <= con; i++)
-                    {
-                        htmlDatas += `<button type="button" class="btn btn-primary" onclick="getdata">${i}</button>`
-                    }
-                    div5.innerHTML = htmlDatas;
+                                        <div class="form-group">
+                                            <label for="InputFile">選擇檔案</label>
+                                            <input type="file" class="form-control-file" id="InputFile" name="photo">
+                                        </div>*@
+@*<div class="form-group">
+                <label asp-for="MemberStatusId" class="control-label"></label>
+                <input type="text" hidden value="@Model.MemberStatusId" id="in" />
+                <select id="Status" name="MemberStatusName">
+                    <option value="@Model.MemberStatusName" selected>@Model.MemberStatusName</option>
+                </select>
+            </div>
+        <div class="form-group">
+    <input type="submit" value="Save" class="btn btn-primary" />
+                                            </div>*@
+
+                            @*</div>
+                        </div>
+                    </div>
+            </div>*@
+@*<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-primary">Send message</button>
+</div>
+        </div>
+    </div>
+</div>*@
+
+
+@section Scripts{
+
+
+
+    <script>
+        $(document).ready(function () {
+            $('#myTable').DataTable({
+                "language": {
+                    "processing": "處理中...",
+                    "loadingRecords": "載入中...",
+                    "paginate": {
+                        "first": "第一頁",
+                        "previous": "上一頁",
+                        "next": "下一頁",
+                        "last": "最後一頁"
+                    },
+                    "emptyTable": "目前沒有資料",
+                    "datetime": {
+                        "previous": "上一頁",
+                        "next": "下一頁",
+                        "hours": "時",
+                        "minutes": "分",
+                        "seconds": "秒",
+                        "amPm": [
+                            "上午",
+                            "下午"
+                        ],
+                        "unknown": "未知",
+                        "weekdays": [
+                            "週日",
+                            "週一",
+                            "週二",
+                            "週三",
+                            "週四",
+                            "週五",
+                            "週六"
+                        ],
+                        "months": [
+                            "一月",
+                            "二月",
+                            "三月",
+                            "四月",
+                            "五月",
+                            "六月",
+                            "七月",
+                            "八月",
+                            "九月",
+                            "十月",
+                            "十一月",
+                            "十二月"
+                        ]
+                    },
+                    "searchBuilder": {
+                        "add": "新增條件",
+                        "condition": "條件",
+                        "deleteTitle": "刪除過濾條件",
+                        "button": {
+                            "_": "複合查詢 (%d)",
+                            "0": "複合查詢"
+                        },
+                        "clearAll": "清空",
+                        "conditions": {
+                            "array": {
+                                "contains": "含有",
+                                "equals": "等於",
+                                "empty": "空值",
+                                "not": "不等於",
+                                "notEmpty": "非空值",
+                                "without": "不含"
+                            },
+                            "date": {
+                                "after": "大於",
+                                "before": "小於",
+                                "between": "在其中",
+                                "empty": "為空",
+                                "equals": "等於",
+                                "not": "不為",
+                                "notBetween": "不在其中",
+                                "notEmpty": "不為空"
+                            },
+                            "number": {
+                                "between": "在其中",
+                                "empty": "為空",
+                                "equals": "等於",
+                                "gt": "大於",
+                                "gte": "大於等於",
+                                "lt": "小於",
+                                "lte": "小於等於",
+                                "not": "不為",
+                                "notBetween": "不在其中",
+                                "notEmpty": "不為空"
+                            },
+                            "string": {
+                                "contains": "含有",
+                                "empty": "為空",
+                                "endsWith": "字尾為",
+                                "equals": "等於",
+                                "not": "不為",
+                                "notEmpty": "不為空",
+                                "startsWith": "字首為",
+                                "notContains": "不含",
+                                "notStartsWith": "開頭不是",
+                                "notEndsWith": "結尾不是"
+                            }
+                        },
+                        "data": "欄位",
+                        "leftTitle": "群組條件",
+                        "logicAnd": "且",
+                        "logicOr": "或",
+                        "rightTitle": "取消群組",
+                        "title": {
+                            "_": "複合查詢 (%d)",
+                            "0": "複合查詢"
+                        },
+                        "value": "內容"
+                    },
+                    "editor": {
+                        "close": "關閉",
+                        "create": {
+                            "button": "新增",
+                            "title": "新增資料",
+                            "submit": "送出新增"
+                        },
+                        "remove": {
+                            "button": "刪除",
+                            "title": "刪除資料",
+                            "submit": "送出刪除",
+                            "confirm": {
+                                "_": "您確定要刪除您所選取的 %d 筆資料嗎？",
+                                "1": "您確定要刪除您所選取的 1 筆資料嗎？"
+                            }
+                        },
+                        "error": {
+                            "system": "系統發生錯誤(更多資訊)"
+                        },
+                        "edit": {
+                            "button": "修改",
+                            "title": "修改資料",
+                            "submit": "送出修改"
+                        },
+                        "multi": {
+                            "title": "多重值",
+                            "info": "您所選擇的多筆資料中，此欄位包含了不同的值。若您想要將它們都改為同一個值，可以在此輸入，要不然它們會保留各自原本的值。",
+                            "restore": "復原",
+                            "noMulti": "此輸入欄需單獨輸入，不容許多筆資料一起修改"
+                        }
+                    },
+                    "autoFill": {
+                        "cancel": "取消"
+                    },
+                    "buttons": {
+                        "copySuccess": {
+                            "_": "複製了 %d 筆資料",
+                            "1": "複製了 1 筆資料"
+                        },
+                        "copyTitle": "已經複製到剪貼簿",
+                        "excel": "Excel",
+                        "pdf": "PDF",
+                        "print": "列印",
+                        "copy": "複製",
+                        "colvis": "欄位顯示",
+                        "colvisRestore": "重置欄位顯示",
+                        "csv": "CSV",
+                        "pageLength": {
+                            "-1": "顯示全部",
+                            "_": "顯示 %d 筆"
+                        },
+                        "createState": "建立狀態",
+                        "removeAllStates": "移除所有狀態",
+                        "removeState": "移除",
+                        "renameState": "重新命名",
+                        "savedStates": "儲存狀態",
+                        "stateRestore": "狀態 %d",
+                        "updateState": "更新"
+                    },
+                    "searchPanes": {
+                        "collapse": {
+                            "_": "搜尋面版 (%d)",
+                            "0": "搜尋面版"
+                        },
+                        "emptyPanes": "沒搜尋面版",
+                        "loadMessage": "載入搜尋面版中...",
+                        "clearMessage": "清空",
+                        "count": "{total}",
+                        "countFiltered": "{shown} ({total})",
+                        "title": "過濾條件 - %d",
+                        "showMessage": "顯示全部",
+                        "collapseMessage": "摺疊全部"
+                    },
+                    "stateRestore": {
+                        "emptyError": "名稱不能空白。",
+                        "creationModal": {
+                            "button": "建立",
+                            "columns": {
+                                "search": "欄位搜尋",
+                                "visible": "欄位顯示"
+                            },
+                            "name": "名稱：",
+                            "order": "排序",
+                            "paging": "分頁",
+                            "scroller": "卷軸位置",
+                            "search": "關鍵字查詢",
+                            "searchBuilder": "複合查詢",
+                            "select": "選擇",
+                            "title": "建立新狀態",
+                            "toggleLabel": "包含："
+                        },
+                        "duplicateError": "此狀態名稱已經存在。",
+                        "emptyStates": "名稱不可空白。",
+                        "removeConfirm": "確定要移除 %s 嗎？",
+                        "removeError": "移除狀態失敗。",
+                        "removeJoiner": "和",
+                        "removeSubmit": "移除",
+                        "removeTitle": "移除狀態",
+                        "renameButton": "重新命名",
+                        "renameLabel": "%s 的新名稱：",
+                        "renameTitle": "重新命名狀態"
+                    },
+                    "select": {
+                        "columns": {
+                            "_": "選擇了 %d 欄資料",
+                            "1": "選擇了 1 欄資料"
+                        },
+                        "rows": {
+                            "1": "選擇了 1 筆資料",
+                            "_": "選擇了 %d 筆資料"
+                        },
+                        "cells": {
+                            "1": "選擇了 1 格資料",
+                            "_": "選擇了 %d 格資料"
+                        }
+                    },
+                    "zeroRecords": "沒有符合的資料",
+                    "aria": {
+                        "sortAscending": "：升冪排列",
+                        "sortDescending": "：降冪排列"
+                    },
+                    "info": "顯示第 _START_ 至 _END_ 筆結果，共 _TOTAL_ 筆",
+                    "infoEmpty": "顯示第 0 至 0 筆結果，共 0 筆",
+                    "infoFiltered": "(從 _MAX_ 筆結果中過濾)",
+                    "infoThousands": ",",
+                    "lengthMenu": "顯示 _MENU_ 筆",
+                    "search": "搜尋：",
+                    "searchPlaceholder": "請輸入關鍵字",
+                    "thousands": ","
                 }
-                btn();
-                function getdata() {
+            });
+        });
+
+    </script>
+    <script src="~/js/JS.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+}
+@*<script>
+
+    let aa = 0;
+    var exampleModal = document.getElementById('exampleModal')
+    function getid(evt) {
+        aa = evt.currentTarget.value
+    }
+
+    const btns = document.getElementsByClassName('getbtn')
+    for (let item of btns) {
+        item.addEventListener('click', function () {
+            console.log('AA');
+            aa = event.currentTarget.value;
+            console.log(aa);
+
+             exampleModal.addEventListener('show.bs.modal',function () {
+        let idd = aa;
+        console.log(aa);
+        console.log(event.currentTarget)
+             $.ajax({
+                url: "@Url.Content("~/Customer/Edit")",
+                type: "get",
+                data: { "id": idd },
+                dataType: "json"
+            }).done(data => {
+                console.log(data)
+                $("#MemberNameinput").val(data.memberName);
+                $("#Addressinput").val(data.address);
+                $("#BirthDayinput").val(data.birthDay);
+                $("#Emailinput").val(data.email);
+                $("#GenderNameinput").val(data.gender);
+
+                $("#MemberStatusNameinput").val(data.memberStatusName);
+                $("#PasswordNameinput").val(data.password);
+                $("#MemberNameinput").val(data.memberName);
+                $("#CityNameinput").val(data.cityName);
+               /* $("#MemberName").val("123123");*/
+                //$.each(data, function (index, vle) {
+
+                //    })
+            })
 
 
+                //var button = event.relatedTarget
+                //var recipient = button.getAttribute('data-bs-whatever')
+                //var modalTitle = exampleModal.querySelector('.modal-title')
+                //var modalBodyInput = exampleModal.querySelector('.modal-body input')
+                //modalTitle.textContent = 'New message to ' + recipient
+                //modalBodyInput.value = recipient
+        })
+        })
+    }*@
+@*exampleModal.addEventListener('show.bs.modal',function () {
+            let idd = aa;
+            console.log(aa);
+            console.log(event.currentTarget)
+                 $.ajax({
+                    url: "@Url.Content("~/Customer/Edit")",
+                    type: "get",
+                    data: { "id": idd },
+                    dataType: "json"
+                }).done(data => {
+                    console.log(data)
+                    $("#MemberNameinput").val(data.memberName);
+                    $("#Addressinput").val(data.address);
+                    $("#BirthDayinput").val(data.birthDay);
+                    $("#Emailinput").val(data.email);
+                    $("#GenderNameinput").val(data.gender);
 
-                }
-                 let response = await fetch("@Url.Content("~/Admin/List")")
-                 let results = await response.json()  //["Chai","Chang","Chartreuse verte"]
+                    $("#MemberStatusNameinput").val(data.memberStatusName);
+                    $("#PasswordNameinput").val(data.password);
+                    $("#MemberNameinput").val(data.memberName);
+                    $("#CityNameinput").val(data.cityName);
+                   /* $("#MemberName").val("123123");*/
+                    //$.each(data, function (index, vle) {
 
-                  let htmlDatas = results.map(data => {
-                      return (
-                          `<button type="button" class="btn btn-primary">${con}</button>`
-                        /*`<button type="button" onclick="read(event)" class="list-group-item list-group-item-action">${data}</button>`*/
-                      )
+                    //    })
+                })
 
-                  })
-        </script>
-        }
 
+                    //var button = event.relatedTarget
+                    //var recipient = button.getAttribute('data-bs-whatever')
+                    //var modalTitle = exampleModal.querySelector('.modal-title')
+                    //var modalBodyInput = exampleModal.querySelector('.modal-body input')
+                    //modalTitle.textContent = 'New message to ' + recipient
+                    //modalBodyInput.value = recipient
+            })
+
+
+    </script>*@
