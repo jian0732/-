@@ -67,10 +67,9 @@
                 <img src="~/images/TravelProductPictures/@Model.TravelPicturePath[i]" />
                 <div class="form-group">
                     <input type="hidden" asp-for="TravelPictureId" value="@Model.TravelPictureId[i]" />
-                    <input asp-for="PictureCount" value="0" id="test[@i]"/>
+                    <input type="hidden" asp-for="PictureCount" value="0" id="hiddenPictureCount[@i]"/>
                     <label class="control-label">更改行程照片</label>
-                    <input asp-for="photo" type="file" id="photoTest[@i]">
-                    <button type="button" value="測試按鍵" id="testBtn[@i]">test</button>
+                    <input asp-for="photo" type="file" id="photoUpload[@i]">                   
                 </div>
                 <div class="form-group">
                     <label class="control-label"></label>
@@ -96,15 +95,10 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 <script>
     for (var i = 0; i < @Model.TravelPictureId.Count; i++) {
-     let aaa = document.getElementById(`photoTest[${i}]`)
-     let bbb = document.getElementById(`test[${i}]`);
-     let ccc = document.getElementById(`testBtn[${i}]`);
-    aaa.addEventListener("click", () => {
-        bbb.value = 1;
-    })
-    ccc.addEventListener("click", () => {
-        bbb.value = 1;
-        console.log("AAA");
+        let photoUpload = document.getElementById(`photoUpload[${i}]`)
+        let hiddenPictureCount = document.getElementById(`hiddenPictureCount[${i}]`);
+        photoUpload.addEventListener("click", () => {
+            hiddenPictureCount.value = 1;
     })
     }
 
