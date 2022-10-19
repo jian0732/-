@@ -106,6 +106,7 @@ namespace prj認真版嗎.Controllers
         }
         public ActionResult Edit(int? id)
         {
+            
             if (id != null)
             {
                 //TravelProduct prod = _db.TravelProducts.FirstOrDefault(p => p.TravelProductId == id);
@@ -118,52 +119,89 @@ namespace prj認真版嗎.Controllers
                                                Price = s.Price,
                                                TravelProductTypeId = s.TravelProductTypeId,
                                                Stocks = s.Stocks,
-                                               Description =s.Description,
+                                               Description = s.Description,
                                                CountryId = s.CountryId,
                                                Cost = s.Cost,
                                                EventIntroduction = s.EventIntroduction,
-                                               PreparationDescription =s.PreparationDescription,
-                                               TravelPictureText = s.TravelPictures.Where(pic=>pic.TravelProductId==id).FirstOrDefault().TravelPictureText,
+                                               PreparationDescription = s.PreparationDescription,
+                                               產品圖片列表 = s.TravelPictures.Select(pic => new 產品圖片 {
+                                                   TravelPictureId=pic.TravelPictureId,
+                                                   TravelPicture1 = pic.TravelPicture1,
+                                                   TravelPictureText = pic.TravelPictureText,
+                                                   TravelProductId=pic.TravelProductId,
+                                               }).ToList(),
                                            }).FirstOrDefault();
                 if (prod != null)
-                {
-
+                {                   
                     return View(prod);
                 }
             }
             return RedirectToAction("List");
         }
         [HttpPost]
-        public ActionResult Edit(CProductViewModel inPord)
+        public ActionResult Edit(CProductViewModel inProd)
         {
-            TravelProduct c = _db.TravelProducts.FirstOrDefault(p => p.TravelProductId == inPord.TravelProductId);
+            TravelProduct c = _db.TravelProducts.FirstOrDefault(p => p.TravelProductId == inProd.TravelProductId);
             if (c != null)
             {
-                c.TravelProductName = inPord.TravelProductName;
-                c.Price = inPord.Price;
-                c.TravelProductTypeId = inPord.TravelProductTypeId;
-                c.Stocks = inPord.Stocks;
-                c.Description = inPord.Description;
-                c.CountryId = inPord.CountryId;
-                c.Cost = inPord.Cost;
-                c.EventIntroduction = inPord.EventIntroduction;
-                c.PreparationDescription = inPord.PreparationDescription;
-                _db.SaveChanges();
-                if (inPord.photo != null)
+                c.TravelProductName = inProd.TravelProductName;
+                c.Price = inProd.Price;
+                c.TravelProductTypeId = inProd.TravelProductTypeId;
+                c.Stocks = inProd.Stocks;
+                c.Description = inProd.Description;
+                c.CountryId = inProd.CountryId;
+                c.Cost = inProd.Cost;
+                c.EventIntroduction = inProd.EventIntroduction;
+                c.PreparationDescription = inProd.PreparationDescription;
+                //_db.SaveChanges();
+                if (inProd.photo != null)
                 {
-                    var TraPicture = _db.TravelPictures.Where(pic => pic.TravelProductId == c.TravelProductId).FirstOrDefault();                    
-                    TraPicture.TravelPictureText = inPord.TravelPictureText;
+                    var TraPicture = _db.TravelPictures.Where(pic => pic.TravelProductId == c.TravelProductId).FirstOrDefault();
+                    TraPicture.TravelPictureText = inProd.TravelPictureText;
 
                     string pname = Guid.NewGuid().ToString() + ".jpg";
                     TraPicture.TravelPicture1 = pname;
                     string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
                     //inPord.photo.CopyTo(new FileStream(path, FileMode.Create));
-                    _db.SaveChanges();
+                    //_db.SaveChanges();
+                   
                 }
             }
 
             return RedirectToAction("List");
         }
+        //[HttpPost] 失敗
+        //public ActionResult Edit(FormCollection inPord)
+        //{
+        //    TravelProduct c = _db.TravelProducts.FirstOrDefault(p => p.TravelProductId == inPord["TravelProductId"]);
+        //    if (c != null)
+        //    {
+        //        c.TravelProductName = inPord["TravelProductName"];
+        //        c.Price = Convert.ToDecimal(inPord["Price"]);
+        //        c.TravelProductTypeId = Convert.ToInt32(inPord["TravelProductTypeId"]);
+        //        c.Stocks = Convert.ToInt32(inPord["Stocks"]);
+        //        c.Description = inPord["Description"];
+        //        c.CountryId = Convert.ToInt32(inPord["CountryId"]);
+        //        c.Cost = Convert.ToInt32(inPord["Cost"]);
+        //        c.EventIntroduction = inPord["EventIntroduction"];
+        //        c.PreparationDescription = inPord["PreparationDescription"];
+        //        //_db.SaveChanges();
+        //        if (inPord["photo"].Count > 0)
+        //        {
+        //            var TraPicture = _db.TravelPictures.Where(pic => pic.TravelProductId == c.TravelProductId).FirstOrDefault();
+        //            TraPicture.TravelPictureText = inPord["TravelPictureText"];
+
+        //            string pname = Guid.NewGuid().ToString() + ".jpg";
+        //            TraPicture.TravelPicture1 = pname;
+        //            string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
+        //            //var temp = inPord["photo"] as IFormFile;
+        //            //temp.CopyTo(new FileStream(path, FileMode.Create));
+        //            //_db.SaveChanges();
+        //        }
+        //    }
+
+        //    return RedirectToAction("List");
+        //}
         public IActionResult IndexHome()
         {
           

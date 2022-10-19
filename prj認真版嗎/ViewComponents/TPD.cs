@@ -18,12 +18,12 @@ namespace prj認真版嗎.ViewComponents
         //    _db = Travel;
  
         //}
-        public async Task<IViewComponentResult> InvokeAsync()
-        {
+        //public async Task<IViewComponentResult> InvokeAsync()
+        //{
 
-            return View();
+        //    return View();
       
-        }
+        //}
 
 
     }
