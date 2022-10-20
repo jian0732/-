@@ -12,7 +12,7 @@ namespace prj認真版嗎.ViewModel
     {
         public CProductViewModel()
         {
-            _product = new TravelProduct();
+            _product = new TravelProduct();            
         }
         private TravelProduct _product;
 
@@ -109,6 +109,9 @@ namespace prj認真版嗎.ViewModel
             get { return _product.PreparationDescription; }
             set { _product.PreparationDescription = value; }
         }
+
+        //ProductDetail屬性欄位
+        
 
     }
 

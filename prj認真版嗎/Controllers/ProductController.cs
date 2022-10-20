@@ -38,15 +38,17 @@ namespace prj認真版嗎.Controllers
                                TravelProductName = c.TravelProductName,
                                TravelProductId = c.TravelProductId,
                                Price = c.Price,
-                               TravelProductTypeId = c.TravelProductId,
+                               TravelProductTypeId = c.TravelProductTypeId,
+                               TravelProductTypeDisplayName = c.TravelProductType.TravelProductTypeName,
                                Stocks = c.Stocks,
                                Description = c.Description,
                                CountryId = c.CountryId,
+                               CountryDisplayName=c.Country.CountryName,
                                Cost = c.Cost,
                                EventIntroduction = c.EventIntroduction,
                                PreparationDescription = c.PreparationDescription,
                                TravelPicture1 = c.TravelPictures.Where(pic => pic.TravelProductId == c.TravelProductId).FirstOrDefault().TravelPicture1,
-                               
+
                            }).ToList();
 
             return View(result);
@@ -237,5 +239,6 @@ namespace prj認真版嗎.Controllers
          
             return View();
         }
+        
     }
 }
