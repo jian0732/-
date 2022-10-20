@@ -30,10 +30,10 @@ namespace prj認真版嗎.Controllers
                 CityName = s.City.CityName,
                 MemberStatusName = s.MemberStatus.MemberStatusName
             }).ToList();
-
+            return View(datas);
             //if (string.IsNullOrEmpty(keyword.txtKeyword))
             //{
-               
+
             //}
             //else
             //{
@@ -53,7 +53,7 @@ namespace prj認真版嗎.Controllers
             //    }
             //}
             //return View(datas);
-            return View(datas);
+
         }
 
         public IActionResult Create()
@@ -117,7 +117,7 @@ namespace prj認真版嗎.Controllers
                     prod.PhotoPath = photoname;
                     string path = _enviro.WebRootPath + "/images/" + photoname;
                     inPord.photo.CopyTo(new FileStream(path, FileMode.Create));
-                    
+
                 }
                 prod.BirthDay = inPord.BirthDay;
                 prod.Address = inPord.Address;
@@ -133,9 +133,9 @@ namespace prj認真版嗎.Controllers
         }
         public IActionResult Status(int id)
         {
-            
-            var Status = _db.MemberStatuses.Where(p=>p.MemberStatusId!=id).Select(p=>p.MemberStatusName);
-            
+
+            var Status = _db.MemberStatuses.Where(p => p.MemberStatusId != id).Select(p => p.MemberStatusName);
+
             return Json(Status);
         }
     }
