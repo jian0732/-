@@ -82,8 +82,7 @@ namespace prj認真版嗎.Controllers
                     if (newProduct.photo != null)
                     {
                     foreach (IFormFile travel_pictures in newProduct.photo)
-                    {
-                        //測試測試
+                    {                        
                         TravelPicture pic = new TravelPicture();
                         pic.TravelPictureText = newProduct.TravelPictureText;
                         pic.TravelProductId = _db.TravelProducts.OrderBy(e => e.TravelProductId).LastOrDefault().TravelProductId;
@@ -141,16 +140,16 @@ namespace prj認真版嗎.Controllers
             TravelProduct c = _db.TravelProducts.FirstOrDefault(p => p.TravelProductId == inProd.TravelProductId);
             if (c != null)
             {
-                c.TravelProductName = inProd.TravelProductName;
-                c.Price = inProd.Price;
-                c.TravelProductTypeId = inProd.TravelProductTypeId;
-                c.Stocks = inProd.Stocks;
-                c.Description = inProd.Description;
-                c.CountryId = inProd.CountryId;
-                c.Cost = inProd.Cost;
-                c.EventIntroduction = inProd.EventIntroduction;
-                c.PreparationDescription = inProd.PreparationDescription;
-                _db.SaveChanges();
+                //c.TravelProductName = inProd.TravelProductName;
+                //c.Price = inProd.Price;
+                //c.TravelProductTypeId = inProd.TravelProductTypeId;
+                //c.Stocks = inProd.Stocks;
+                //c.Description = inProd.Description;
+                //c.CountryId = inProd.CountryId;
+                //c.Cost = inProd.Cost;
+                //c.EventIntroduction = inProd.EventIntroduction;
+                //c.PreparationDescription = inProd.PreparationDescription;
+                //_db.SaveChanges();
                 if (inProd.photo != null)
                 {
                     int tempCount = 0;
@@ -158,27 +157,45 @@ namespace prj認真版嗎.Controllers
                     {
                         if (inProd.PictureCount[i] != 0)
                         {
-                            var TraPicture = _db.TravelPictures.Where(pic => pic.TravelPictureId == inProd.TravelPictureId[i]).FirstOrDefault();
-                            string pname = Guid.NewGuid().ToString() + ".jpg";
-                            TraPicture.TravelPicture1 = pname;
-                            string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
-                            if (inProd.photo[tempCount] != null)
+                            if (inProd.TravelPictureId[i] != -1)
                             {
+                                var TraPicture = _db.TravelPictures.Where(pic => pic.TravelPictureId == inProd.TravelPictureId[i]).FirstOrDefault();
+                                string pname = Guid.NewGuid().ToString() + ".jpg";
+                                TraPicture.TravelPicture1 = pname;
+                                string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
+                                if (inProd.photo[tempCount] != null)
+                                {
+                                    //inProd.photo[tempCount].CopyTo(new FileStream(path, FileMode.Create));
+                                    //_db.SaveChanges();
+                                    tempCount++;
+                                }
+                            }
+                            else
+                            {
+                                TravelPicture pic = new TravelPicture();
+                                pic.TravelPictureText = inProd.TravelPictureText[i];
+                                pic.TravelProductId = inProd.TravelPictureId[i];
+                                pic.TravelPictureText = inProd.TravelPictureText[i];
+                                string pname = Guid.NewGuid().ToString() + ".jpg";
+                                pic.TravelPicture1 = pname;
+                                string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
+
                                 inProd.photo[tempCount].CopyTo(new FileStream(path, FileMode.Create));
+                                _db.TravelPictures.Add(pic);
                                 _db.SaveChanges();
-                                tempCount++;
-                            }                              
+                            }
+
                         }
                     }
                 }
                 if (inProd.TravelPictureText != null)
                 {
-                    for (int i = 0; i < inProd.TravelPictureText.Count; i++)
-                    {
-                        var TraPicture = _db.TravelPictures.Where(pic => pic.TravelPictureId == inProd.TravelPictureId[i]).FirstOrDefault();
-                        TraPicture.TravelPictureText = inProd.TravelPictureText[i];                       
-                        _db.SaveChanges();
-                    }
+                    //for (int i = 0; i < inProd.TravelPictureText.Count; i++)
+                    //{
+                    //    var TraPicture = _db.TravelPictures.Where(pic => pic.TravelPictureId == inProd.TravelPictureId[i]).FirstOrDefault();
+                    //    TraPicture.TravelPictureText = inProd.TravelPictureText[i];                       
+                    //    _db.SaveChanges();
+                    //}
                 }
             }
 
@@ -218,7 +235,7 @@ namespace prj認真版嗎.Controllers
         //}
         public IActionResult IndexHome()
         {
-          
+         
             return View();
         }
     }

@@ -55,12 +55,12 @@ namespace prj認真版嗎.Controllers
 
         }
 
-        //public IActionResult Create()
-        //{
-        //    return PartialView();
-        //}
+        public IActionResult Create()
+        {
+            return PartialView();
+        }
         //[HttpPost]
-        //public ActionResult Create( CProductViewModel p)
+        //public ActionResult Create(CProductViewModel p)
         //{
         //    _db.Admins.Add(ad);
         //    _db.SaveChanges();
@@ -75,19 +75,19 @@ namespace prj認真版嗎.Controllers
         //    _db.SaveChanges();
         //    return RedirectToAction("Index");
         //}
-        //public ActionResult Delete(int? id)
-        //{
-        //    if (id != null)
-        //    {
-        //        Member prod = _db.Members.FirstOrDefault(p => p.MembersId == id);
-        //        if (prod != null)
-        //        {
-        //            _db.Members.Remove(prod);
-        //            _db.SaveChanges();
-        //        }
-        //    }
-        //    return RedirectToAction("List");
-        //}
+        public ActionResult Delete(int? id)
+        {
+            if (id != null)
+            {
+                Member prod = _db.Members.FirstOrDefault(p => p.MembersId == id);
+                if (prod != null)
+                {
+                    _db.Members.Remove(prod);
+                    _db.SaveChanges();
+                }
+            }
+            return RedirectToAction("List");
+        }
 
         public ActionResult Edit(int? id)
         {
