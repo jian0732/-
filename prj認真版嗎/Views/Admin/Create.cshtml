@@ -2,12 +2,13 @@
 
 @{
     ViewData["Title"] = "Create";
+    Layout = null;
 }
 
 <h1>新增管理員</h1>
 <hr />
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-12">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
@@ -16,7 +17,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Account" class="control-label"></label>
-                <input asp-for="Account" class="form-control" id="Account1"/>
+                <input asp-for="Account" class="form-control" id="Account1" />
                 <span asp-validation-for="Account" class="text-danger" id="NameHelp"></span>
             </div>
             <div class="form-group">
@@ -27,7 +28,7 @@
                 <label asp-for="CommentStatus" class="control-label"></label>
                 <input asp-for="CommentStatus" type="checkbox" />
                 <label asp-for="MemberStatus" class="control-label"></label>
-                <input asp-for="MemberStatus" type="checkbox" />
+                <input asp-for="MemberStatus" type="checkbox"/>
                 <label asp-for="ProductStatus" class="control-label"></label>
                 <input asp-for="ProductStatus" type="checkbox" />
                 <label asp-for="AdminStatus1" class="control-label"></label>
@@ -43,10 +44,11 @@
 <div>
     <a asp-action="Index">回管理權限列表</a>
 </div>
-@section Scripts {
+
     <script>
-        const Account = document.querySelector("#Account1")
-        const Help = document.querySelector("#NameHelp")
+        var Account = document.querySelector("#Account1")
+        var Help = document.querySelector("#NameHelp")
+       
         Account.addEventListener("blur", async () => {
             let rp = await fetch('@Url.Content("~/Admin/Cy")' + `?Account=${Account.value}`)
             let data =await rp.text();
@@ -54,6 +56,6 @@
         })
 
     </script>
-}
+
 
 

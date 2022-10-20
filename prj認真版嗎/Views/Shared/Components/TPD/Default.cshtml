@@ -1,1 +1,102 @@
 ﻿
+@using prj認真版嗎.ViewModel
+@model List<CAdminViewModel>
+
+@{
+    ViewData["Title"] = "管理員";
+}
+<div id="divA">
+    <h1>管理員管理</h1>
+    <p>
+        <a class="btn btn-success" onclick="showmodal('@Url.Action("Create","Admin",null,Context.Request.Scheme)',null)">新增管理員</a>
+    </p>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().AdminName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Account)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Password)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().CommentStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().MemberStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().ProductStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().AdminStatus1)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AdminName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Account)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Password)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CommentStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.MemberStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductStatus)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.AdminStatus1)
+                    </td>
+                    <td>
+                        <a class="btn btn-success" onclick="showmodal('@Url.Action("Edit","Admin",new {id=@item.AdminId},Context.Request.Scheme)',null)">修改</a>
+                        <a asp-action="Delete" asp-route-id="@item.AdminId" class="btn btn-danger" onclick="check()">刪除</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>
+
+<div class="modal fade" id="newstaticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+            </div>
+
+            <div class="modal-body">
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Send 11message</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+@section Scripts{
+    <script>
+        function check() {
+            return confirm("確定刪除?");
+        }
+    </script>
+}
+<script src="~/js/JS.js"></script>
+
