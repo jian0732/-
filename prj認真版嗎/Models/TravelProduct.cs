@@ -24,6 +24,8 @@ namespace prj認真版嗎.Models
         public int Cost { get; set; }
         public string EventIntroduction { get; set; }
         public string PreparationDescription { get; set; }
+        public string MapUrl { get; set; }
+        public string ProductStatus { get; set; }
 
         public virtual Country Country { get; set; }
         public virtual TravelProductType TravelProductType { get; set; }

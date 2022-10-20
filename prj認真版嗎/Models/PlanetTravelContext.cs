@@ -38,6 +38,15 @@ namespace prj認真版嗎.Models
         public virtual DbSet<TravelProductType> TravelProductTypes { get; set; }
         public virtual DbSet<View> Views { get; set; }
 
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=192.168.36.26;Initial Catalog=PlanetTravel;User ID=jian;Password=0777");
+            }
+        }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "Chinese_Taiwan_Stroke_CI_AS");
@@ -244,33 +253,40 @@ namespace prj認真版嗎.Models
 
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
 
-                entity.Property(e => e.MemberId).HasColumnName("MemberID");
+                entity.Property(e => e.CouponId).HasColumnName("CouponID");
+
+                entity.Property(e => e.MembersId).HasColumnName("MembersID");
 
                 entity.Property(e => e.OrderDate)
                     .IsRequired()
                     .HasMaxLength(50);
 
-                entity.Property(e => e.OrderDetailId).HasColumnName("OrderDetailID");
-
                 entity.Property(e => e.OrderStatusId).HasColumnName("OrderStatusID");
 
-                entity.HasOne(d => d.Member)
+                entity.Property(e => e.PaymentId).HasColumnName("PaymentID");
+
+                entity.HasOne(d => d.Coupon)
                     .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.MemberId)
+                    .HasForeignKey(d => d.CouponId)
+                    .HasConstraintName("FK_Order_Coupon");
+
+                entity.HasOne(d => d.Members)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.MembersId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Order_Members");
-
-                entity.HasOne(d => d.OrderDetail)
-                    .WithMany(p => p.Orders)
-                    .HasForeignKey(d => d.OrderDetailId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Order_OrderDetail");
 
                 entity.HasOne(d => d.OrderStatus)
                     .WithMany(p => p.Orders)
                     .HasForeignKey(d => d.OrderStatusId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Order_OrderStatus");
+
+                entity.HasOne(d => d.Payment)
+                    .WithMany(p => p.Orders)
+                    .HasForeignKey(d => d.PaymentId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Order_Payment");
             });
 
             modelBuilder.Entity<OrderDetail>(entity =>
@@ -279,25 +295,16 @@ namespace prj認真版嗎.Models
 
                 entity.Property(e => e.OrderDetailId).HasColumnName("OrderDetailID");
 
-                entity.Property(e => e.CouponId).HasColumnName("CouponID");
-
-                entity.Property(e => e.PaymentId).HasColumnName("PaymentID");
+                entity.Property(e => e.OrderId).HasColumnName("OrderID");
 
                 entity.Property(e => e.TravelProductId).HasColumnName("TravelProductID");
 
                 entity.Property(e => e.UnitPrice).HasColumnType("money");
 
-                entity.HasOne(d => d.Coupon)
+                entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderDetails)
-                    .HasForeignKey(d => d.CouponId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetail_Coupon");
-
-                entity.HasOne(d => d.Payment)
-                    .WithMany(p => p.OrderDetails)
-                    .HasForeignKey(d => d.PaymentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_OrderDetail_Payment");
+                    .HasForeignKey(d => d.OrderId)
+                    .HasConstraintName("FK_OrderDetail_Order");
 
                 entity.HasOne(d => d.TravelProduct)
                     .WithMany(p => p.OrderDetails)
@@ -370,6 +377,10 @@ namespace prj認真版嗎.Models
 
                 entity.Property(e => e.TravelPicture1).HasColumnName("TravelPicture");
 
+                entity.Property(e => e.TravelPictureText)
+                    .IsRequired()
+                    .HasDefaultValueSql("('圖片描述')");
+
                 entity.Property(e => e.TravelProductId).HasColumnName("TravelProductID");
 
                 entity.HasOne(d => d.TravelProduct)
@@ -389,7 +400,13 @@ namespace prj認真版嗎.Models
 
                 entity.Property(e => e.Description).IsRequired();
 
+                entity.Property(e => e.MapUrl).HasDefaultValueSql("('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3615.010806047606!2d121.54111421524708!3d25.033707344456612!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442abd37971c7cb%3A0x40ba641f27b6d4e3!2zMTA25Y-w5YyX5biC5aSn5a6J5Y2A5b6p6IiI5Y2X6Lev5LiA5q61Mzkw6Jmf!5e0!3m2!1szh-TW!2stw!4v1666082951345!5m2!1szh-TW!2stw\" width=\"600\" height=\"450\" style=\"border:0;\" allowfullscreen=\"\" loading=\"lazy\" referrerpolicy=\"no-referrer-when-downgrade')");
+
                 entity.Property(e => e.Price).HasColumnType("money");
+
+                entity.Property(e => e.ProductStatus)
+                    .IsRequired()
+                    .HasDefaultValueSql("('未上架')");
 
                 entity.Property(e => e.TravelProductName)
                     .IsRequired()
