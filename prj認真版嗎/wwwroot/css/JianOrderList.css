@@ -1,0 +1,17 @@
+﻿
+.trtd > td {
+    height: 50px;
+    color: black
+}
+
+.thbkc{
+    background-color: #302372
+}
+
+.thbkc > th {
+    color: white
+}
+
+.orderi {
+    font-size: 25px;
+}
