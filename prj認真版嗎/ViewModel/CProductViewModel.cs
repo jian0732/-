@@ -43,6 +43,17 @@ namespace prj認真版嗎.ViewModel
             get;
             set;
         }
+        public List<IFormFile> CreateNewPhoto { get; set; } //在編輯時新增的圖片檔案
+        public List<string> CreateNewTravelPicturePath //在編輯時新增的圖片路徑
+        {
+            get;
+            set;
+        }
+        public List<string> CreateNewTravelPictureText //在編輯時新增的圖片描述
+        {
+            get;
+            set;
+        }
         public int TravelProductId
         {
             get { return _product.TravelProductId; }

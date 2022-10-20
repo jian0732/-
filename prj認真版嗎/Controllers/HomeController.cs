@@ -65,10 +65,10 @@ namespace prj認真版嗎.Controllers
                     CAdminViewModel qq = _db.Admins.Where(p => p.AdminId == x.AdminId).Select(s => new CAdminViewModel
                     { 
                         admin = x,
-                        //CommentStatus = s.AdminStatuses.Select(s => s.CommentStatus).FirstOrDefault(),
-                        //MemberStatus = s.AdminStatuses.Select(s => s.MemberStatus).FirstOrDefault(),
-                        //AdminStatus1 = s.AdminStatuses.Select(s => s.AdminStatus1).FirstOrDefault(),
-                        //ProductStatus = s.AdminStatuses.Select(s => s.ProductStatus).FirstOrDefault(),
+                        CommentStatus = s.AdminStatuses.Select(s => s.CommentStatus).FirstOrDefault(),
+                        MemberStatus = s.AdminStatuses.Select(s => s.MemberStatus).FirstOrDefault(),
+                        AdminStatus1 = s.AdminStatuses.Select(s => s.AdminStatus1).FirstOrDefault(),
+                        ProductStatus = s.AdminStatuses.Select(s => s.ProductStatus).FirstOrDefault(),
                     }).FirstOrDefault();
 
                     if (qq != null) 

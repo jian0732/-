@@ -128,17 +128,17 @@
         let pic_div = `<img src="@Url.Content("~/images/ProductDefaultImage.jpg")" />` +
         `<div class="form-group">` +
         `<input name="TravelPictureId" value="-1" />` +
-        `<input name="PictureCount" value="0" id="ActivedHiddenPictureCount[${num}]" />` +
+        `<input name="PictureCount111" value="0" id="ActivedHiddenPictureCount[${num}]" />` +
         `<label class="control-label">更改行程照片</label>` +
-        `<input name="photo" type="file" id="ActivedPhotoUpload[${num}]">` +
+        `<input name="CreateNewPhoto" type="file" id="ActivedPhotoUpload[${num}]">` +
         `</div>` +
         `<div class="form-group">` +
         ` <label class="control-label"></label>` +
-        `<input class="form-control" name="TravelPictureText" value="請輸入圖片描述" type="text" />` +
+        `<input class="form-control" name="CreateNewTravelPictureText" value="請輸入圖片描述" type="text" />` +
         `<span class="text-danger"></span>` +
         `</div>`;
         if (num < 11) {
-            test = `<p>第${num+1}張圖</p>`
+            test = `<p>新增第${num}張圖</p>`
             let p = document.createElement("div")
             p.id = "testID";
 
@@ -152,10 +152,10 @@
     }
     function minus() {
         num--;
-        if (num > 0) {
+        if (num >= 0) {
             $('#pic_group').children().last().remove();
         } else
-            num = 1;
+            num = 0;
 
     }
 </script>
