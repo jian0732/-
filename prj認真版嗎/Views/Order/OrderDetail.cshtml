@@ -72,25 +72,28 @@
                 //稅金 = 總小計 * 0.05M;
                 總金額 = 手續費 + 總小計;
             }
-            <tr >
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                </td>
-                <td>
-                    <p style="font-size:18px;">小計金額: @總小計.ToString("###,###,##0")</p>
-                    <p style="font-size:20px;">手 續 費: @手續費.ToString("###,###,##0")</p>
-                    <p style="font-size:20px;">總 金 額: @總金額.ToString("###,###,##0")</p>
-                </td>
-            </tr>
+        <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td class="金額顯示">
+                <p>小計金額: @總小計.ToString("###,###,##0")</p>
+                <p>手&ensp;續&ensp;費: @手續費.ToString("###,###,##0")</p>
+                <p>總&ensp;金&ensp;額: @總金額.ToString("###,###,##0")</p>
+            </td>
+        </tr>
         </tbody>
     </table>
+</div>
+<div class="d-flex justify-content-center">
+    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="right:0">關閉</button>
 </div>

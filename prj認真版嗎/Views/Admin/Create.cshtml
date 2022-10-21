@@ -4,8 +4,9 @@
     ViewData["Title"] = "Create";
     Layout = null;
 }
-
-<h1>新增管理員</h1>
+<div class="d-flex justify-content-center">
+    <h1>新增管理員</h1>
+</div>
 <hr />
 <div class="row">
     <div class="col-md-12">
@@ -37,13 +38,12 @@
 
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="right:0">關閉</button>
             </div>
         </form>
     </div>
 </div>
-<div>
-    <a asp-action="Index">回管理權限列表</a>
-</div>
+
 
     <script>
         var Account = document.querySelector("#Account1")
