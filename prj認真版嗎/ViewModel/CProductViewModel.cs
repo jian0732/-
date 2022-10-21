@@ -23,7 +23,12 @@ namespace prj認真版嗎.ViewModel
             get { return _product; }
             set { _product = value; }
         }
-       
+        public TravelProductDetail TravelProductDetail
+        {
+            get { return _TravelProductDetail; }
+            set { _TravelProductDetail = value; }
+        }
+
         public List<IFormFile> photo { get; set; } //圖片的檔案
         public List<string> TravelPicturePath //圖片的路徑
         {
@@ -118,6 +123,48 @@ namespace prj認真版嗎.ViewModel
         {
             get { return _TravelProductDetail.TravelProductDetailId; }
             set { _TravelProductDetail.TravelProductDetailId = value; }
+        }
+        public int TravelProductDetail_ProductID
+        {
+            get { return _TravelProductDetail.TravelProductId; }
+            set { _TravelProductDetail.TravelProductId = value; }
+        }
+        public int Day
+        {
+            get { return _TravelProductDetail.Day; }
+            set { _TravelProductDetail.Day = value; }
+        }
+        public int TravelProductDetail_HotelID
+        {
+            get { return (int)_TravelProductDetail.HotelId; }
+            set { _TravelProductDetail.HotelId = value; }
+        }
+        public string TravelProductDetail_DisplayHotelName //展示的旅館名稱
+        {
+            get;
+            set;
+        }
+        public string Date
+        {
+            get { return _TravelProductDetail.Date; }
+            set { _TravelProductDetail.Date = value; }
+        }
+        public string DailyDetailText
+        {
+            get { return _TravelProductDetail.DailyDetailText; }
+            set { _TravelProductDetail.DailyDetailText = value; }
+        }
+        //Trasportation屬性欄位
+        public string Trasportation_DisplayTrasportationName //展示的交通方式名稱
+        {
+            get;
+            set;
+        }
+        //View屬性欄位
+        public string View_DisplayViewName //展示的交通方式名稱
+        {
+            get;
+            set;
         }
     }
 

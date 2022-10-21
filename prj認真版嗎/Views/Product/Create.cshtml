@@ -22,8 +22,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="TravelProductTypeId" class="control-label"></label>
-                <input asp-for="TravelProductTypeId" class="form-control" />
-                <span asp-validation-for="TravelProductTypeId" class="text-danger"></span>
+                <select asp-for="TravelProductTypeId" class="form-select"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Stocks" class="control-label"></label>
@@ -37,8 +36,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="CountryId" class="control-label"></label>
-                <input asp-for="CountryId" class="form-control" />
-                <span asp-validation-for="CountryId" class="text-danger"></span>
+                <select asp-for="CountryId" class="form-select"></select>
             </div>
             <div class="form-group">
                 <label asp-for="Cost" class="control-label"></label>
@@ -55,12 +53,12 @@
                 <input asp-for="PreparationDescription" class="form-control" />
                 <span asp-validation-for="PreparationDescription" class="text-danger"></span>
             </div>
-
-            <div id="pic_group">                
+            =========新增旅遊產品介紹照片=========
+            <div id="pic_group">
                 <div class="form-group">
                     <label class="control-label">旅遊產品介紹照片</label>
                     <p>Tips:按住ctrl可進行多筆上傳</p>
-                    <input type="file" name="photo" multiple/>
+                    <input type="file" name="photo" multiple />
                 </div>
                 <div class="form-group">
                     <label asp-for="TravelPictureText" class="control-label"></label>
@@ -68,17 +66,37 @@
                     <span asp-validation-for="TravelPictureText" class="text-danger"></span>
                 </div>
             </div>
+            ===========新增每日行程明細===========
+            <div class="form-group">
+                <label asp-for="TravelProductDetailID" class="control-label"></label>
+                <input asp-for="TravelProductDetailID" class="form-control" />
+                <span asp-validation-for="TravelProductDetailID" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Day" class="control-label"></label>
+                <input asp-for="Day" class="form-control" />
+                <span asp-validation-for="Day" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="TravelProductDetail_HotelID" class="control-label"></label>
+                <select asp-for="TravelProductDetail_HotelID" class="form-select"></select>
+            </div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DailyDetailText" class="control-label"></label>
+                <input asp-for="DailyDetailText" class="form-control" />
+                <span asp-validation-for="DailyDetailText" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <input type="submit" value="建立新行程" class="btn btn-primary" />
             </div>
+
+
         </form>
-        @*<div id="btnControl">
-            <button id="plus" onclick="plus()">新增圖片上傳欄位</button>
-
-            <button id="minus" onclick="minus()">減少圖片上傳欄位</button>
-        </div>*@
-
-
 
 
     </div>
@@ -90,35 +108,43 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-@*<script>
-    let num = 1;
-    let pic_div = '<div class="form-group"><label class="control-label">旅遊產品介紹照片</label ><input type="file" name="photo" /></div ><div class="form-group"><label asp-for="TravelPictureText" class="control-label">圖片描述</label><input name="TravelPictureText" class="form-control" /><span asp-validation-for="TravelPictureText" class="text-danger"></span></div>';
-    const abc = document.querySelector("#pic_group");
-    let test = ""
-    
-    function plus() {
-        num++;
-        if (num < 11) {
-            test = `<p>第${num}張圖</p>`
-            let p = document.createElement("div")
-            p.id = "testID";
+<script>
 
-            p.innerHTML = test;
-            p.innerHTML += pic_div;
-            abc.appendChild(p)
-        } else
-            num = 10;
+    async function LoadTravelProductType() {
+        //抓資料庫旅遊型態的資料
+        let selTravelProductType = document.querySelector("#TravelProductTypeId")
+        let response = await fetch("@Url.Content("~/Product/LoadTravelProductType_ReturnJson")")
+        let datas = await response.json()
+        datas.forEach(TravelProductType => {
+            const opt = new Option(TravelProductType['travelProductTypeName'], TravelProductType['travelProductTypeId'])
+            selTravelProductType.options.add(opt)
+        })
+    }
 
+    async function LoadCountryName() {
+        //抓資料庫國家的名字
+        let selCountryName = document.querySelector("#CountryId")
+        let response = await fetch("@Url.Content("~/Product/LoadCountryName_ReturnJson")")
+        let datas = await response.json()
+        datas.forEach(Country => {
+            const opt = new Option(Country['countryName'], Country['countryId'])
+            selCountryName.options.add(opt)
+        })
     }
-    function minus() {
-        num--;
-        if (num > 0) {
-            $('#pic_group').children().last().remove();
-        } else
-            num = 1;
-       
+        async function LoadHotelName() {
+        //抓資料庫旅館的名字
+            let selHotelName = document.querySelector("#TravelProductDetail_HotelID")
+        let response = await fetch("@Url.Content("~/Product/LoadHotelName_ReturnJson")")
+        let datas = await response.json()
+            datas.forEach(Hotel => {
+                const opt = new Option(Hotel['hotelNameName'], Hotel['hotelNameId'])
+                selHotelName.options.add(opt)
+        })
     }
-</script>*@
+    LoadTravelProductType();
+    LoadCountryName();
+    LoadHotelName();
+</script>
 
 
 }

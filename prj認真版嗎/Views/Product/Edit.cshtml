@@ -38,7 +38,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control" cols="50" rows="5"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -60,7 +60,7 @@
                 <label asp-for="PreparationDescription" class="control-label"></label>
                 <input asp-for="PreparationDescription" class="form-control" />
                 <span asp-validation-for="PreparationDescription" class="text-danger"></span>
-            </div>           
+            </div>
             <div id="pic_group">
                 @for (int i = 0; i < Model.TravelPictureId.Count; i++)
                 {
@@ -81,7 +81,44 @@
                 }
             </div>
 
+            <div>
+                <p>─────────我是測試用排版分隔線（開頭）─────────</p>
+            </div>
 
+            <div class="form-group">
+                <label asp-for="@Model.TravelProductDetail.Day" class="control-label"></label>
+                <input asp-for="@Model.TravelProductDetail.Day" class="form-control" />
+                <span asp-validation-for="@Model.TravelProductDetail.Day" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.TravelProductDetail.Date" class="control-label"></label>
+                <input asp-for="@Model.TravelProductDetail.Date" class="form-control" />
+                <span asp-validation-for="@Model.TravelProductDetail.Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">                
+                <label asp-for="@Model.TravelProductDetail.DailyDetailText" class="control-label"></label>               
+                <textarea asp-for="@Model.TravelProductDetail.DailyDetailText" class="form-control" cols="50" rows="10"></textarea>
+                <span asp-validation-for="@Model.TravelProductDetail.DailyDetailText" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.TravelProductDetail_DisplayHotelName" class="control-label"></label>
+                <input asp-for="@Model.TravelProductDetail_DisplayHotelName" class="form-control" />
+                <span asp-validation-for="@Model.TravelProductDetail_DisplayHotelName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.Trasportation_DisplayTrasportationName" class="control-label"></label>
+                <input asp-for="@Model.Trasportation_DisplayTrasportationName" class="form-control" />
+                <span asp-validation-for="@Model.Trasportation_DisplayTrasportationName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="@Model.View_DisplayViewName" class="control-label"></label>
+                <input asp-for="@Model.View_DisplayViewName" class="form-control" />
+                <span asp-validation-for="@Model.View_DisplayViewName" class="text-danger"></span>
+            </div>
+
+            <div>
+                <p>─────────我是測試用排版分隔線（結尾）─────────</p>
+            </div>
             <div class="form-group">
                 <input type="submit" value="修改並儲存" class="btn btn-primary" />
             </div>
