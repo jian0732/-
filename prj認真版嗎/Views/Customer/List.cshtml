@@ -2,34 +2,20 @@
 @model List<CMember>
 @section Styles{
     <style>
-        img {
-            width: 100%
-        }
-
-        .imgtd {
-            width: 50px;
-            height: 50px;
-        }
-
-        td {
-            height: 50px;
-        }
-
-        .thbkc{
-            background-color:#06fff7
-        }
-        th{
-            color:black
-        }
     </style>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <link href="~/css/JianCutsomerList.css" rel="stylesheet" />
     <link href="~/css/jiancustomer.css" rel="stylesheet" />
 }
-<div class="justify-content-center">
-    <h1 class="justify-content-center">會員管理</h1>
+<div class="d-flex justify-content-center">
+    <h1 class="標題">會員管理</h1>
 </div>
-<div class="justify-content-center dataTable" style="margin-top:50px;">
-    <table id="myTable" class="display hover compact stripe table-striped">
+<div class="btn-group">
+    <button id="全部" class="btn btn-primary">全部</button>
+    <button id="停權" class="btn btn-danger">停權</button>
+</div>
+<div>
+    <table id="myTable" class="hover compact cell-border 自訂">
         <thead>
             <tr class="thbkc">
                 <th>
@@ -104,15 +90,13 @@
                         @Html.DisplayFor(modelItem => item.MemberStatusName)
                     </td>
                     <td>
-                        <a class="btn btn-success getbtn" onclick="showmodal('@Url.Action("Edit","Customer",new {id=@item.MembersId},Context.Request.Scheme)',null)">修改</a>
+                        <a class="btn getbtn 修改按鈕" onclick="showmodal('@Url.Action("Edit","Customer",new {id=@item.MembersId},Context.Request.Scheme)',null)"><i class=" fas fa-fw fa-wrench"></i>修改</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
 </div>
-
-
 <!--修改光箱-->
 <div class="modal fade" id="newstaticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -125,8 +109,10 @@
     </div>
 </div>
 <!--修改光箱-->
-
 @section Scripts{
+    @*<script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>*@
+    <script src="~/js/datatables.min.js"></script>
+    <script src="~/js/JS.js"></script>
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable({
@@ -370,12 +356,21 @@
                     "thousands": ","
                 },
                 "lengthMenu": [10, 20, 30],
-            
-
+                "processing": true,
+                "stateSave": true,
+                "destroy": true,
+                "info": true,
+                "scrollCollapse": true,
+                "serverSide": false,
             });
         });
+        $(function () {
+            $('#停權').on('click', function () {
+                $('.dataTables_filter [type=search]').val("停權").keyup();
+            });
+            $('#全部').on('click', function () {
+                $('.dataTables_filter [type=search]').val("").keyup();
+            });
+        })
     </script>
-    <script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
-    <script src="~/js/JS.js"></script>
 }
-

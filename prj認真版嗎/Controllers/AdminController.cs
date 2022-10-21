@@ -30,6 +30,19 @@ namespace prj認真版嗎.Controllers
             
             return View(qq);
         }
+        public ActionResult ttry()
+        {
+            List<CAdminViewModel> qq = _db.Admins.Select(s => new CAdminViewModel
+            {
+                admin = s,
+                CommentStatus = s.AdminStatuses.Select(s => s.CommentStatus).FirstOrDefault(),
+                MemberStatus = s.AdminStatuses.Select(s => s.MemberStatus).FirstOrDefault(),
+                AdminStatus1 = s.AdminStatuses.Select(s => s.AdminStatus1).FirstOrDefault(),
+                ProductStatus = s.AdminStatuses.Select(s => s.ProductStatus).FirstOrDefault(),
+            }).ToList();
+
+            return Json(qq);
+        }
         public IActionResult Create()
         {
             return View();

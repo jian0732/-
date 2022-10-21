@@ -1,0 +1,133 @@
+﻿img {
+    width: 100%
+}
+
+.imgtd {
+    width: 50px;
+    height: 50px;
+}
+
+.thbkc {
+    height: 50px;
+    background-color: black;
+    font-weight:bold
+}
+.置中{
+    display:flex;
+    margin:auto;
+}
+.thbkc > th {
+ color: white ;
+ font-weight:bold
+}
+.標題 {
+    font-weight: bold;
+    font-size: 50px;
+    color: black;
+   
+}
+.btn-group > button {
+    width: 100px;
+    font-weight: bold
+}
+.修改按鈕 {
+    background-color: #808080;
+    color: black;
+    font-weight: bold
+}
+.檢視按鈕 {
+    background-color: #14b4fb;
+    color: black;
+    font-weight: bold
+}
+tbody > tr > td {
+    font-weight: bold;
+    height: 50px;
+    color: black;
+}
+
+tbody > tr > td >a {
+    font-weight: bold
+}
+body {
+    font-family: "Open Sans", sans-serif;
+}
+
+table.dataTable {
+    box-shadow: #bbbbbb 0px 0px 5px 0px;
+}
+
+    thead > tr,
+    thead > tr > th {
+        background-color: transparent;
+        color: #fff;
+        font-weight: normal;
+        height:20px;
+        text-align: start;
+    }
+
+table.dataTable thead th,
+table.dataTable thead td {
+    border-bottom: 0px solid #111 !important;
+}
+
+.dataTables_wrapper > div {
+    margin: 5px;
+}
+
+table.dataTable.display tbody tr.even > .sorting_1,
+table.dataTable.order-column.stripe tbody tr.even > .sorting_1 table.dataTable.display
+tbody
+tr.even,
+table.dataTable.display tbody tr.odd > .sorting_1,
+table.dataTable.order-column.stripe tbody tr.odd > .sorting_1,
+table.dataTable.display tbody tr.odd {
+    background-color: #ffffff;
+}
+
+table.dataTable thead th {
+    position: relative;
+    background-image: none !important;
+}
+
+    table.dataTable thead th.sorting:after,
+    table.dataTable thead th.sorting_asc:after,
+    table.dataTable thead th.sorting_desc:after {
+        position: absolute;
+        top: 12px;
+        right: 8px;
+        display: block;
+        font-family: "Font Awesome\ 5 Free";
+    }
+
+    table.dataTable thead th.sorting:after {
+        content: "\f0dc";
+        color: #ddd;
+        font-size: 0.8em;
+        padding-top: 0.12em;
+    }
+
+    table.dataTable thead th.sorting_asc:after {
+        content: "\f0de";
+    }
+
+    table.dataTable thead th.sorting_desc:after {
+        content: "\f0dd";
+    }
+
+table.dataTable.display tbody tr:hover > .sorting_1,
+table.dataTable.order-column.hover tbody tr:hover > .sorting_1 {
+    background-color: #eeeeee !important;
+    color: black;
+}
+tbody tr > td > a:hover {
+    color: #f11010;
+}
+
+
+tbody tr:hover {
+    background-color: #eeeeee !important;
+    color: black;
+}
+
+
