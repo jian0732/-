@@ -1,0 +1,96 @@
+﻿@model List<COrederDetailsViewModel>
+@using prj認真版嗎.ViewModel
+<link href="~/css/JianOrderList.css" rel="stylesheet" />
+@{
+    Layout = null;
+
+}
+<div>
+    <table class="table">
+        <thead>
+            <tr class="thbkc">
+                <th>
+
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().產品名稱)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Quantity)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().UnitPrice)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().優惠券名稱)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().優惠內容)
+                </th>
+                <th>
+                    小計
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @{
+                int count = 0;
+                decimal 總金額 = 0;
+                decimal 總小計 = 0;
+                decimal 手續費 = 0;
+                foreach (var item in Model)
+                {
+                    decimal 小計 = item.小計 * item.優惠內容;
+                    總小計 += 小計;
+                    count++;
+                    string 優惠內容 = (item.優惠內容 * 10).ToString("###,#0") + "折";
+                    <tr class="trtd">
+                        <td>
+                            @count .
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.產品名稱)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.Quantity)
+                        </td>
+                        <td>
+                            @item.UnitPrice.ToString("###,##0")
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modelItem => item.優惠券名稱)
+                        </td>
+                        <td>
+                            @優惠內容
+                        </td>
+                        <td>
+                            @小計.ToString("###,#0")
+                        </td>
+                    </tr>
+                }
+
+                //稅金 = 總小計 * 0.05M;
+                總金額 = 手續費 + 總小計;
+            }
+            <tr >
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                </td>
+                <td>
+                    <p style="font-size:18px;">小計金額: @總小計.ToString("###,###,##0")</p>
+                    <p style="font-size:20px;">手 續 費: @手續費.ToString("###,###,##0")</p>
+                    <p style="font-size:20px;">總 金 額: @總金額.ToString("###,###,##0")</p>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>

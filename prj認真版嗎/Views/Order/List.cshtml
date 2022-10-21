@@ -1,110 +1,65 @@
 ﻿@using prj認真版嗎.ViewModel
-@model List<CMember>
-@section Styles{
-    <style>
-        img {
-            width: 100%
-        }
+@model List<COrderViewModel>
+@section Styles
+{
+<style>
 
-        .imgtd {
-            width: 50px;
-            height: 50px;
-        }
-
-        td {
-            height: 50px;
-        }
-
-        .thbkc{
-            background-color:#06fff7
-        }
-        th{
-            color:black
-        }
-    </style>
+</style>
+    <link href="~/css/JianOrderList.css" rel="stylesheet" />
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
     <link href="~/css/jiancustomer.css" rel="stylesheet" />
 }
-<div class="justify-content-center">
-    <h1 class="justify-content-center">會員管理</h1>
+
+<div>
+    <h1>訂單管理</h1>
 </div>
+
 <div class="justify-content-center dataTable" style="margin-top:50px;">
     <table id="myTable" class="display hover compact stripe table-striped">
         <thead>
             <tr class="thbkc">
                 <th>
-                    @Html.DisplayNameFor(model => model.First().MemberName)
-                </th>
-                <th style="width:50px;">
-                    @Html.DisplayNameFor(model => model.First().PhotoPath)
+                    @Html.DisplayNameFor(model => model.First().OrderId)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.First().Password)
+                    @Html.DisplayNameFor(model => model.First().MembersId)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.First().Phone)
+                    @Html.DisplayNameFor(model => model.First().OrderDate)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.First().Email)
+                    @Html.DisplayNameFor(model => model.First().OrderStatusId)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.First().Gender)
+                    @Html.DisplayNameFor(model => model.First().PaymentId)
                 </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().BirthDay)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().Address)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().CityId)
-                </th>
-                <th>
-                    @Html.DisplayNameFor(model => model.First().MemberStatusId)
-                </th>
-                <th>
-                </th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model)
             {
-                <tr>
+                <tr class="trtd">
                     <td>
-                        @Html.DisplayFor(modelItem => item.MemberName)
+                        @Html.DisplayFor(modelItem => item.OrderId)
                     </td>
                     <td>
-                        @if (@item.PhotoPath != null)
-                        {
-                            <img src="~/images/@item.PhotoPath" />
-                        }
+                        @Html.DisplayFor(modelItem => item.MembersId) .
+                        @Html.DisplayFor(modelItem => item.會員名稱)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Password)
+                        @Html.DisplayFor(modelItem => item.OrderDate)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Phone)
+                        @Html.DisplayFor(modelItem => item.訂單狀態)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Email)
+                        @Html.DisplayFor(modelItem => item.付款方式)
                     </td>
                     <td>
-                        @Html.DisplayFor(modelItem => item.Gender)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.BirthDay)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.Address)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.CityName)
-                    </td>
-                    <td>
-                        @Html.DisplayFor(modelItem => item.MemberStatusName)
-                    </td>
-                    <td>
-                        <a class="btn btn-success getbtn" onclick="showmodal('@Url.Action("Edit","Customer",new {id=@item.MembersId},Context.Request.Scheme)',null)">修改</a>
+                        @*<a class="btn btn-success" onclick="showmodal('@Url.Action("OrderDetail","Order",new {id=@item.OrderId},Context.Request.Scheme)',null)">修改</a>*@
+                        <a class="btn btn-dark" onclick="showmodal('@Url.Action("OrderDetail","Order",new {id=@item.OrderId},Context.Request.Scheme)',null)"><i class="fa fa-list" aria-hidden="true"></i>檢視明細</a>
+                        <a asp-action="Edit" asp-route-id="@item.OrderId" class="btn btn-primary" style="background-color:#551515;color:whitesmoke"> <i class=" fas fa-fw fa-wrench"></i>修改</a>
                     </td>
                 </tr>
             }
@@ -112,19 +67,39 @@
     </table>
 </div>
 
+<!--檢視光箱-->
 
-<!--修改光箱-->
-<div class="modal fade" id="newstaticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
+<div id="newstaticBackdrop" class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="newstaticBackdrop" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content" style="width:1000px">
+            <div id="_modalDialog_body" class="modal-body">
+                <div id="selectTree" class="ztree" style="height:300px;overflow:auto; ">
 
-            <div class="modal-body">
+                </div>
             </div>
-
         </div>
     </div>
 </div>
-<!--修改光箱-->
+@*<div class="modal fade" id="newstaticBackdrop" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                
+            </div>
+        </div>
+    </div>*@
+
+@*<div class="modal fade" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog justify-content-center align-content-center">
+            <div class="modal-content">
+
+                <div class="modal-body">
+                </div>
+
+            </div>
+        </div>
+    </div>*@
+<!--檢視光箱-->
+
 
 @section Scripts{
     <script>
@@ -370,7 +345,6 @@
                     "thousands": ","
                 },
                 "lengthMenu": [10, 20, 30],
-            
 
             });
         });
@@ -378,4 +352,3 @@
     <script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="~/js/JS.js"></script>
 }
-
