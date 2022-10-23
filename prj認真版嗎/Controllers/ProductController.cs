@@ -69,9 +69,7 @@ namespace prj認真版嗎.Controllers
                 {
                     TravelProductName = newProduct.TravelProductName,
                     Price = newProduct.Price,
-                    TravelProductTypeId = newProduct.TravelProductTypeId,
-                    //TravelProductTypeId = _db.TravelProductTypes.Where(s => s.TravelProductTypeName == newProduct.TravelProductType_DisplayTravelProductTypeName)
-                    //                        .First().TravelProductTypeId,
+                    TravelProductTypeId = newProduct.TravelProductTypeId,                   
                     Stocks = newProduct.Stocks,
                     Description = newProduct.Description,
                     CountryId = newProduct.CountryId,
@@ -84,26 +82,50 @@ namespace prj認真版嗎.Controllers
                 //_db.SaveChanges();
 
 
-                //if (newProduct.photo != null)
-                //{
-                //    foreach (IFormFile travel_pictures in newProduct.photo)
-                //    {
-                //        TravelPicture pic = new TravelPicture();
-                //        pic.TravelPictureText = newProduct.TravelPictureText;
-                //        pic.TravelProductId = _db.TravelProducts.OrderBy(e => e.TravelProductId).LastOrDefault().TravelProductId;
+                if (newProduct.photo != null)
+                {
+                    foreach (IFormFile travel_pictures in newProduct.photo)
+                    {
+                        TravelPicture pic = new TravelPicture();
+                        pic.TravelPictureText = newProduct.TravelPictureText;
+                        pic.TravelProductId = _db.TravelProducts.OrderBy(e => e.TravelProductId).LastOrDefault().TravelProductId;
 
-                //        string pname = Guid.NewGuid().ToString() + ".jpg";
-                //        pic.TravelPicture1 = pname;
-                //        string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
+                        string pname = Guid.NewGuid().ToString() + ".jpg";
+                        pic.TravelPicture1 = pname;
+                        string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
 
-                //        travel_pictures.CopyTo(new FileStream(path, FileMode.Create));
-                //        _db.TravelPictures.Add(pic);
-                //        _db.SaveChanges();
-                //    }
+                        //travel_pictures.CopyTo(new FileStream(path, FileMode.Create));
+                        //_db.TravelPictures.Add(pic);
+                        //_db.SaveChanges();
+                    }
 
-                //}
+                }
 
+                TravelProductDetail tpd = new TravelProductDetail
+                {
+                    TravelProductId = _db.TravelProducts.OrderBy(e => e.TravelProductId).LastOrDefault().TravelProductId,
+                    Day = newProduct.Day,
+                    HotelId = newProduct.TravelProductDetail_HotelID,
+                    Date = newProduct.Date,
+                    DailyDetailText = newProduct.DailyDetailText,
+                };
+                //_db.TravelProductDetails.Add(tpd);
+                //_db.SaveChanges();
 
+                ProductToTransportation ptt = new ProductToTransportation
+                {
+                    TravelProductDetailId = _db.TravelProductDetails.OrderBy(e => e.TravelProductDetailId).LastOrDefault().TravelProductDetailId,
+                    TrasportationId = newProduct.Trasportation_TrasportationID,
+                };
+
+                ProductToView ptv = new ProductToView
+                {
+                    TravelProductDetailId = _db.TravelProductDetails.OrderBy(e => e.TravelProductDetailId).LastOrDefault().TravelProductDetailId,
+                    //ViewId = newProduct.View_ViewID,
+                };
+                //_db.ProductToTransportations.Add(ptt);
+                //_db.ProductToViews.Add(ptv);
+                //_db.SaveChanges();
             }
 
             return RedirectToAction("List");
@@ -266,10 +288,25 @@ namespace prj認真版嗎.Controllers
             var CountryName_JsonData = _db.Countries.ToList();
             return Json(CountryName_JsonData);
         }
+        public IActionResult LoadCityName_ReturnJson()
+        {
+            var CityName_JsonData = _db.Cities.ToList();
+            return Json(CityName_JsonData);
+        }
         public IActionResult LoadHotelName_ReturnJson()
         {
             var HotelName_JsonData = _db.Hotels.ToList();
             return Json(HotelName_JsonData);
+        }
+        public IActionResult LoadViewName_ReturnJson()
+        {
+            var ViewName_JsonData = _db.Views.ToList();
+            return Json(ViewName_JsonData);
+        }
+        public IActionResult LoadTrasportationName_ReturnJson()
+        {
+            var TrasportationName_JsonData = _db.Trasportations.ToList();
+            return Json(TrasportationName_JsonData);
         }
 
     }

@@ -61,25 +61,6 @@
                 <input asp-for="PreparationDescription" class="form-control" />
                 <span asp-validation-for="PreparationDescription" class="text-danger"></span>
             </div>
-            <div id="pic_group">
-                @for (int i = 0; i < Model.TravelPictureId.Count; i++)
-                {
-                    <img src="~/images/TravelProductPictures/@Model.TravelPicturePath[i]" />
-                    <div class="form-group">
-                        <input type="hidden" asp-for="TravelPictureId" value="@Model.TravelPictureId[i]" />
-                        <input type="hidden" asp-for="PictureCount" value="0" id="hiddenPictureCount[@i]" />
-                        <label class="control-label">更改行程照片</label>
-                        <input asp-for="photo" type="file" id="photoUpload[@i]">
-                    </div>
-                    <div class="form-group">
-                        <label class="control-label"></label>
-                        <input class="form-control" asp-for="TravelPictureText" value="@Model.TravelPictureText[i]" type="text" />
-                        <span class="text-danger"></span>
-                    </div>
-
-                    Count++;
-                }
-            </div>
 
             <div>
                 <p>─────────我是測試用排版分隔線（開頭）─────────</p>
@@ -95,8 +76,8 @@
                 <input asp-for="@Model.TravelProductDetail.Date" class="form-control" />
                 <span asp-validation-for="@Model.TravelProductDetail.Date" class="text-danger"></span>
             </div>
-            <div class="form-group">                
-                <label asp-for="@Model.TravelProductDetail.DailyDetailText" class="control-label"></label>               
+            <div class="form-group">
+                <label asp-for="@Model.TravelProductDetail.DailyDetailText" class="control-label"></label>
                 <textarea asp-for="@Model.TravelProductDetail.DailyDetailText" class="form-control" cols="50" rows="10"></textarea>
                 <span asp-validation-for="@Model.TravelProductDetail.DailyDetailText" class="text-danger"></span>
             </div>
@@ -119,14 +100,34 @@
             <div>
                 <p>─────────我是測試用排版分隔線（結尾）─────────</p>
             </div>
+            <div id="pic_group">
+                @for (int i = 0; i < Model.TravelPictureId.Count; i++)
+                {
+                    <img src="~/images/TravelProductPictures/@Model.TravelPicturePath[i]" />
+                    <div class="form-group">
+                        <input type="hidden" asp-for="TravelPictureId" value="@Model.TravelPictureId[i]" />
+                        <input type="hidden" asp-for="PictureCount" value="0" id="hiddenPictureCount[@i]" />
+                        <label class="control-label">更改行程照片</label>
+                        <input asp-for="photo" type="file" id="photoUpload[@i]">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label"></label>
+                        <input class="form-control" asp-for="TravelPictureText" value="@Model.TravelPictureText[i]" type="text" />
+                        <span class="text-danger"></span>
+                    </div>
+
+                    Count++;
+                }
+            </div>
+
+
             <div class="form-group">
                 <input type="submit" value="修改並儲存" class="btn btn-primary" />
             </div>
         </form>
         <div id="btnControl">
             <button id="plus" onclick="plus()">新增圖片上傳欄位</button>
-            <button id="minus" onclick="minus()">減少圖片上傳欄位</button>
-            <button id="minus" onclick="testFunc()">測試</button>
+            <button id="minus" onclick="minus()">減少圖片上傳欄位</button>           
         </div>
     </div>
 </div>
@@ -147,7 +148,7 @@
     }
 
     let num = 0;
-    function testFunc() {
+    function correct_uploadedPicture() {
         let ActivedPhotoUpload = document.getElementById(`ActivedPhotoUpload[${num}]`)
         let ActivedHiddenPictureCount = document.getElementById(`ActivedHiddenPictureCount[${num}]`);
         ActivedPhotoUpload.addEventListener("click", () => {
@@ -182,7 +183,7 @@
             p.innerHTML = test;
             p.innerHTML += pic_div;
             abc.appendChild(p)
-            testFunc();
+            correct_uploadedPicture();
         } else
             num = 10;
 

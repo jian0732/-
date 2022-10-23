@@ -22,7 +22,9 @@
             </div>
             <div class="form-group">
                 <label asp-for="TravelProductTypeId" class="control-label"></label>
-                <select asp-for="TravelProductTypeId" class="form-select"></select>
+                <select asp-for="TravelProductTypeId" class="form-select">
+                    <option value="-1">請選擇行程分類</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Stocks" class="control-label"></label>
@@ -31,12 +33,14 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
+                <textarea asp-for="Description" class="form-control"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="CountryId" class="control-label"></label>
-                <select asp-for="CountryId" class="form-select"></select>
+                <select asp-for="CountryId" class="form-select">
+                    <option value="-1">請選擇行程所在國家</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Cost" class="control-label"></label>
@@ -45,14 +49,20 @@
             </div>
             <div class="form-group">
                 <label asp-for="EventIntroduction" class="control-label"></label>
-                <input asp-for="EventIntroduction" class="form-control" />
+                <textarea asp-for="EventIntroduction" class="form-control"></textarea>
                 <span asp-validation-for="EventIntroduction" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PreparationDescription" class="control-label"></label>
-                <input asp-for="PreparationDescription" class="form-control" />
+                <textarea asp-for="PreparationDescription" class="form-control"></textarea>
                 <span asp-validation-for="PreparationDescription" class="text-danger"></span>
             </div>
+            <div class="form-group">
+                <label asp-for="MapUrl" class="control-label"></label>
+                <input asp-for="MapUrl" class="form-control" />
+                <span asp-validation-for="MapUrl" class="text-danger"></span>
+            </div>
+
             =========新增旅遊產品介紹照片=========
             <div id="pic_group">
                 <div class="form-group">
@@ -67,19 +77,17 @@
                 </div>
             </div>
             ===========新增每日行程明細===========
-            <div class="form-group">
-                <label asp-for="TravelProductDetailID" class="control-label"></label>
-                <input asp-for="TravelProductDetailID" class="form-control" />
-                <span asp-validation-for="TravelProductDetailID" class="text-danger"></span>
-            </div>
+
             <div class="form-group">
                 <label asp-for="Day" class="control-label"></label>
-                <input asp-for="Day" class="form-control" />
+                <input asp-for="Day" class="form-control" value="1" />
                 <span asp-validation-for="Day" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="TravelProductDetail_HotelID" class="control-label"></label>
-                <select asp-for="TravelProductDetail_HotelID" class="form-select"></select>
+                <select asp-for="TravelProductDetail_HotelID" class="form-select">
+                    <option value="-1">請選擇下榻飯店</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
@@ -88,16 +96,41 @@
             </div>
             <div class="form-group">
                 <label asp-for="DailyDetailText" class="control-label"></label>
-                <input asp-for="DailyDetailText" class="form-control" />
+                <textarea asp-for="DailyDetailText" class="form-control"></textarea>
                 <span asp-validation-for="DailyDetailText" class="text-danger"></span>
             </div>
+            ===========新增交通方式===========
+            <div class="form-group">
+                <label asp-for="Trasportation_TrasportationID" class="control-label"></label>
+                <select asp-for="Trasportation_TrasportationID" id="Trasportation_TrasportationID111" class="form-select">
+                    <option value="-1">請選擇交通方式</option>
+                </select>
+            </div>
+            <div id="createNewTransportation">
+            </div>
+            ===========選擇行程景點===========
+            <div class="form-group">
+                <label for="_View" class="control-label">選擇行程景點</label>
+                <select id="_View" name="_View[0].ViewId" class="form-select">
+                    <option value="-1">請選擇行程景點</option>
+                </select>
+            </div>
+            <div id="createNewView">
+            </div>
+
             <div class="form-group">
                 <input type="submit" value="建立新行程" class="btn btn-primary" />
             </div>
-
-
         </form>
 
+        <div>
+            <button onclick="removeNewViewFunc()">－景點</button>
+            <button onclick="createNewViewFunc()">＋景點</button>
+        </div>
+        <div>
+            <button onclick="removeNewTransportationFunc()">－交通</button>
+            <button onclick="createNewTransportationFunc()">＋交通</button>
+        </div>
 
     </div>
 </div>
@@ -109,9 +142,70 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 <script>
+    //新增、減少景點
+    let view_num = 0;
+    const createNewViewNode = document.querySelector("#createNewView");
+    function createNewViewFunc()
+    {
+        if (view_num < 10) {
+            let p = document.createElement("div")
+            const temp =
+                `<div class="form-group">` +
+                `<label for="View_CityId${view_num}" class="control-label">城市</label>` +
+                `<select name="View_CityId" id="View_CityId${view_num}" class="form-select">` +
+                ` <option value="-1">請選擇景點所在城市</option>` +
+                `</select>` +
+                `</div>` +
+                `<label for="ViewName${view_num}">請輸入景點名字</label>` +
+                `<input type="text" name="ViewName" id="ViewName${view_num}" />`;
+            p.innerHTML += temp;
+            createNewViewNode.appendChild(p);
+            LoadCityName();
+            view_num++;
+        }
+        else
+            view_num = 10;
 
+    }
+    function removeNewViewFunc() {
+        view_num--;
+        if (view_num >= 0) {
+            $('#createNewView').children().last().remove();
+        } else
+            view_num = 0;
+    }
+    //新增、減少交通方式
+    let transportation_num = 0;
+    const createNewTransportationNode = document.querySelector("#createNewTransportation");
+    function createNewTransportationFunc() {
+        if (transportation_num < 10) {
+            let p = document.createElement("div")
+            const temp =
+                `<div class="form-group">` +
+                `<label for="Trasportation_TrasportationID${transportation_num}" class="control-label">交通</label>` +
+                `<select name="Trasportation_TrasportationID" id="Trasportation_TrasportationID${transportation_num}" class="form-select">` +
+                ` <option value="-1">新增每日行程交通方式</option>` +
+                `</select>` +
+                `</div>`;
+               
+            p.innerHTML += temp;
+            createNewTransportationNode.appendChild(p);
+            LoadTrasportationName(transportation_num);
+            transportation_num++;
+        }
+        else
+            transportation_num = 10;
+
+    }
+    function removeNewTransportationFunc() {
+        transportation_num--;
+        if (transportation_num >= 0) {
+            $('#createNewTransportation').children().last().remove();
+        } else
+            transportation_num = 0;
+    }
+    //抓資料庫旅遊型態的資料
     async function LoadTravelProductType() {
-        //抓資料庫旅遊型態的資料
         let selTravelProductType = document.querySelector("#TravelProductTypeId")
         let response = await fetch("@Url.Content("~/Product/LoadTravelProductType_ReturnJson")")
         let datas = await response.json()
@@ -120,9 +214,8 @@
             selTravelProductType.options.add(opt)
         })
     }
-
+    //抓資料庫國家的名字
     async function LoadCountryName() {
-        //抓資料庫國家的名字
         let selCountryName = document.querySelector("#CountryId")
         let response = await fetch("@Url.Content("~/Product/LoadCountryName_ReturnJson")")
         let datas = await response.json()
@@ -131,19 +224,54 @@
             selCountryName.options.add(opt)
         })
     }
+    //抓資料庫城市的名字
+    async function LoadCityName() {
+        let selCityName = document.querySelector(`#View_CityId${view_num}`)
+        let response = await fetch("@Url.Content("~/Product/LoadCityName_ReturnJson")")
+        let datas = await response.json()
+        datas.forEach(City => {
+            const opt = new Option(City['cityName'], City['cityId'])
+            selCityName.options.add(opt)
+        })
+    }
+   
+    //抓資料庫旅館的名字
         async function LoadHotelName() {
-        //抓資料庫旅館的名字
             let selHotelName = document.querySelector("#TravelProductDetail_HotelID")
         let response = await fetch("@Url.Content("~/Product/LoadHotelName_ReturnJson")")
         let datas = await response.json()
             datas.forEach(Hotel => {
-                const opt = new Option(Hotel['hotelNameName'], Hotel['hotelNameId'])
+                const opt = new Option(Hotel['hotelName'], Hotel['hotelId'])
                 selHotelName.options.add(opt)
         })
     }
+    //抓資料庫景點的名字
+        async function LoadViewName() {
+            let selViewName = document.querySelector("#_View")
+        let response = await fetch("@Url.Content("~/Product/LoadViewName_ReturnJson")")
+        let datas = await response.json()
+            datas.forEach(View => {
+                const opt = new Option(View['viewName'], View['viewId'])
+                selViewName.options.add(opt)
+        })
+    }
+    //抓資料庫交通的方式
+    async function LoadTrasportationName(id) {
+        let selTrasportationName = document.querySelector(`#Trasportation_TrasportationID${id}`)
+        let response = await fetch("@Url.Content("~/Product/LoadTrasportationName_ReturnJson")")
+        let datas = await response.json()
+        datas.forEach(Trasportation => {
+            const opt = new Option(Trasportation['trasportationName'], Trasportation['trasportationId'])
+                selTrasportationName.options.add(opt)
+        })
+    }
+
+
     LoadTravelProductType();
     LoadCountryName();
     LoadHotelName();
+    LoadViewName();
+    LoadTrasportationName(111);
 </script>
 
 

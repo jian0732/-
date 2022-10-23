@@ -3,6 +3,7 @@ using prj認真版嗎.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -14,9 +15,14 @@ namespace prj認真版嗎.ViewModel
         {
             _product = new TravelProduct();
             _TravelProductDetail = new TravelProductDetail();
-        }
+            //_View = new View();
+            _Trasportation = new Trasportation();         
+
+    }
         private TravelProduct _product;
-        private TravelProductDetail _TravelProductDetail;
+        private TravelProductDetail _TravelProductDetail;        
+        private Trasportation _Trasportation;
+        public List<View> _View;
 
         public TravelProduct product
         {
@@ -45,7 +51,7 @@ namespace prj認真版嗎.ViewModel
             get { return _product.TravelProductId; }
             set { _product.TravelProductId = value; }
         }
-        [DisplayName("品名")]
+        [DisplayName("行程方案名稱")]
         public string TravelProductName
         {
             get { return _product.TravelProductName; }
@@ -95,6 +101,12 @@ namespace prj認真版嗎.ViewModel
             get { return _product.PreparationDescription; }
             set { _product.PreparationDescription = value; }
         }
+
+        public string MapUrl
+        {
+            get { return _product.MapUrl; }
+            set { _product.MapUrl = value; }
+        }
         //ProductDetail屬性欄位
         public int TravelProductDetailID
         {
@@ -106,8 +118,9 @@ namespace prj認真版嗎.ViewModel
             get { return _TravelProductDetail.TravelProductId; }
             set { _TravelProductDetail.TravelProductId = value; }
         }
+        [Required(ErrorMessage = "請輸入數字")]
         public int Day
-        {
+        {            
             get { return _TravelProductDetail.Day; }
             set { _TravelProductDetail.Day = value; }
         }
@@ -131,5 +144,28 @@ namespace prj認真版嗎.ViewModel
             get { return _TravelProductDetail.DailyDetailText; }
             set { _TravelProductDetail.DailyDetailText = value; }
         }
+        //View屬性欄位
+        //public int View_ViewID
+        //{
+        //    get { return _View.ViewId; }
+        //    set { _View.ViewId = value; }
+        //}
+        //public int View_CityId
+        //{
+        //    get { return _View.CityId; }
+        //    set { _View.CityId = value; }
+        //}
+        //public string ViewName
+        //{
+        //    get { return _View.ViewName; }
+        //    set { _View.ViewName = value; }
+        //}
+        //Trasportation屬性欄位
+        public int Trasportation_TrasportationID
+        {
+            get { return _Trasportation.TrasportationId; }
+            set { _Trasportation.TrasportationId = value; }
+        }
+       
     }
 }
