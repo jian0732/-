@@ -170,7 +170,7 @@
                             "number": {
                                 "between": "在其中",
                                 "empty": "為空",
-                              Url "equals": "等於",
+                                "equals": "等於",
                                 "gt": "大於",
                                 "gte": "大於等於",
                                 "lt": "小於",
@@ -342,32 +342,6 @@
                 "serverSide": false,
             });
         });
-        const tbShipper = document.querySelector("#dds");
-        $.getJSON("@Url.Content("~/Admin/ttry")", function (datas) {
-
-                $.each(datas,function (index, Admin) {
-                    let row = document.createElement('tr');
-                    let id = Admin.adminName
-                    let aaa = "";
-                    aaa += `<td>${Admin.adminName}</td>`
-                    aaa += `<td>${Admin.account}</td>`
-                    aaa += `<td>${Admin.password}</td>`
-                    aaa += `<td><input value=${Admin.commentStatus} type = "checkbox" name = "CommentStatus" /></td>`
-                    aaa += `<td><input value=${Admin.memberStatus} type = "checkbox" name = "CommentStatus" /></td>`
-                    aaa += `<td><input value=${Admin.productStatus} type = "checkbox" name = "CommentStatus" /></td>`
-                    aaa += `<td><input value=${Admin.adminStatus1} type = "checkbox" name = "CommentStatus" /></td>`
-                    aaa += `<td><a class="btn btn-success" onclick="showmodal('@Url.Content("~/Admin/Edit/")`${id}`',@Context.Request.Scheme)"`+
-                            `>修改</a>@*<a asp-action="Delete" asp-route-id="@item.AdminId" class="btn btn-danger" onclick="check()">刪除</a></td>`*@
-                        
-                    @*aaa+=`<td>
-                            <a class="btn btn-success" onclick="showmodal('@Url.Action("Edit","Admin",new {id= id },Context.Request.Scheme)',null)">修改</a>
-                            <a asp-action="Delete" asp-route-id="@item.AdminId" class="btn btn-danger" onclick="check()">刪除</a>
-                        </td>`*@
-                    row.innerHTML = aaa
-                    tbShipper.appendChild(row)
-                })
-
-        })
     </script>
     <script>
         function check() {
