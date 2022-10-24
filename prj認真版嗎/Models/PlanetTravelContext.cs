@@ -41,14 +41,14 @@ namespace prj認真版嗎.Models
         public virtual DbSet<TravelProductType> TravelProductTypes { get; set; }
         public virtual DbSet<View> Views { get; set; }
 
-//        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//        {
-//            if (!optionsBuilder.IsConfigured)
-//            {
-//#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                optionsBuilder.UseSqlServer("Data Source=192.168.36.26;Initial Catalog=PlanetTravel;User ID=jian;Password=0777");
-//            }
-//        }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Data Source=192.168.36.26;Initial Catalog=PlanetTravel;User ID=jian;Password=0777");
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -151,11 +151,15 @@ namespace prj認真版嗎.Models
 
                 entity.Property(e => e.CouponId).HasColumnName("CouponID");
 
+                entity.Property(e => e.Condition).HasMaxLength(50);
+
                 entity.Property(e => e.CouponName)
                     .IsRequired()
                     .HasMaxLength(50);
 
                 entity.Property(e => e.Discount).HasColumnType("decimal(18, 1)");
+
+                entity.Property(e => e.ExDate).HasMaxLength(50);
             });
 
             modelBuilder.Entity<Hotel>(entity =>
@@ -193,6 +197,8 @@ namespace prj認真版嗎.Models
 
                 entity.Property(e => e.CityId).HasColumnName("CityID");
 
+                entity.Property(e => e.CouponId).HasColumnName("CouponID");
+
                 entity.Property(e => e.Email)
                     .IsRequired()
                     .HasMaxLength(50);
@@ -222,6 +228,11 @@ namespace prj認真版嗎.Models
                     .HasForeignKey(d => d.CityId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Members_City");
+
+                entity.HasOne(d => d.Coupon)
+                    .WithMany(p => p.Members)
+                    .HasForeignKey(d => d.CouponId)
+                    .HasConstraintName("FK_Members_Coupon");
 
                 entity.HasOne(d => d.MemberStatus)
                     .WithMany(p => p.Members)
@@ -262,9 +273,7 @@ namespace prj認真版嗎.Models
             {
                 entity.HasKey(e => e.MyfavoritesId);
 
-                entity.Property(e => e.MyfavoritesId)
-                    .ValueGeneratedNever()
-                    .HasColumnName("MyfavoritesID");
+                entity.Property(e => e.MyfavoritesId).HasColumnName("MyfavoritesID");
 
                 entity.Property(e => e.MembersId).HasColumnName("MembersID");
 
@@ -275,6 +284,12 @@ namespace prj認真版嗎.Models
                     .HasForeignKey(d => d.MembersId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Myfavorites_Members");
+
+                entity.HasOne(d => d.TravelProduct)
+                    .WithMany(p => p.Myfavorites)
+                    .HasForeignKey(d => d.TravelProductId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Myfavorites_TravelProduct");
             });
 
             modelBuilder.Entity<Order>(entity =>
@@ -329,12 +344,12 @@ namespace prj認真版嗎.Models
                 entity.HasOne(d => d.Coupon)
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.CouponId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetail_Coupon");
 
                 entity.HasOne(d => d.Order)
                     .WithMany(p => p.OrderDetails)
                     .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_OrderDetail_Order");
 
                 entity.HasOne(d => d.TravelProduct)

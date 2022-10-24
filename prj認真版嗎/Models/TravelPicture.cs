@@ -11,6 +11,7 @@ namespace prj認真版嗎.Models
         public string TravelPicture1 { get; set; }
         public string TravelPictureText { get; set; }
         public int TravelProductId { get; set; }
+        public int? PicturePurpose { get; set; }
 
         public virtual TravelProduct TravelProduct { get; set; }
     }

@@ -12,5 +12,6 @@ namespace prj認真版嗎.Models
         public int MembersId { get; set; }
 
         public virtual Member Members { get; set; }
+        public virtual TravelProduct TravelProduct { get; set; }
     }
 }
