@@ -79,30 +79,30 @@
             ===========新增每日行程明細===========
 
             <div class="form-group">
-                <label asp-for="Day" class="control-label"></label>
-                <input asp-for="Day" class="form-control" value="1" readonly="readonly" />
-                <span asp-validation-for="Day" class="text-danger"></span>
+                <label asp-for="_TravelProductDetail[0].Day" class="control-label"></label>
+                <input asp-for="_TravelProductDetail[0].Day" class="form-control" value="1" readonly="readonly" />
+                <span asp-validation-for="_TravelProductDetail[0].Day" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TravelProductDetail_HotelID" class="control-label"></label>
-                <select asp-for="TravelProductDetail_HotelID" class="form-select">
+                <label asp-for="_TravelProductDetail[0].HotelId" class="control-label"></label>
+                <select asp-for="_TravelProductDetail[0].HotelId" id="TravelProductDetail_HotelID" class="form-select">
                     <option value="-1">請選擇下榻飯店</option>
                 </select>
             </div>
             <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input type="date" asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+                <label asp-for="_TravelProductDetail[0].Date" class="control-label"></label>
+                <input type="date" asp-for="_TravelProductDetail[0].Date" class="form-control" />
+                <span asp-validation-for="_TravelProductDetail[0].Date" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DailyDetailText" class="control-label"></label>
-                <textarea asp-for="DailyDetailText" class="form-control"></textarea>
-                <span asp-validation-for="DailyDetailText" class="text-danger"></span>
+                <label asp-for="_TravelProductDetail[0].DailyDetailText" class="control-label"></label>
+                <textarea asp-for="_TravelProductDetail[0].DailyDetailText" class="form-control"></textarea>
+                <span asp-validation-for="_TravelProductDetail[0].DailyDetailText" class="text-danger"></span>
             </div>
             ===========新增交通方式===========
             <div class="form-group">
-                <label asp-for="Trasportation_TrasportationID" class="control-label"></label>
-                <select asp-for="Trasportation_TrasportationID" id="Trasportation_TrasportationIDT" class="form-select">
+                <label asp-for="TrasportationID" class="control-label"></label>
+                <select asp-for="TrasportationID" id="Trasportation_TrasportationIDT" class="form-select">
                     <option value="-1">請選擇交通方式</option>
                 </select>
             </div>
@@ -135,16 +135,17 @@
             <div id="createNewTravelDetail">
 
             </div>
+            <div>
+                <button type="button" onclick="removeNewTravelDetaiFunc()">－行程明細</button>
+                <button type="button" onclick="createNewTravelDetaiFunc()">＋行程明細</button>
+            </div>
 
-            <div class="form-group">
+            <div class="form-group" style="margin-top:70px">
                 <input type="submit" value="建立新行程" class="btn btn-primary" />
             </div>
         </form>
 
-        <div>
-            <button type="button" onclick="removeNewTravelDetaiFunc()">－行程明細</button>
-            <button type="button" onclick="createNewTravelDetaiFunc()">＋行程明細</button>
-        </div>
+
         
     </div>
 </div>
@@ -157,7 +158,8 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 <script>
     //新增、減少行程明細
-    let detail_num = 2
+    let detail_num = 2;
+    let CCTPVM_Count = 1; //給CCreateTravelProductViewModel存資料用的Count
     const createNewTravelDetailNode = document.querySelector("#createNewTravelDetail");
     function createNewTravelDetaiFunc()
     {
@@ -166,21 +168,21 @@
             const temp =
                 `<div class="form-group">` +
                 `<label for="Day" class="control-label">行程第${detail_num}天</label>` +
-                `<input id="Day" name="Day" class="form-control" value="${detail_num}" readonly="readonly"/>` +
+                `<input id="Day" name="_TravelProductDetail[${CCTPVM_Count}].Day" class="form-control" value="${detail_num}" readonly="readonly"/>` +
                 `</div>` +
                 `<div class="form-group">` +
                 `<label for="TravelProductDetail_HotelIDH${detail_num}" class="control-label">住宿地點</label>` +
-                `<select id="TravelProductDetail_HotelIDH${detail_num}" name="TravelProductDetail_HotelID" class="form-select">` +
+                `<select id="TravelProductDetail_HotelIDH${detail_num}" name="_TravelProductDetail[${CCTPVM_Count}].HotelId" class="form-select">` +
                 `<option value="-1">請選擇下榻飯店</option>` +
                 ` </select>` +
                 `</div>` +
                 `<div class="form-group">` +
                 `<label for="Date" class="control-label">日期</label>` +
-                `<input type="date" id="Date" name="Date" class="form-control" />` +
+                `<input type="date" id="Date" name="_TravelProductDetail[${CCTPVM_Count}].Date" class="form-control" />` +
                 `</div>` +
                 `<div class="form-group">` +
                 `<label for="DailyDetailText" class="control-label">每日行程概述</label>` +
-                `<textarea id="DailyDetailText" name="DailyDetailText" class="form-control"></textarea>` +
+                `<textarea id="DailyDetailText" name="_TravelProductDetail[${CCTPVM_Count}].DailyDetailText" class="form-control"></textarea>` +
                 `</div>` +
                 `=========== 新增交通方式 ===========` +
                 ` <div class="form-group">` +
@@ -221,16 +223,28 @@
             LoadViewName(`V${detail_num}`);
             LoadHotelName(`H${detail_num}`);
             detail_num++;
-        } else
+            CCTPVM_Count++;
+        }
+        else
+        {
             detail_num = 6;
+            CCTPVM_Count=5;
+        }
+        
+        
     };
     function removeNewTravelDetaiFunc() {
         if (detail_num > 2) {
             $(`#createNewTravelDetail`).children().last().remove();
             detail_num--;
+            CCTPVM_Count--;
         }
         else
+        {
             detail_num = 2;
+            CCTPVM_Count=1;
+        }
+        
     }
     //新增、減少景點(既有資料)
     let view_exist_num = 0;

@@ -71,11 +71,12 @@ namespace prj認真版嗎.Controllers
                     Price = newProduct.Price,
                     TravelProductTypeId = newProduct.TravelProductTypeId,                   
                     Stocks = newProduct.Stocks,
-                    Description = newProduct.Description,
+                    Description = newProduct.Description,                    
                     CountryId = newProduct.CountryId,
                     Cost = newProduct.Cost,
                     EventIntroduction = newProduct.EventIntroduction,
                     PreparationDescription = newProduct.PreparationDescription,
+                    MapUrl = newProduct.MapUrl,
                 };
 
                 //_db.TravelProducts.Add(tp);
@@ -100,22 +101,28 @@ namespace prj認真版嗎.Controllers
                     }
 
                 }
-
-                TravelProductDetail tpd = new TravelProductDetail
+                if(newProduct._TravelProductDetail != null) 
                 {
-                    TravelProductId = _db.TravelProducts.OrderBy(e => e.TravelProductId).LastOrDefault().TravelProductId,
-                    Day = newProduct.Day,
-                    HotelId = newProduct.TravelProductDetail_HotelID,
-                    Date = newProduct.Date,
-                    DailyDetailText = newProduct.DailyDetailText,
-                };
-                //_db.TravelProductDetails.Add(tpd);
-                //_db.SaveChanges();
+                    foreach (var item in newProduct._TravelProductDetail)
+                    {
+                        TravelProductDetail tpd = new TravelProductDetail
+                        {
+                            TravelProductId = _db.TravelProducts.OrderBy(e => e.TravelProductId).LastOrDefault().TravelProductId,
+                            Day = item.Day,
+                            HotelId = item.HotelId,
+                            Date = item.Date,
+                            DailyDetailText = item.DailyDetailText,
+                        };
+                        //_db.TravelProductDetails.Add(tpd);
+                        //_db.SaveChanges();
+                    }
+
+                } 
 
                 ProductToTransportation ptt = new ProductToTransportation
                 {
                     TravelProductDetailId = _db.TravelProductDetails.OrderBy(e => e.TravelProductDetailId).LastOrDefault().TravelProductDetailId,
-                    TrasportationId = newProduct.Trasportation_TrasportationID,
+                    //TrasportationId = newProduct.Trasportation_TrasportationID,
                 };
 
                 ProductToView ptv = new ProductToView

@@ -14,26 +14,23 @@ namespace prj認真版嗎.ViewModel
         public CCreateTravelProductViewModel()
         {
             _product = new TravelProduct();
-            _TravelProductDetail = new TravelProductDetail();
-            //_View = new View();
             _Trasportation = new Trasportation();         
 
-    }
+        }
+
         private TravelProduct _product;
-        private TravelProductDetail _TravelProductDetail;        
+        public List<TravelProductDetail> _TravelProductDetail { get; set; }        
         private Trasportation _Trasportation;
         public List<View> _View;
+        //public List<ProductToTransportation> _ProductToTransportation { get; set; }
+
 
         public TravelProduct product
         {
             get { return _product; }
             set { _product = value; }
         }
-        public TravelProductDetail TravelProductDetail
-        {
-            get { return _TravelProductDetail; }
-            set { _TravelProductDetail = value; }
-        }
+
         public List<IFormFile> photo { get; set; } //圖片的檔案
         public string TravelPicturePath //圖片的路徑
         {
@@ -107,65 +104,10 @@ namespace prj認真版嗎.ViewModel
             get { return _product.MapUrl; }
             set { _product.MapUrl = value; }
         }
-        //ProductDetail屬性欄位
-        public int TravelProductDetailID
-        {
-            get { return _TravelProductDetail.TravelProductDetailId; }
-            set { _TravelProductDetail.TravelProductDetailId = value; }
-        }
-        public int TravelProductDetail_ProductID
-        {
-            get { return _TravelProductDetail.TravelProductId; }
-            set { _TravelProductDetail.TravelProductId = value; }
-        }
-        [Required(ErrorMessage = "請輸入數字")]
-        public int Day
-        {            
-            get { return _TravelProductDetail.Day; }
-            set { _TravelProductDetail.Day = value; }
-        }
-        public int TravelProductDetail_HotelID
-        {
-            get { return (int)_TravelProductDetail.HotelId; }
-            set { _TravelProductDetail.HotelId = value; }
-        }
-        //public string TravelProductDetail_DisplayHotelName //展示的旅館名稱
-        //{
-        //    get;
-        //    set;
-        //}
-        public string Date
-        {
-            get { return _TravelProductDetail.Date; }
-            set { _TravelProductDetail.Date = value; }
-        }
-        public string DailyDetailText
-        {
-            get { return _TravelProductDetail.DailyDetailText; }
-            set { _TravelProductDetail.DailyDetailText = value; }
-        }
-        //View屬性欄位
-        //public int View_ViewID
-        //{
-        //    get { return _View.ViewId; }
-        //    set { _View.ViewId = value; }
-        //}
-        //public int View_CityId
-        //{
-        //    get { return _View.CityId; }
-        //    set { _View.CityId = value; }
-        //}
-        //public string ViewName
-        //{
-        //    get { return _View.ViewName; }
-        //    set { _View.ViewName = value; }
-        //}
+
         //Trasportation屬性欄位
-        public int Trasportation_TrasportationID
-        {
-            get { return _Trasportation.TrasportationId; }
-            set { _Trasportation.TrasportationId = value; }
-        }
-       
+        public List<int> TrasportationID { get; set; }
+      
+
     }
 }
