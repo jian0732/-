@@ -80,7 +80,7 @@
 
             <div class="form-group">
                 <label asp-for="Day" class="control-label"></label>
-                <input asp-for="Day" class="form-control" value="1" />
+                <input asp-for="Day" class="form-control" value="1" readonly="readonly" />
                 <span asp-validation-for="Day" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -91,7 +91,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
+                <input type="date" asp-for="Date" class="form-control" />
                 <span asp-validation-for="Date" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -119,11 +119,17 @@
                     <option value="-1">請選擇行程景點</option>
                 </select>
             </div>
+            <div id="createExistView1">
+            </div>
+            <div>
+                <button type="button" onclick="removeExistViewFunc(1)">－選擇景點</button>
+                <button type="button" onclick="createExistViewFunc(1)">＋選擇景點</button>
+            </div>
             <div id="createNewView1">
             </div>
             <div>
-                <button type="button" onclick="removeNewViewFunc(1)">－景點</button>
-                <button type="button" onclick="createNewViewFunc(1)">＋景點</button>
+                <button type="button" onclick="removeNewViewFunc(1)">－自訂景點</button>
+                <button type="button" onclick="createNewViewFunc(1)">＋自訂景點</button>
             </div>
             ===========新增行程明細===========
             <div id="createNewTravelDetail">
@@ -136,6 +142,7 @@
         </form>
 
         <div>
+            <button type="button" onclick="removeNewTravelDetaiFunc()">－行程明細</button>
             <button type="button" onclick="createNewTravelDetaiFunc()">＋行程明細</button>
         </div>
         
@@ -154,12 +161,12 @@
     const createNewTravelDetailNode = document.querySelector("#createNewTravelDetail");
     function createNewTravelDetaiFunc()
     {
-        if (detail_num < 5) {
+        if (detail_num < 6) {
             let p = document.createElement("div")
-            const temp =                            
+            const temp =
                 `<div class="form-group">` +
                 `<label for="Day" class="control-label">行程第${detail_num}天</label>` +
-                `<input id="Day" name="Day" class="form-control" value="${detail_num}" />` +
+                `<input id="Day" name="Day" class="form-control" value="${detail_num}" readonly="readonly"/>` +
                 `</div>` +
                 `<div class="form-group">` +
                 `<label for="TravelProductDetail_HotelIDH${detail_num}" class="control-label">住宿地點</label>` +
@@ -169,7 +176,7 @@
                 `</div>` +
                 `<div class="form-group">` +
                 `<label for="Date" class="control-label">日期</label>` +
-                `<input id="Date" name="Date" class="form-control" />` +
+                `<input type="date" id="Date" name="Date" class="form-control" />` +
                 `</div>` +
                 `<div class="form-group">` +
                 `<label for="DailyDetailText" class="control-label">每日行程概述</label>` +
@@ -191,15 +198,21 @@
                 `=========== 選擇行程景點 ===========` +
                 `<div class="form-group">` +
                 `<label for="_ViewV${detail_num}" class="control-label">選擇行程景點</label>` +
-                ` <select id="_ViewV${detail_num}" name="_View[0].ViewId" class="form-select">` +
-                `<option value="-1">請選擇行程景點</option>`+
+                `<select id="_ViewV${detail_num}" name="_View[0].ViewId" class="form-select">` +
+                `<option value="-1">請選擇行程景點</option>` +
                 `</select>` +
+                `</div>` +
+                `<div id="createExistViewE${detail_num}">` +
+                `</div>` +
+                `<div>` +
+                `<button type="button" onclick="removeExistViewFunc('E${detail_num}')">－選擇景點</button>` +
+                `<button type="button" onclick="createExistViewFunc('E${detail_num}')">＋選擇景點</button>` +
                 `</div>` +
                 `<div id="createNewViewV${detail_num}">` +
                 `</div>` +
                 `<div>` +
-                `<button type="button" onclick="removeNewViewFunc('V${detail_num}')">－景點</button>` +
-                `<button type="button" onclick="createNewViewFunc('V${detail_num}')">＋景點</button>` +
+                `<button type="button" onclick="removeNewViewFunc('V${detail_num}')">－自訂景點</button>` +
+                `<button type="button" onclick="createNewViewFunc('V${detail_num}')">＋自訂景點</button>` +
                 `</div>` +
                 `==================================`;
             p.innerHTML += temp;
@@ -208,9 +221,41 @@
             LoadViewName(`V${detail_num}`);
             LoadHotelName(`H${detail_num}`);
             detail_num++;
-        }
+        } else
+            detail_num = 6;
     };
-    //新增、減少景點
+    function removeNewTravelDetaiFunc() {
+        if (detail_num > 2) {
+            $(`#createNewTravelDetail`).children().last().remove();
+            detail_num--;
+        }
+        else
+            detail_num = 2;
+    }
+    //新增、減少景點(既有資料)
+    let view_exist_num = 0;
+    function createExistViewFunc(id) {
+        const createExistViewNode = document.querySelector(`#createExistView${id}`);
+        let p = document.createElement("div")
+        const temp =
+            `<div class="form-group">` +
+            `<label for="_ViewE${view_exist_num}" class="control-label">景點</label>` +
+            `<select name="_View_E" id="_ViewE${view_exist_num}" class="form-select">` +
+            ` <option value="-1">請選擇行程景點</option>` +
+            `</select>` +
+            `</div>`;
+            
+        p.innerHTML += temp;
+        createExistViewNode.appendChild(p);
+        LoadViewName(`E${view_exist_num}`);
+        view_exist_num++;
+
+    }
+    function removeExistViewFunc(id) {
+        $(`#createExistView${id}`).children().last().remove();
+
+    }
+    //新增、減少景點(自訂欄位)
     let view_num = 0;    
     function createNewViewFunc(id)
     {
@@ -235,6 +280,7 @@
         $(`#createNewView${id}`).children().last().remove();
        
     }
+    
     //新增、減少交通方式
     let transportation_num = 0;
     

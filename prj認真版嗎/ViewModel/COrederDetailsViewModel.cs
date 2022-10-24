@@ -28,7 +28,7 @@ namespace prj認真版嗎.ViewModel
         public int? OrderId
         {
             get { return _ord.OrderId; }
-            set { _ord.OrderId = value; }
+            set { _ord.OrderId = (int)value; }
         }
         public int TravelProductId
         {
