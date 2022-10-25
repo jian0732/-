@@ -31,7 +31,7 @@
                     {
                         <tr onclick="getdata(@item.CommentId)">
                             <td>
-                                <input class="checkchild" type="checkbox" value="@item.CommentId" name="Orderkey">
+                                <input class="checkchild" type="checkbox" onclick="addtr(@item.CommentId,event)" value="@item.CommentId">
                             </td>
                             <td>
                                 (@item.MembersId)
@@ -60,7 +60,7 @@
                 <h3 class="標題">多筆處理</h3>
             </div>
             <div>
-                <table>
+                <table class="table">
                     <thead>
                         <tr>
                             <th>
@@ -78,7 +78,6 @@
                         </tr>
                     </thead>
                     <tbody id="coms">
-
                     </tbody>
                 </table>
                 
@@ -97,6 +96,28 @@
         function opens(id) {
             $("#comview").load("@Url.Content("~/Comment/opens?id=")" + id)
         }
-
+        function addtr(id, e) {
+            if (e.target.checked) {
+              $.ajax({
+                url: "@Url.Content("~/Comment/getdata")",
+                type: "get",
+                data: { "CommentId": id },
+                dataType: "json"
+              }).done(data => {
+                  let tr = document.createElement("tr");
+                  tr.id = data.commentId
+                  let text = `<td>${data.commentId}</td>
+                              <td>${data.會員名稱}</td>
+                              <td>${data.commentDate}</td>
+                              <td>${data.commentText}</td>`
+                  tr.innerHTML = text
+                  $("#coms").append(tr);
+              })
+            }
+            else
+            {
+                $(`#${id}`).remove();
+            }
+        }
     </script>
 }

@@ -75,5 +75,17 @@ namespace prj認真版嗎.Controllers
 
             return ViewComponent("Commentdata", com);
         }
+        public IActionResult getdata(C評論畫面 id)
+        {
+            C評論畫面 com = null;
+            com = _db.Comments.Where(p => p.CommentId == id.CommentId).Select(s => new C評論畫面
+            {
+                comment = s,
+                產品名稱 = s.TravelProduct.TravelProductName,
+                會員名稱 = s.Members.MemberName
+            }).FirstOrDefault();
+
+            return Json(com);
+        }
     }
 }
