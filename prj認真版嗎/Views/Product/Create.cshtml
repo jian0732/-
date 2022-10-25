@@ -100,25 +100,29 @@
                 <span asp-validation-for="_TravelProductDetail[0].DailyDetailText" class="text-danger"></span>
             </div>
             ===========新增交通方式===========
-            <div class="form-group">
-                <label asp-for="TrasportationID" class="control-label"></label>
-                <select asp-for="TrasportationID" id="Trasportation_TrasportationIDT" class="form-select">
-                    <option value="-1">請選擇交通方式</option>
-                </select>
-            </div>
-            <div id="createNewTransportation1">
-            </div>
-            <div>
-                <button type="button" onclick="removeNewTransportationFunc(1)">－交通</button>
-                <button type="button" onclick="createNewTransportationFunc(1)">＋交通</button>
-            </div>
+            <fieldset>
+                <div class="form-check form-check-inline">
+                    <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="fales" id="railway">
+                    <label class="form-check-label" for="railway">鐵路</label><br>
+
+                    <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="2" id="airplane">
+                    <label class="form-check-label" for="airplane">飛機</label><br>
+
+                    <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="3" id="bus" />
+                    <label class="form-check-label" for="bus">巴士</label>
+
+                    <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="4" id="ship" />
+                    <label class="form-check-label" for="ship">遊輪</label>
+                </div>
+            </fieldset>
             ===========選擇行程景點===========
             <div class="form-group">
-                <label for="_ViewV" class="control-label">選擇行程景點</label>
-                <select id="_ViewV" name="_View[0].ViewId" class="form-select">
+                <label name="_TravelProductDetail[0].ViewID" class="control-label">選擇行程景點</label>
+                <select name="_TravelProductDetail[0].ViewID" class="form-select" id="_ViewV">
                     <option value="-1">請選擇行程景點</option>
                 </select>
             </div>
+
             <div id="createExistView1">
             </div>
             <div>
@@ -139,7 +143,7 @@
                 <button type="button" onclick="removeNewTravelDetaiFunc()">－行程明細</button>
                 <button type="button" onclick="createNewTravelDetaiFunc()">＋行程明細</button>
             </div>
-
+           
             <div class="form-group" style="margin-top:70px">
                 <input type="submit" value="建立新行程" class="btn btn-primary" />
             </div>
@@ -159,10 +163,12 @@
 <script>
     //新增、減少行程明細
     let detail_num = 2;
-    let CCTPVM_Count = 1; //給CCreateTravelProductViewModel存資料用的Count
+    let CCTPVM_Count = 0; //給CCreateTravelProductViewModel存資料用的Count
     const createNewTravelDetailNode = document.querySelector("#createNewTravelDetail");
     function createNewTravelDetaiFunc()
     {
+        _CreateViewCount = 0
+        CCTPVM_Count++;
         if (detail_num < 6) {
             let p = document.createElement("div")
             const temp =
@@ -185,22 +191,22 @@
                 `<textarea id="DailyDetailText" name="_TravelProductDetail[${CCTPVM_Count}].DailyDetailText" class="form-control"></textarea>` +
                 `</div>` +
                 `=========== 新增交通方式 ===========` +
-                ` <div class="form-group">` +
-                `<label asp-for="Trasportation_TrasportationIDT${detail_num}" class="control-label"></label>` +
-                `<select asp-for="Trasportation_TrasportationID" id="Trasportation_TrasportationIDT${detail_num}" class="form-select">` +
-                `<option value="-1">請選擇交通方式</option>` +
-                `</select>` +
+                `<fieldset>`+
+                `<div class="form-check form-check-inline">` +
+                `<input class="form-check-input" name="_TravelProductDetail[${CCTPVM_Count}].TrasportationID" type="checkbox" value="1" id="railway${CCTPVM_Count}">` +
+                `<label class="form-check-label" for="railway${CCTPVM_Count}">鐵路</label><br>` +
+                `<input class="form-check-input" name="_TravelProductDetail[${CCTPVM_Count}].TrasportationID" type="checkbox" value="2" id="airplane${CCTPVM_Count}">` +
+                `<label class="form-check-label" for="airplane${CCTPVM_Count}">飛機</label><br>` +
+                `<input class="form-check-input" name="_TravelProductDetail[${CCTPVM_Count}].TrasportationID" type="checkbox" value="3" id="bus${CCTPVM_Count}" />` +
+                `<label class="form-check-label" for="bus${CCTPVM_Count}">巴士</label>` +
+                `<input class="form-check-input" name="_TravelProductDetail[${CCTPVM_Count}].TrasportationID" type="checkbox" value="4" id="ship${CCTPVM_Count}" />` +
+                `<label class="form-check-label" for="ship${CCTPVM_Count}">遊輪</label>` +
                 `</div>` +
-                `<div id="createNewTransportationT${detail_num}">` +
-                `</div>` +
-                `<div>` +
-                `<button type="button" onclick="removeNewTransportationFunc('T${detail_num}')">－交通</button>` +
-                `<button type="button" onclick="createNewTransportationFunc('T${detail_num}')">＋交通</button>` +
-                `</div>` +
+                `</fieldset>`+
                 `=========== 選擇行程景點 ===========` +
                 `<div class="form-group">` +
                 `<label for="_ViewV${detail_num}" class="control-label">選擇行程景點</label>` +
-                `<select id="_ViewV${detail_num}" name="_View[0].ViewId" class="form-select">` +
+                `<select id="_ViewV${detail_num}" name="_TravelProductDetail[${CCTPVM_Count}].ViewID" class="form-select">` +
                 `<option value="-1">請選擇行程景點</option>` +
                 `</select>` +
                 `</div>` +
@@ -219,19 +225,17 @@
                 `==================================`;
             p.innerHTML += temp;
             createNewTravelDetailNode.appendChild(p);
-            LoadTrasportationName(`T${detail_num}`);
             LoadViewName(`V${detail_num}`);
             LoadHotelName(`H${detail_num}`);
             detail_num++;
-            CCTPVM_Count++;
         }
         else
         {
             detail_num = 6;
-            CCTPVM_Count=5;
+            CCTPVM_Count=4;
         }
-        
-        
+
+
     };
     function removeNewTravelDetaiFunc() {
         if (detail_num > 2) {
@@ -242,9 +246,9 @@
         else
         {
             detail_num = 2;
-            CCTPVM_Count=1;
+            CCTPVM_Count=0;
         }
-        
+
     }
     //新增、減少景點(既有資料)
     let view_exist_num = 0;
@@ -254,11 +258,11 @@
         const temp =
             `<div class="form-group">` +
             `<label for="_ViewE${view_exist_num}" class="control-label">景點</label>` +
-            `<select name="_View_E" id="_ViewE${view_exist_num}" class="form-select">` +
+            `<select name="_TravelProductDetail[${CCTPVM_Count}].ViewID" id="_ViewE${view_exist_num}" class="form-select">` +
             ` <option value="-1">請選擇行程景點</option>` +
             `</select>` +
             `</div>`;
-            
+
         p.innerHTML += temp;
         createExistViewNode.appendChild(p);
         LoadViewName(`E${view_exist_num}`);
@@ -270,54 +274,68 @@
 
     }
     //新增、減少景點(自訂欄位)
-    let view_num = 0;    
+    let view_num = 0;
+    let _CreateViewCount = 0;
     function createNewViewFunc(id)
     {
-        const createNewViewNode = document.querySelector(`#createNewView${id}`);        
+        const createNewViewNode = document.querySelector(`#createNewView${id}`);
             let p = document.createElement("div")
-            const temp =
-                `<div class="form-group">` +
-                `<label for="View_CityId${view_num}" class="control-label">城市</label>` +
-                `<select name="View_CityId" id="View_CityId${view_num}" class="form-select">` +
-                ` <option value="-1">請選擇景點所在城市</option>` +
-                `</select>` +
-                `</div>` +
-                `<label for="ViewName${view_num}">請輸入景點名字</label>` +
-                `<input type="text" name="ViewName" id="ViewName${view_num}" />`;
+            //const temp =
+            //    `<div class="form-group">` +
+            //    `<label for="View_CityId${view_num}" class="control-label">城市</label>` +
+            //    `<select name="_TravelProductDetail[${CCTPVM_Count}].CreateViewCityID" id="View_CityId${view_num}" class="form-select">` +
+            //    ` <option value="-1">請選擇景點所在城市</option>` +
+            //    `</select>` +
+            //    `<label for="ViewName${view_num}">請輸入景點名字</label>` +
+            //    `<input type="text" name="_TravelProductDetail[${CCTPVM_Count}].CreateViewName" id="ViewName${view_num}" />`+
+            //    `</div>`;
+        const temp =
+            `<div class="form-group">` +
+            `<label for="View_CityId${view_num}" class="control-label">城市</label>` +
+            `<select name="_TravelProductDetail[${CCTPVM_Count}]._CreateView[${_CreateViewCount}].CreateViewCityID" id="View_CityId${view_num}" class="form-select">` +
+            ` <option value="-1">請選擇景點所在城市</option>` +
+            `</select>` +
+            `<label for="ViewName${view_num}">請輸入景點名字</label>` +
+            `<input type="text" name="_TravelProductDetail[${CCTPVM_Count}]._CreateView[${_CreateViewCount}].CreateViewName" id="ViewName${view_num}" />` +
+            `</div>`;
             p.innerHTML += temp;
             createNewViewNode.appendChild(p);
             LoadCityName();
             view_num++;
-      
+            _CreateViewCount++;
+
     }
     function removeNewViewFunc(id) {
         $(`#createNewView${id}`).children().last().remove();
-       
+        if (_CreateViewCount > 0)
+            _CreateViewCount--;
+        else
+            _CreateViewCount = 0;        
     }
-    
+
     //新增、減少交通方式
     let transportation_num = 0;
-    
+
     function createNewTransportationFunc(id) {
         const createNewTransportationNode = document.querySelector(`#createNewTransportation${id}`);
-        
+
             let p = document.createElement("div")
             const temp =
                 `<div class="form-group">` +
                 `<label for="Trasportation_TrasportationID${transportation_num}" class="control-label">交通</label>` +
-                `<select name="Trasportation_TrasportationID" id="Trasportation_TrasportationID${transportation_num}" class="form-select">` +
+                `<select name="_TravelProductDetail[0].TrasportationID" id="Trasportation_TrasportationID${transportation_num}" class="form-select">` +
                 ` <option value="-1">新增每日行程交通方式</option>` +
                 `</select>` +
                 `</div>`;
-               
+
             p.innerHTML += temp;
             createNewTransportationNode.appendChild(p);
             LoadTrasportationName(transportation_num);
             transportation_num++;
-   
+
     }
-    function removeNewTransportationFunc(id) {        
-            $(`#createNewTransportation${id}`).children().last().remove();        
+    function removeNewTransportationFunc(id) {
+            $(`#createNewTransportation${id}`).children().last().remove();
     }
     //抓資料庫旅遊型態的資料
     async function LoadTravelProductType() {
@@ -349,7 +367,7 @@
             selCityName.options.add(opt)
         })
     }
-   
+
     //抓資料庫旅館的名字
         async function LoadHotelName(id) {
             let selHotelName = document.querySelector(`#TravelProductDetail_HotelID${id}`)
@@ -371,7 +389,7 @@
         })
     }
     //抓資料庫交通的方式
-    async function LoadTrasportationName(id) {
+    @*async function LoadTrasportationName(id) {
         let selTrasportationName = document.querySelector(`#Trasportation_TrasportationID${id}`)
         let response = await fetch("@Url.Content("~/Product/LoadTrasportationName_ReturnJson")")
         let datas = await response.json()
@@ -379,14 +397,14 @@
             const opt = new Option(Trasportation['trasportationName'], Trasportation['trasportationId'])
                 selTrasportationName.options.add(opt)
         })
-    }
+    }*@
 
 
     LoadTravelProductType();
     LoadCountryName();
     LoadHotelName("");
     LoadViewName("V");
-    LoadTrasportationName("T");
+
 </script>
 
 

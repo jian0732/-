@@ -14,12 +14,12 @@ namespace prj認真版嗎.ViewModel
         public CCreateTravelProductViewModel()
         {
             _product = new TravelProduct();
-            _Trasportation = new Trasportation();         
+            _Trasportation = new Trasportation();            
 
         }
 
         private TravelProduct _product;
-        public List<TravelProductDetail> _TravelProductDetail { get; set; }        
+        public List<CTravelDetailViewModel> _TravelProductDetail { get; set; }        
         private Trasportation _Trasportation;
         public List<View> _View;
         //public List<ProductToTransportation> _ProductToTransportation { get; set; }
@@ -106,7 +106,7 @@ namespace prj認真版嗎.ViewModel
         }
 
         //Trasportation屬性欄位
-        public List<int> TrasportationID { get; set; }
+        //public List<int> TrasportationID { get; set; }
       
 
     }

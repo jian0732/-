@@ -78,10 +78,8 @@ namespace prj認真版嗎.Controllers
                     PreparationDescription = newProduct.PreparationDescription,
                     MapUrl = newProduct.MapUrl,
                 };
-
-                //_db.TravelProducts.Add(tp);
-                //_db.SaveChanges();
-
+                _db.TravelProducts.Add(tp);
+                _db.SaveChanges();
 
                 if (newProduct.photo != null)
                 {
@@ -95,46 +93,71 @@ namespace prj認真版嗎.Controllers
                         pic.TravelPicture1 = pname;
                         string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
 
-                        //travel_pictures.CopyTo(new FileStream(path, FileMode.Create));
-                        //_db.TravelPictures.Add(pic);
-                        //_db.SaveChanges();
+                        travel_pictures.CopyTo(new FileStream(path, FileMode.Create));
+                        _db.TravelPictures.Add(pic);
+                        _db.SaveChanges();
                     }
-
                 }
                 if(newProduct._TravelProductDetail != null) 
                 {
-                    foreach (var item in newProduct._TravelProductDetail)
+                    foreach (var list in newProduct._TravelProductDetail)
                     {
-                        TravelProductDetail tpd = new TravelProductDetail
+                        TravelProductDetail tpd = new TravelProductDetail();
+                        tpd.TravelProductId = _db.TravelProducts.OrderBy(e => e.TravelProductId).LastOrDefault().TravelProductId;
+                        tpd.Day = list.Day;
+                        tpd.Date = list.Date;
+                        tpd.DailyDetailText = list.DailyDetailText;
+                        if (list.HotelId != -1)
+                            tpd.HotelId = list.HotelId;
+                        _db.TravelProductDetails.Add(tpd);
+                        _db.SaveChanges();
+                        int latest_DetailID = _db.TravelProductDetails.OrderBy(e => e.TravelProductDetailId).LastOrDefault().TravelProductDetailId;
+                        foreach (int TrasportationID in list.TrasportationID )
                         {
-                            TravelProductId = _db.TravelProducts.OrderBy(e => e.TravelProductId).LastOrDefault().TravelProductId,
-                            Day = item.Day,
-                            HotelId = item.HotelId,
-                            Date = item.Date,
-                            DailyDetailText = item.DailyDetailText,
-                        };
-                        //_db.TravelProductDetails.Add(tpd);
-                        //_db.SaveChanges();
+                                ProductToTransportation ptt = new ProductToTransportation
+                                {
+                                    TravelProductDetailId = latest_DetailID,
+                                    TrasportationId = TrasportationID,
+                                };
+                                _db.ProductToTransportations.Add(ptt);                            
+                        }
+                        foreach (int ViewID in list.ViewID)
+                        {
+                            if (ViewID != -1) 
+                            {
+                                ProductToView ptv = new ProductToView
+                                {
+                                    TravelProductDetailId = latest_DetailID,
+                                    ViewId = ViewID,
+                                };
+                                _db.ProductToViews.Add(ptv);  
+                            }
+                        }
+                        if (list._CreateView != null)
+                        {                            
+                            foreach (CreateView cv in list._CreateView)
+                            {
+                                View v = new View
+                                {
+                                    CityId = cv.CreateViewCityID,
+                                    ViewName = cv.CreateViewName,
+                                };
+                                _db.Views.Add(v);
+                                _db.SaveChanges();
+                                ProductToView ptv = new ProductToView
+                                {
+                                    TravelProductDetailId = latest_DetailID,
+                                    ViewId = _db.Views.OrderBy(e => e.ViewId).LastOrDefault().ViewId,
+                                };
+                                _db.ProductToViews.Add(ptv);
+                            }
+                            _db.SaveChanges();
+                        }
+
+                        _db.SaveChanges();
                     }
-
                 } 
-
-                ProductToTransportation ptt = new ProductToTransportation
-                {
-                    TravelProductDetailId = _db.TravelProductDetails.OrderBy(e => e.TravelProductDetailId).LastOrDefault().TravelProductDetailId,
-                    //TrasportationId = newProduct.Trasportation_TrasportationID,
-                };
-
-                ProductToView ptv = new ProductToView
-                {
-                    TravelProductDetailId = _db.TravelProductDetails.OrderBy(e => e.TravelProductDetailId).LastOrDefault().TravelProductDetailId,
-                    //ViewId = newProduct.View_ViewID,
-                };
-                //_db.ProductToTransportations.Add(ptt);
-                //_db.ProductToViews.Add(ptv);
-                //_db.SaveChanges();
             }
-
             return RedirectToAction("List");
         }
         public ActionResult Edit(int? id)
