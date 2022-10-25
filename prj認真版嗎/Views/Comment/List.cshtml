@@ -1,11 +1,15 @@
-﻿@using prj認真版嗎.Models
-@model
-@section Styles{ 
-<style>
-    *{
-        border:1px solid red
-    }
-</style>
+﻿@using prj認真版嗎.ViewModel
+@model List<C評論畫面>
+@section Styles{
+    <style>
+        * {
+            border: 1px solid red
+        }
+
+        tr {
+            border: 1px solid #ff6a00
+        }
+    </style>
 }
 <div class="d-flex justify-content-center">
     <h1>評價管理</h1>
@@ -22,37 +26,42 @@
                 </button>
             </div>
         </div>
+        <div>
+            <span class="btn">1星</span><span class="btn">2星</span>
+        </div>
         <div id="List">
-            <table>
-                @foreach (var item in Model)
-                {
-                <tr>
-                    <td>
-                        產品id
-                    </td>
-                    <td>
-                        產品名稱()
-                    </td>
-                </tr>
-                }
+            <table id="myTable">
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr onclick="getdata(@item.CommentId)">
+                            <td>
+                                <input class="checkchild" type="checkbox" value="@item.CommentId" name="Orderkey">
+                            </td>
+                            <td>
+                                (@item.MembersId)
+                            </td>
+                            <td>
+                                @item.產品名稱 (@item.Star 星)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
             </table>
         </div>
     </div>
     <div class="col-8">
-        <div>
-
+        <div id="comview">
+           
         </div>
         <div>
 
         </div>
     </div>
 </div>
+@section Scripts{
+    <script>
 
-<script>
-
-    @*$('#List').load("@Url.Action("List","Comment")", function () {
-   })*@
-    LoadCities()
     async function LoadCities()
     {
             let response = await fetch("@Url.Content("~/Comment/List")")
@@ -61,7 +70,21 @@
                 const opt = new li(city, city)
                 selCity.options.add(opt)
             })
-    }
+        }
 
-        
-</script>
+        async function getdata(id) {
+            await $("#comview").load("@Url.Content("~/Comment/Showcomment?id=")" + id)
+
+        }
+
+    //$("#myTable tbody").on("click", "tr", function () {
+    //    var check = $(this).find(".checkchild").prop("checked");
+    //    if (check && check == true) {
+    //        $(this).find('.checkchild').prop("checked", false);
+    //    } else {
+    //        $(this).find('.checkchild').prop("checked", true);
+    //    }
+    //});
+
+    </script>
+}
