@@ -11,20 +11,9 @@ namespace prj認真版嗎.ViewComponents
 {
     public class TPDViewComponent : ViewComponent
     {
-
-        //private readonly PlanetTravelContext _db;
-        //public TPDViewComponent( PlanetTravelContext Travel)
-        //{
-        //    _db = Travel;
- 
-        //}
-        //public async Task<IViewComponentResult> InvokeAsync()
-        //{
-
-        //    return View();
-      
-        //}
-
-
+        public async Task<IViewComponentResult> InvokeAsync(C評論畫面 x)
+        {
+            return View(x);
+        }
     }
 }

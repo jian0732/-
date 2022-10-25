@@ -2,20 +2,15 @@
 @model List<C評論畫面>
 @section Styles{
     <style>
-        * {
-            border: 1px solid red
-        }
 
-        tr {
-            border: 1px solid #ff6a00
-        }
     </style>
+    <link href="~/css/JianComment.css" rel="stylesheet" />
 }
 <div class="d-flex justify-content-center">
     <h1>評價管理</h1>
 </div>
-<div class="container d-flex">
-    <div class="col-4 ">
+<div class="big d-flex">
+    <div class="左列">
         <div class="input-group">
             <input type="text" class="form-control bg-light border-0 small"
                    placeholder="搜尋" aria-label="Search"
@@ -30,7 +25,7 @@
             <span class="btn">1星</span><span class="btn">2星</span>
         </div>
         <div id="List">
-            <table id="myTable">
+            <table id="myTable tbl">
                 <tbody>
                     @foreach (var item in Model)
                     {
@@ -50,41 +45,58 @@
             </table>
         </div>
     </div>
-    <div class="col-8">
-        <div id="comview">
-           
-        </div>
-        <div>
+    <div>
+        <div class="評論內容">
+            <div class="標題div">
+                <h3 class="標題">評價內容 / 修改</h3>
+            </div>
+            <div id="comview">
 
+            </div>
+        </div>
+
+        <div class="評論內容">
+            <div class="標題div">
+                <h3 class="標題">多筆處理</h3>
+            </div>
+            <div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>
+                                留言編號
+                            </th>
+                            <th>
+                                客戶姓名
+                            </th>
+                            <th>
+                                留言時間
+                            </th>
+                            <th>
+                                留言內容
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="coms">
+
+                    </tbody>
+                </table>
+                
+            </div>
         </div>
     </div>
 </div>
 @section Scripts{
     <script>
-
-    async function LoadCities()
-    {
-            let response = await fetch("@Url.Content("~/Comment/List")")
-            let datas = await response.json()
-            datas.forEach(city => {
-                const opt = new li(city, city)
-                selCity.options.add(opt)
-            })
+        function getdata(id) {
+            $("#comview").load("@Url.Content("~/Comment/Showcomment?id=")" + id)
         }
-
-        async function getdata(id) {
-            await $("#comview").load("@Url.Content("~/Comment/Showcomment?id=")" + id)
-
+        function offs(id) {
+            $("#comview").load("@Url.Content("~/Comment/offs?id=")" + id)
         }
-
-    //$("#myTable tbody").on("click", "tr", function () {
-    //    var check = $(this).find(".checkchild").prop("checked");
-    //    if (check && check == true) {
-    //        $(this).find('.checkchild').prop("checked", false);
-    //    } else {
-    //        $(this).find('.checkchild').prop("checked", true);
-    //    }
-    //});
+        function opens(id) {
+            $("#comview").load("@Url.Content("~/Comment/opens?id=")" + id)
+        }
 
     </script>
 }

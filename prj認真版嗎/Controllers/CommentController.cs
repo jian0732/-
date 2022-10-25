@@ -37,14 +37,43 @@ namespace prj認真版嗎.Controllers
                 會員名稱=s.Members.MemberName
             }).FirstOrDefault();
 
-            return ViewComponent("Commentdata",com);
+            return ViewComponent("Commentdata", com);
         }
 
-        [HttpPost]
-        public IActionResult Delete()
+        public IActionResult offs(int id)
         {
+            C評論畫面 com = null;
 
-            return View();
+            var q = _db.Comments.FirstOrDefault(p => p.CommentId == id);
+            q.CommentStatus = false;
+            _db.SaveChanges();
+
+            com = _db.Comments.Where(p => p.CommentId == id).Select(s => new C評論畫面
+            {
+                comment = s,
+                產品名稱 = s.TravelProduct.TravelProductName,
+                會員名稱 = s.Members.MemberName
+            }).FirstOrDefault();
+
+            return ViewComponent("Commentdata", com);
+
+        }
+        public IActionResult opens(int id)
+        {
+            C評論畫面 com = null;
+
+            var q = _db.Comments.FirstOrDefault(p => p.CommentId == id);
+            q.CommentStatus = true;
+            _db.SaveChanges();
+
+            com = _db.Comments.Where(p => p.CommentId == id).Select(s => new C評論畫面
+            {
+                comment = s,
+                產品名稱 = s.TravelProduct.TravelProductName,
+                會員名稱 = s.Members.MemberName
+            }).FirstOrDefault();
+
+            return ViewComponent("Commentdata", com);
         }
     }
 }
