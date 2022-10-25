@@ -40,7 +40,6 @@
                 <div class="sidebar-brand-text mx-3">星球旅遊 <sup>D</sup></div>
             </a>
 
-            <br />
 
             @{
                 if (Accessor.HttpContext.Session.Keys.Contains(CDictionary.SK_Admin_Login))
@@ -93,7 +92,7 @@
                         <li class="nav-item active ">
                             <div class="nav-link ">
                                 <i class=" fas fa-fw fa-comment " id="Jimg"></i>
-                                @Html.ActionLink("評論管理", "List", "", null, new { @class = "nav-link 超連結", style = "display:inline" })
+                                @Html.ActionLink("評論管理", "List", "Comment", null, new { @class = "nav-link 超連結", style = "display:inline" })
                             </div>
                         </li>
                     }

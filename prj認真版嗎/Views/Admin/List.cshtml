@@ -1,83 +1,82 @@
 ﻿
 @using prj認真版嗎.ViewModel
 @model List<CAdminViewModel>
-
-@{
-    ViewData["Title"] = "管理員";
+@section Styles{
+    <style>
+    </style>
+    <script src="~/lib/jquery/jquery.min.js"></script>
+    <link href="~/css/JianCutsomerList.css" rel="stylesheet" />
+    <link href="~/css/jiancustomer.css" rel="stylesheet" />
 }
-<div id="divA">
-    <h1>管理員管理</h1>
+<div class="d-flex justify-content-center">
+    <h1 class="標題">管理員管理</h1>
+</div>
+<div class="btn-group">
     <p>
         <a class="btn btn-success" onclick="showmodal('@Url.Action("Create", "Admin", null, Context.Request.Scheme)',null)">新增管理員</a>
     </p>
-    @*<table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().AdminName)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Account)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().Password)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().CommentStatus)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().MemberStatus)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().ProductStatus)
-                    </th>
-                    <th>
-                        @Html.DisplayNameFor(model => model.FirstOrDefault().AdminStatus1)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AdminName)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Account)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Password)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.CommentStatus)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.MemberStatus)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.ProductStatus)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modelItem => item.AdminStatus1)
-                        </td>
-                        <td>
-                            <a class="btn btn-success" onclick="showmodal('@Url.Action("Edit","Admin",new {id=@item.AdminId},Context.Request.Scheme)',null)">修改</a>
-                            <a asp-action="Delete" asp-route-id="@item.AdminId" class="btn btn-danger" onclick="check()">刪除</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>*@
-    <!--------------------------------------------------------------------------------------------->
-    <div>
-        <table class="table">
-            <tbody id="dds">
-            </tbody>
-        </table>
-    </div>
-    <!----------------------------------------------------------------------------------------->
+</div>
+<div id="divA">
+    <table class="hover compact cell-border 自訂" id="myTable">
+        <thead>
+            <tr class="thbkc">
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().AdminName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Account)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().Password)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().CommentStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().MemberStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().ProductStatus)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.FirstOrDefault().AdminStatus1)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdminName)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Account)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Password)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CommentStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.MemberStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.ProductStatus)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.AdminStatus1)
+                </td>
+                <td>
+                    <a class="btn btn-success" onclick="showmodal('@Url.Action("Edit","Admin",new {id=@item.AdminId},Context.Request.Scheme)',null)">修改</a>
+                    <a asp-action="Delete" asp-route-id="@item.AdminId" class="btn btn-danger" onclick="check()">刪除</a>
+                </td>
+            </tr>
+            }
+        </tbody>
+    </table>
 </div>
 
 <div class="modal fade" id="newstaticBackdrop" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -91,6 +90,8 @@
     </div>
 </div>
 @section Scripts{
+    <script src="~/js/datatables.min.js"></script>
+    <script src="~/js/JS.js"></script>
     <script>
         $(document).ready(function () {
             $('#myTable').DataTable({
@@ -346,6 +347,12 @@
     <script>
         function check() {
             return confirm("確定刪除?");
+        }
+        (function () {
+            addclass();
+        }())
+         function addclass(){
+            $("input").addClass("勾勾大小");
         }
     </script>
 }

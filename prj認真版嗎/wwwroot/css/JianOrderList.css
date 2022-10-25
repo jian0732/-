@@ -4,12 +4,15 @@
     color: black
 }
 
-.thbkc{
-    background-color: #302372
+.thbkc {
+    height: 50px;
+    background-color: black;
+    font-weight: bold
 }
 
 .thbkc > th {
-    color: white
+        color: white;
+        font-weight: bold
 }
 
 .orderi {

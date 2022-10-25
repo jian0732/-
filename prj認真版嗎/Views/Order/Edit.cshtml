@@ -1,0 +1,89 @@
+﻿@model prj認真版嗎.ViewModel.COrderViewModel
+@{
+    Layout = null;
+
+}
+<h1>修改訂單</h1>
+<hr />
+<form asp-action="Edit">
+    <div class="row">
+        <div class="col-6">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="OrderId" />
+            <div class="form-group">
+                <label asp-for="OrderId" class="control-label"></label>
+                <input asp-for="OrderId" class="form-control" asp-items="ViewBag.OrderId" disabled="disabled">
+            </div>
+            <div class="form-group">
+                <label asp-for="會員名稱" class="control-label"></label>
+                <input asp-for="會員名稱" class="form-control" asp-items="ViewBag.MembersId" disabled="disabled">
+            </div>
+            <div class="form-group">
+                @{
+                    string s = DateTime.Parse(Model.OrderDate).ToString("yyyy-MM-dd");
+                    <label asp-for="OrderDate" class="control-label"></label><br />
+                    <input type="date" value="@s" class="form-control" disabled="disabled" />
+                }
+            </div>
+        </div>
+
+        <div class="col-6">
+            <div class="form-group">
+                <label asp-for="PaymentId" class="control-label"></label>
+                <input type="text" hidden value="@Model.PaymentId" id="in" />
+                <select asp-for="付款方式" id="Status" class="form-control">
+                    <option selected>@Model.付款方式</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label asp-for="OrderStatusId" class="control-label"></label>
+                <input type="text" hidden value="@Model.OrderStatusId" id="osi" />
+                <select asp-for="訂單狀態" id="Status1" class="form-control">
+                    <option selected>@Model.訂單狀態</option>
+                </select>
+            </div>
+            <div class="form-group d-flex justify-content-end">
+                <input type="submit" value="確認修改" class="btn btn-primary" />
+            </div>
+        </div>
+
+    </div>
+</form>
+<script>
+    var hid = document.querySelector("#in");
+    var osi = document.querySelector("#osi")
+
+        var selStatus = document.querySelector("#Status");
+       
+        var selStatus1 = document.querySelector("#Status1");
+        
+            (async function () {
+                await console.log(osi.value)
+                await loadStatus()
+                await loadOStatus()
+            }())
+
+
+
+
+        async function loadStatus() {
+            await ajaxCall("@Url.Content("~/Order/Status?id=")" + hid.value, rendering, selStatus)
+    }
+         async function loadOStatus() {
+             await ajaxCall("@Url.Content("~/Order/OStatus?id=")" + osi.value, rendering, selStatus1)
+            
+        }
+        async function ajaxCall(url, rendering, sel) {
+            let response = await fetch(url)
+            let datas = await response.json()
+            rendering(sel, datas)
+        }
+
+        function rendering(sel, datas) {
+        datas.forEach(da=>{
+            const opt = new Option(da, da)
+         sel.options.add(opt)
+          })
+        }
+</script>
+

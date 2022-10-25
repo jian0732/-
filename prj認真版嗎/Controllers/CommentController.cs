@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using prj認真版嗎.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,9 +9,16 @@ namespace prj認真版嗎.Controllers
 {
     public class CommentController : Controller
     {
-        public IActionResult Index()
+        public CommentController(PlanetTravelContext _PTdb)
         {
-            return View();
+            _db = _PTdb;
+        }
+        private PlanetTravelContext _db;
+        public IActionResult List()
+        {
+            var q = _db.Comments.Select(p=>p.TravelProduct.TravelProductName).ToList();
+
+            return View(q);
         }
         [HttpPost]
         public IActionResult Delete()

@@ -45,7 +45,10 @@ tbody > tr > td {
     height: 50px;
     color: black;
 }
-
+.勾勾大小 {
+    width: 20px;
+    height: 20px;
+}
 tbody > tr > td >a {
     font-weight: bold
 }

@@ -1,0 +1,67 @@
+﻿@using prj認真版嗎.Models
+@model
+@section Styles{ 
+<style>
+    *{
+        border:1px solid red
+    }
+</style>
+}
+<div class="d-flex justify-content-center">
+    <h1>評價管理</h1>
+</div>
+<div class="container d-flex">
+    <div class="col-4 ">
+        <div class="input-group">
+            <input type="text" class="form-control bg-light border-0 small"
+                   placeholder="搜尋" aria-label="Search"
+                   aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                    <i class="fas fa-search fa-sm"></i>
+                </button>
+            </div>
+        </div>
+        <div id="List">
+            <table>
+                @foreach (var item in Model)
+                {
+                <tr>
+                    <td>
+                        產品id
+                    </td>
+                    <td>
+                        產品名稱()
+                    </td>
+                </tr>
+                }
+            </table>
+        </div>
+    </div>
+    <div class="col-8">
+        <div>
+
+        </div>
+        <div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+
+    @*$('#List').load("@Url.Action("List","Comment")", function () {
+   })*@
+    LoadCities()
+    async function LoadCities()
+    {
+            let response = await fetch("@Url.Content("~/Comment/List")")
+            let datas = await response.json()
+            datas.forEach(city => {
+                const opt = new li(city, city)
+                selCity.options.add(opt)
+            })
+    }
+
+        
+</script>
