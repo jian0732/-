@@ -9,11 +9,13 @@ using System.Threading.Tasks;
 
 namespace prj認真版嗎.ViewComponents
 {
-    public class TPDViewComponent : ViewComponent
+    [Microsoft.AspNetCore.Mvc.ViewComponent]
+    public class CommentdataViewComponent : Microsoft.AspNetCore.Mvc.ViewComponent
     {
+
         public async Task<IViewComponentResult> InvokeAsync(C評論畫面 x)
         {
-            return View(x);
+            return View(x);  
         }
     }
 }

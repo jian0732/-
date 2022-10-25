@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using prjMvcCoreModel.ViewModel;
-using prj認真版嗎.Models;
 using prj認真版嗎.ViewModel;
 using System;
 using System.Collections.Generic;
@@ -9,7 +7,8 @@ using System.Threading.Tasks;
 
 namespace prj認真版嗎.ViewComponents
 {
-    public class TPDViewComponent : ViewComponent
+    [Microsoft.AspNetCore.Mvc.ViewComponent]
+    public class ClassViewComponent: Microsoft.AspNetCore.Mvc.ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync(C評論畫面 x)
         {

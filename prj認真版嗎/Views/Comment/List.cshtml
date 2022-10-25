@@ -1,16 +1,16 @@
-﻿@using prj認真版嗎.Models
-@section Styles{ 
-<style>
-    *{
-        border:1px solid red
-    }
-</style>
+@using prj認真版嗎.ViewModel
+@model List<C評論畫面>
+@section Styles{
+    <style>
+
+    </style>
+    <link href="~/css/JianComment.css" rel="stylesheet" />
 }
 <div class="d-flex justify-content-center">
     <h1>評價管理</h1>
 </div>
-<div class="container d-flex">
-    <div class="col-4 ">
+<div class="big d-flex">
+    <div class="左列">
         <div class="input-group">
             <input type="text" class="form-control bg-light border-0 small"
                    placeholder="搜尋" aria-label="Search"
@@ -21,46 +21,103 @@
                 </button>
             </div>
         </div>
+        <div>
+            <span class="btn">1星</span><span class="btn">2星</span>
+        </div>
         <div id="List">
-            <table>
-                @foreach (var item in Model)
-                {
-                <tr>
-                    <td>
-                        產品id
-                    </td>
-                    <td>
-                        產品名稱()
-                    </td>
-                </tr>
-                }
+            <table id="myTable tbl">
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr onclick="getdata(@item.CommentId)">
+                            <td>
+                                <input class="checkchild" type="checkbox" onclick="addtr(@item.CommentId,event)" value="@item.CommentId">
+                            </td>
+                            <td>
+                                (@item.MembersId)
+                            </td>
+                            <td>
+                                @item.產品名稱 (@item.Star 星)
+                            </td>
+                        </tr>
+                    }
+                </tbody>
             </table>
         </div>
     </div>
-    <div class="col-8">
-        <div>
+    <div>
+        <div class="評論內容">
+            <div class="標題div">
+                <h3 class="標題">評價內容 / 修改</h3>
+            </div>
+            <div id="comview">
 
+            </div>
         </div>
-        <div>
 
+        <div class="評論內容">
+            <div class="標題div">
+                <h3 class="標題">多筆處理</h3>
+            </div>
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                留言編號
+                            </th>
+                            <th>
+                                客戶姓名
+                            </th>
+                            <th>
+                                留言時間
+                            </th>
+                            <th>
+                                留言內容
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="coms">
+                    </tbody>
+                </table>
+                
+            </div>
         </div>
     </div>
 </div>
-
-<script>
-
-    @*$('#List').load("@Url.Action("List","Comment")", function () {
-   })*@
-    LoadCities()
-    async function LoadCities()
-    {
-            let response = await fetch("@Url.Content("~/Comment/List")")
-            let datas = await response.json()
-            datas.forEach(city => {
-                const opt = new li(city, city)
-                selCity.options.add(opt)
-            })
-    }
-
-        
-</script>
+@section Scripts{
+    <script>
+        function getdata(id) {
+            $("#comview").load("@Url.Content("~/Comment/Showcomment?id=")" + id)
+        }
+        function offs(id) {
+            $("#comview").load("@Url.Content("~/Comment/offs?id=")" + id)
+        }
+        function opens(id) {
+            $("#comview").load("@Url.Content("~/Comment/opens?id=")" + id)
+        }
+        function addtr(id, e) {
+            if (e.target.checked) {
+              $.ajax({
+                url: "@Url.Content("~/Comment/getdata")",
+                type: "get",
+                data: { "CommentId": id },
+                dataType: "json"
+              }).done(data => {
+                  let tr = document.createElement("tr");
+                  tr.id = data.commentId
+                  let text = `<td>${data.commentId}</td>
+                              <td>${data.會員名稱}</td>
+                              <td>${data.commentDate}</td>
+                              <td>${data.commentText}</td>`
+                  tr.innerHTML = text
+                  $("#coms").append(tr);
+              })
+            }
+            else
+            {
+                $(`#${id}`).remove();
+            }
+        }
+    </script>
+}
