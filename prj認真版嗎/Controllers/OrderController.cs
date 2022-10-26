@@ -32,9 +32,10 @@ namespace prj認真版嗎.Controllers
             return View(datas);
         }
 
-        public ActionResult OrderDetail(int id)
+        public ActionResult OrderDetail(int? id)
         {
             List<COrederDetailsViewModel> datas = null;
+            if(id != null) { 
             datas = _db.OrderDetails.Where(p => p.OrderId == id)
                 .Select(s => new COrederDetailsViewModel
                 {
@@ -45,9 +46,9 @@ namespace prj認真版嗎.Controllers
 
                 }).ToList();
             return View(datas);
+            }
 
-
-            //return RedirectToAction("List");
+            return RedirectToAction("List");
         }
 
         public IActionResult Edit(int? id)
@@ -95,7 +96,7 @@ namespace prj認真版嗎.Controllers
         {
             Order order = null;
             var Orders = _db.Orders.ToList();
-            if (id != null) { 
+            if (id.Orderkey != null) { 
             foreach (var i in id.Orderkey)
             {
                 order = Orders.FirstOrDefault(p => p.OrderId == i);

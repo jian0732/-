@@ -1,0 +1,20 @@
+﻿@using prj認真版嗎.ViewModel
+@model List<C評論畫面>
+
+@{
+    Layout = null;
+ }
+@foreach (var item in Model)
+{
+    <tr class="左列的row" onclick="getdata(@item.CommentId)">
+        <td class="左列的td">
+            <input class="checkchild" type="checkbox" onclick="進入多選(@item.CommentId,event)" value="@item.CommentId">
+        </td>
+        <td>
+            (@item.MembersId)
+        </td>
+        <td>
+            @item.產品名稱 (@item.Star 星)
+        </td>
+    </tr>
+}

@@ -1,5 +1,4 @@
-@using prj認真版嗎.ViewModel
-@model List<C評論畫面>
+
 @section Styles{
     <style>
 
@@ -22,25 +21,15 @@
             </div>
         </div>
         <div>
-            <span class="btn">1星</span><span class="btn">2星</span>
+            <button id="" class="btn btn-primary" onclick="load()">全部</button>
+            <button id="onestar" class="btn btn-danger" onclick="filter(1)">1星</button>
+            <button id="twostar" class="btn btn-warning" onclick="filter(2)">2星</button>
+            <button id="hidbtn" class="btn btn-secondary" onclick="filter(3)" >已隱藏</button>
         </div>
         <div id="List">
             <table id="myTable tbl">
-                <tbody>
-                    @foreach (var item in Model)
-                    {
-                        <tr class="左列的row" onclick="getdata(@item.CommentId)" >
-                            <td class="左列的td">
-                                <input class="checkchild" type="checkbox" onclick="addtr(@item.CommentId,event)" value="@item.CommentId" >
-                            </td>
-                            <td>
-                                (@item.MembersId)
-                            </td>
-                            <td>
-                                @item.產品名稱 (@item.Star 星)
-                            </td>
-                        </tr>
-                    }
+                <tbody id="左tbody">
+                   
                 </tbody>
             </table>
         </div>
@@ -56,7 +45,6 @@
 
             </div>
         </div>
-        <button onclick="gg()" type="button">測試</button>
 
         <div class="評論內容 多筆DIV" >
             <div class="標題div">
@@ -95,7 +83,13 @@
 </div>
 @section Scripts{
     <script>
+        (function () {
+            load();
+        }())
+        function load() {
+            $("#左tbody").load("@Url.Content("~/Comment/goleft")")
 
+        }
         function getdata(id) {
             $("#comview").load("@Url.Content("~/Comment/Showcomment?id=")" + id)
         }
@@ -106,6 +100,9 @@
             $("#comview").load("@Url.Content("~/Comment/opens?id=")" + id)
         }
         let ww = [];
+        const one = document.querySelector("#onestar");
+        const two = document.querySelector("#twostar");
+        const hidbtn = document.querySelector("#hidbtn");
         async function 多筆處理(e) {
 
             let jsn = { id: ww, bol: e };
@@ -124,23 +121,18 @@
                     }
                     Swal.fire(
                         datas.msg,
-                        '',               
+                        '',
                         'success',
                     )
                     ww = [];
                     var checked = document.querySelectorAll('input:checked');
-                    checked.forEach(ele => ele.checked = "")  
-
+                    checked.forEach(ele => ele.checked = "")
+                    $(".右下row").remove();
+                    document.getElementById("多筆按鈕").style.visibility = "hidden";
                 }
              })
         }
-
-        function gg() {
-
-
-        }
-        
-        function addtr(id, e) {
+        function 進入多選(id, e) {
             if (e.target.checked) {
               $.ajax({
                 url: "@Url.Content("~/Comment/getdata")",
@@ -155,6 +147,7 @@
                       狀態 = '隱藏中';
                   let tr = document.createElement("tr");
                   tr.id = data.commentId
+                  tr.className ="右下row";
                   let text = `<td>${data.commentId}</td>
                               <td>${data.會員名稱}</td>
                               <td>${狀態}</td>
@@ -177,6 +170,33 @@
                 if (ww.length == 0)
                     document.getElementById("多筆按鈕").style.visibility = "hidden";//隱藏
             }
+        }
+
+        function All()
+        {
+            $.getJSON("@Url.Content("~/Comment/getAll")", function (datas) {
+                let row = document.createElement('tr');
+                row.className = '左列的row'
+                datas.map(data =>
+                    console.log(data)
+
+                    )
+
+            })
+        }
+
+        function filter(prt) {
+            $("#左tbody").load("@Url.Content("~/Comment/commentfilter")"+"?filter="+prt)
+             @*$.ajax({
+                url: "@Url.Content("~/Comment/commentfilter")"+"?filter="+prt,
+                type: "get",
+                 dataType: "json"
+             }).done(datas => {
+                 if (datas.length == 0) {
+                     $(".左列的row").remove();
+                 }
+
+             })*@
         }
     </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
