@@ -112,14 +112,14 @@ namespace prj認真版嗎.Controllers
                         _db.TravelProductDetails.Add(tpd);
                         _db.SaveChanges();
                         int latest_DetailID = _db.TravelProductDetails.OrderBy(e => e.TravelProductDetailId).LastOrDefault().TravelProductDetailId;
-                        foreach (int TrasportationID in list.TrasportationID )
+                        foreach (int TrasportationID in list.TrasportationID)
                         {
-                                ProductToTransportation ptt = new ProductToTransportation
-                                {
-                                    TravelProductDetailId = latest_DetailID,
-                                    TrasportationId = TrasportationID,
-                                };
-                                _db.ProductToTransportations.Add(ptt);                            
+                            ProductToTransportation ptt = new ProductToTransportation
+                            {
+                                TravelProductDetailId = latest_DetailID,
+                                TrasportationId = TrasportationID,
+                            };
+                            //_db.ProductToTransportations.Add(ptt);                            
                         }
                         foreach (int ViewID in list.ViewID)
                         {
@@ -130,7 +130,7 @@ namespace prj認真版嗎.Controllers
                                     TravelProductDetailId = latest_DetailID,
                                     ViewId = ViewID,
                                 };
-                                _db.ProductToViews.Add(ptv);  
+                                _db.ProductToViews.Add(ptv);
                             }
                         }
                         if (list._CreateView != null)
@@ -165,35 +165,33 @@ namespace prj認真版嗎.Controllers
 
             if (id != null)
             {
-                //_db.ProductToTransportations.ToList();
-                //_db.TRAP
-                //TravelProduct prod = _db.TravelProducts.FirstOrDefault(p => p.TravelProductId == id);
+
                 CProductViewModel prod = _db.TravelProducts.Where(p => p.TravelProductId == id)
                                            .Select(s => new CProductViewModel
                                            {
-                                               product = s,
                                                TravelProductId = s.TravelProductId,
                                                TravelProductName = s.TravelProductName,
                                                Price = s.Price,
                                                TravelProductTypeId = s.TravelProductTypeId,
+                                               TravelProductTypeName = s.TravelProductType.TravelProductTypeName,
                                                Stocks = s.Stocks,
                                                Description = s.Description,
                                                CountryId = s.CountryId,
+                                               CountryName=s.Country.CountryName,
                                                Cost = s.Cost,
                                                EventIntroduction = s.EventIntroduction,
                                                PreparationDescription = s.PreparationDescription,
                                                TravelPictureId = s.TravelPictures.Select(p => p.TravelPictureId).ToList(),
                                                TravelPicturePath = s.TravelPictures.Select(p => p.TravelPicture1).ToList(),
                                                TravelPictureText = s.TravelPictures.Select(p => p.TravelPictureText).ToList(),
-                                               TravelProductDetail = s.TravelProductDetails.FirstOrDefault(),
-                                               TravelProductDetail_DisplayHotelName = s.TravelProductDetails.Select(p => p.Hotel.HotelName).FirstOrDefault(),
 
-                                               Trasportation_DisplayTrasportationName = s.TravelProductDetails.Where(p => p.TravelProductDetailId == p.ProductToTransportations.First().TravelProductDetailId).First()
-                                                                                        .ProductToTransportations.Where(p => p.TrasportationId == p.Trasportation.TrasportationId).First()
-                                                                                        .Trasportation.TrasportationName,
-                                               View_DisplayViewName = s.TravelProductDetails.Where(p => p.TravelProductDetailId == p.ProductToViews.First().TravelProductDetailId).First()
-                                                                       .ProductToViews.Where(p => p.ViewId == p.View.ViewId).First()
-                                                                       .View.ViewName,
+                                               _CTravelDetailForEditViewModel = s.TravelProductDetails.Select(p => new CTravelDetailForEditViewModel
+                                               {
+                                                   _TravelProductDetail = p,
+                                                   TrasportationName = p.ProductToTransportations.Select(t => t.Trasportation.TrasportationName).ToList(),
+                                                   ViewName = p.ProductToViews.Select(v => v.View.ViewName).ToList(),
+                                                   HotelName = p.Hotel.HotelName,
+                                               }).ToList(),
 
                                            }).FirstOrDefault();
                
@@ -210,16 +208,16 @@ namespace prj認真版嗎.Controllers
             TravelProduct c = _db.TravelProducts.FirstOrDefault(p => p.TravelProductId == inProd.TravelProductId);
             if (c != null)
             {
-                c.TravelProductName = inProd.TravelProductName;
-                c.Price = inProd.Price;
-                c.TravelProductTypeId = inProd.TravelProductTypeId;
-                c.Stocks = inProd.Stocks;
-                c.Description = inProd.Description;
-                c.CountryId = inProd.CountryId;
-                c.Cost = inProd.Cost;
-                c.EventIntroduction = inProd.EventIntroduction;
-                c.PreparationDescription = inProd.PreparationDescription;
-                _db.SaveChanges();
+                //c.TravelProductName = inProd.TravelProductName;
+                //c.Price = inProd.Price;
+                //c.TravelProductTypeId = inProd.TravelProductTypeId;
+                //c.Stocks = inProd.Stocks;
+                //c.Description = inProd.Description;
+                //c.CountryId = inProd.CountryId;
+                //c.Cost = inProd.Cost;
+                //c.EventIntroduction = inProd.EventIntroduction;
+                //c.PreparationDescription = inProd.PreparationDescription;
+                //_db.SaveChanges();
                 if (inProd.photo != null)
                 {
                     int tempCount = 0;
@@ -246,6 +244,7 @@ namespace prj認真版嗎.Controllers
                     {
                         var TraPicture = _db.TravelPictures.Where(pic => pic.TravelPictureId == inProd.TravelPictureId[i]).FirstOrDefault();
                         TraPicture.TravelPictureText = inProd.TravelPictureText[i];
+                        TraPicture.PicturePurpose = 2;
                         _db.SaveChanges();
                     }
                 }
@@ -256,7 +255,7 @@ namespace prj認真版嗎.Controllers
                         TravelPicture pic = new TravelPicture();
                         pic.TravelPictureText = inProd.CreateNewTravelPictureText[i];
                         pic.TravelProductId = inProd.TravelProductId;
-
+                        pic.PicturePurpose = 2;
                         string pname = Guid.NewGuid().ToString() + ".jpg";
                         pic.TravelPicture1 = pname;
                         string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;

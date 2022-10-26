@@ -37,6 +37,7 @@ namespace prj認真版嗎.ViewModel
             get;
             set;
         }
+        [DisplayName("圖片集描述")]
         public string TravelPictureText //圖片描述
         {
             get;
@@ -61,44 +62,49 @@ namespace prj認真版嗎.ViewModel
             get { return _product.Price; }
             set { _product.Price = value; }
         }
+        [DisplayName("行程分類")]
         public int TravelProductTypeId
         {
             get { return _product.TravelProductTypeId; }
             set { _product.TravelProductTypeId = value; }
         }
+        [DisplayName("行程總人數")]
         public int Stocks
         {
             get { return _product.Stocks; }
             set { _product.Stocks = value; }
         }
+        [DisplayName("行程簡介")]
         public string Description
         {
             get { return _product.Description; }
             set { _product.Description = value; }
         }
+        [DisplayName("旅遊國家")]
         public int CountryId
         {
             get { return _product.CountryId; }
             set { _product.CountryId = value; }
         }
-        [DisplayName("成本")]
+        [DisplayName("每人成本")]
         public int Cost
         {
             get { return _product.Cost; }
             set { _product.Cost = value; }
         }
+        [DisplayName("活動介紹")]
         public string EventIntroduction
         {
             get { return _product.EventIntroduction; }
             set { _product.EventIntroduction = value; }
         }
-
+        [DisplayName("行前準備注意事項")]
         public string PreparationDescription
         {
             get { return _product.PreparationDescription; }
             set { _product.PreparationDescription = value; }
         }
-
+        [DisplayName("Google地圖連結")]
         public string MapUrl
         {
             get { return _product.MapUrl; }

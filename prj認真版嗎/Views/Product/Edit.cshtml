@@ -27,9 +27,9 @@
                 <span asp-validation-for="Price" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="TravelProductTypeId" class="control-label"></label>
-                <input asp-for="TravelProductTypeId" class="form-control" />
-                <span asp-validation-for="TravelProductTypeId" class="text-danger"></span>
+                <label asp-for="TravelProductTypeName" class="control-label"></label>
+                <input asp-for="TravelProductTypeName" class="form-control" />
+                <span asp-validation-for="TravelProductTypeName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Stocks" class="control-label"></label>
@@ -42,9 +42,9 @@
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CountryId" class="control-label"></label>
-                <input asp-for="CountryId" class="form-control" />
-                <span asp-validation-for="CountryId" class="text-danger"></span>
+                <label asp-for="CountryName" class="control-label"></label>
+                <input asp-for="CountryName" class="form-control" />
+                <span asp-validation-for="CountryName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Cost" class="control-label"></label>
@@ -62,49 +62,72 @@
                 <span asp-validation-for="PreparationDescription" class="text-danger"></span>
             </div>
 
-            <div>
-                <p>─────────我是測試用排版分隔線（開頭）─────────</p>
-            </div>
+            @{int DetailCount = 1; }
+            @foreach (var detail in Model._CTravelDetailForEditViewModel)
+            {
 
-            <div class="form-group">
-                <label asp-for="@Model.TravelProductDetail.Day" class="control-label"></label>
-                <input asp-for="@Model.TravelProductDetail.Day" class="form-control" />
-                <span asp-validation-for="@Model.TravelProductDetail.Day" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.TravelProductDetail.Date" class="control-label"></label>
-                <input asp-for="@Model.TravelProductDetail.Date" class="form-control" />
-                <span asp-validation-for="@Model.TravelProductDetail.Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.TravelProductDetail.DailyDetailText" class="control-label"></label>
-                <textarea asp-for="@Model.TravelProductDetail.DailyDetailText" class="form-control" cols="50" rows="10"></textarea>
-                <span asp-validation-for="@Model.TravelProductDetail.DailyDetailText" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.TravelProductDetail_DisplayHotelName" class="control-label"></label>
-                <input asp-for="@Model.TravelProductDetail_DisplayHotelName" class="form-control" />
-                <span asp-validation-for="@Model.TravelProductDetail_DisplayHotelName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.Trasportation_DisplayTrasportationName" class="control-label"></label>
-                <input asp-for="@Model.Trasportation_DisplayTrasportationName" class="form-control" />
-                <span asp-validation-for="@Model.Trasportation_DisplayTrasportationName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="@Model.View_DisplayViewName" class="control-label"></label>
-                <input asp-for="@Model.View_DisplayViewName" class="form-control" />
-                <span asp-validation-for="@Model.View_DisplayViewName" class="text-danger"></span>
-            </div>
+                <div>
+                    <p>─────────行程明細Day-@DetailCount─────────</p>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@detail._TravelProductDetail.Day" class="control-label"></label>
+                    <input asp-for="@detail._TravelProductDetail.Day" class="form-control" />
+                    <span asp-validation-for="@detail._TravelProductDetail.Day" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@detail._TravelProductDetail.Date" class="control-label">日期</label>
+                    <input asp-for="@detail._TravelProductDetail.Date" class="form-control" />
+                    <span asp-validation-for="@detail._TravelProductDetail.Date" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="@detail._TravelProductDetail.DailyDetailText" class="control-label">行程概述</label>
+                    <textarea asp-for="@detail._TravelProductDetail.DailyDetailText" class="form-control" cols="50" rows="5"></textarea>
+                    <span asp-validation-for="@detail._TravelProductDetail.DailyDetailText" class="text-danger"></span>
+                </div>
+                @if (detail.HotelName != null)
+                {
+                    <div class="form-group">
+                        <label asp-for="@detail.HotelName" class="control-label">住宿地點</label>
+                        <input asp-for="@detail.HotelName" class="form-control" />
+                        <span asp-validation-for="@detail.HotelName" class="text-danger"></span>
+                    </div>
+                }
+
+                int TPnum = 0;
+                <div class="d-flex">
+                @foreach (string trans in detail.TrasportationName)
+                {
+                    TPnum++;
+                    <div class="form-group">
+                        <label asp-for="@trans" class="control-label">當日使用交通方式-@TPnum</label>
+                        <input asp-for="@trans" class="form-control" />
+                        <span asp-validation-for="@trans" class="text-danger"></span>
+                    </div>
+                }
+                </div>
+                int VNnum = 0;
+                <div class="d-flex">
+                @foreach (string vn in detail.ViewName)
+                {
+                    VNnum++;
+                    <div class="form-group">
+                        <label asp-for="@vn" class="control-label">景點-@VNnum</label>
+                        <input asp-for="@vn" class="form-control" />
+                        <span asp-validation-for="@vn" class="text-danger"></span>
+                    </div>
+                }                
+                </div>
+                DetailCount++;
+            }
 
             <div>
-                <p>─────────我是測試用排版分隔線（結尾）─────────</p>
+                <p>─────────圖片列表─────────</p>
             </div>
             <div id="pic_group">
                 @for (int i = 0; i < Model.TravelPictureId.Count; i++)
                 {
-                    <img src="~/images/TravelProductPictures/@Model.TravelPicturePath[i]" />
-                    <div class="form-group">
+                    <div id="photo_group" class="form-group">
+                        <img id="photo-@i" src="~/images/TravelProductPictures/@Model.TravelPicturePath[i]" />
                         <input type="hidden" asp-for="TravelPictureId" value="@Model.TravelPictureId[i]" />
                         <input type="hidden" asp-for="PictureCount" value="0" id="hiddenPictureCount[@i]" />
                         <label class="control-label">更改行程照片</label>
@@ -120,25 +143,32 @@
                 }
             </div>
 
+            <div id="newPic">
+
+            </div>
 
             <div class="form-group">
                 <input type="submit" value="修改並儲存" class="btn btn-primary" />
             </div>
         </form>
         <div id="btnControl">
+            <button id="minus" onclick="minus()">減少圖片上傳欄位</button>
             <button id="plus" onclick="plus()">新增圖片上傳欄位</button>
-            <button id="minus" onclick="minus()">減少圖片上傳欄位</button>           
         </div>
     </div>
 </div>
+
 
 <div>
     <a asp-action="List">回到商品列表</a>
 </div>
 
+
+
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script>
+    <script>
+
     for (var i = 0; i < @Model.TravelPictureId.Count; i++) {
         let photoUpload = document.getElementById(`photoUpload[${i}]`)
         let hiddenPictureCount = document.getElementById(`hiddenPictureCount[${i}]`);
@@ -156,17 +186,15 @@
         })
     }
 
-
-    const abc = document.querySelector("#pic_group");
-
-
+    //新增圖片欄位
+    const abc = document.querySelector("#newPic");
     function plus() {
         num++;
         let test = "";
-        let pic_div = `<img src="@Url.Content("~/images/ProductDefaultImage.jpg")" />` +
-        `<div class="form-group">` +
-        `<input name="TravelPictureId" value="-1" />` +
-        `<input name="PictureCount111" value="0" id="ActivedHiddenPictureCount[${num}]" />` +
+        let pic_div = `<img id="preview${num}" src="@Url.Content("~/images/ProductDefaultImage.jpg")" />` +
+        `<div id="testID" class="form-group">` +
+        `<input type="hidden" name="TravelPictureId" value="-1" />` +
+        `<input type="hidden" name="PictureCount111" value="0" id="ActivedHiddenPictureCount[${num}]" />` +
         `<label class="control-label">更改行程照片</label>` +
         `<input name="CreateNewPhoto" type="file" id="ActivedPhotoUpload[${num}]">` +
         `</div>` +
@@ -178,12 +206,12 @@
         if (num < 11) {
             test = `<p>新增第${num}張圖</p>`
             let p = document.createElement("div")
-            p.id = "testID";
 
             p.innerHTML = test;
             p.innerHTML += pic_div;
             abc.appendChild(p)
             correct_uploadedPicture();
+
         } else
             num = 10;
 
@@ -191,23 +219,27 @@
     function minus() {
         num--;
         if (num >= 0) {
-            $('#pic_group').children().last().remove();
+            $('#newPic').children().last().remove();
         } else
             num = 0;
+        }
 
-    }
-</script>
+    //動態顯示修改的圖片(資料庫既有)
+    $('#pic_group').on("change", "input[name='photo']", function () {
+        const file = this.files[0];
+        const objectURL = URL.createObjectURL(file);
+        console.log(this);
+        $(this).siblings("img").attr('src', objectURL);
+    })
+
+    //動態顯示修改的圖片(新增)
+    $('#newPic').on("change", "input[name='CreateNewPhoto']", function () {
+        const file = this.files[0];
+        const objectURL = URL.createObjectURL(file);    // 使用 createObjectURL 產生圖片url
+        $(`#preview${num}`).attr('src', objectURL);
+    })
+
+    </script>
 
 }
-@*<img src="@Url.Content("~/images/ProductDefaultImage.jpg")" />
-<div class="form-group">
-    <input type="hidden" asp-for="TravelPictureId" value="000" />
-    <input type="hidden" asp-for="PictureCount" value="0" id="ActivedHiddenPictureCount[@i]" />
-    <label class="control-label">更改行程照片</label>
-    <input asp-for="photo" type="file" id="ActivedPhotoUpload[@i]">
-</div>
-<div class="form-group">
-    <label class="control-label"></label>
-    <input class="form-control" asp-for="TravelPictureText" value="@Model.TravelPictureText[i]" type="text" />
-    <span class="text-danger"></span>
-</div>*@
+

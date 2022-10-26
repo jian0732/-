@@ -12,21 +12,15 @@ namespace prj認真版嗎.ViewModel
     {
         public CProductViewModel()
         {
-            _product = new TravelProduct();
-            _TravelProductDetail = new TravelProductDetail();
+            _product = new TravelProduct();            
         }
         private TravelProduct _product;
-        private TravelProductDetail _TravelProductDetail;
-
+        public List<CTravelDetailForEditViewModel> _CTravelDetailForEditViewModel;
+        
         public TravelProduct product
         {
             get { return _product; }
             set { _product = value; }
-        }
-        public TravelProductDetail TravelProductDetail
-        {
-            get { return _TravelProductDetail; }
-            set { _TravelProductDetail = value; }
         }
 
         public List<IFormFile> photo { get; set; } //圖片的檔案
@@ -66,7 +60,7 @@ namespace prj認真版嗎.ViewModel
             get { return _product.TravelProductId; }
             set { _product.TravelProductId = value; }
         }
-        [DisplayName("品名")]
+        [DisplayName("行程方案名稱")]
         public string TravelProductName
         {
             get { return _product.TravelProductName; }
@@ -84,11 +78,13 @@ namespace prj認真版嗎.ViewModel
             get { return _product.TravelProductTypeId; }
             set { _product.TravelProductTypeId = value; }
         }
+        [DisplayName("剩餘人數")]
         public int Stocks
         {
             get { return _product.Stocks; }
             set { _product.Stocks = value; }
         }
+        [DisplayName("行程簡介")]
         public string Description
         {
             get { return _product.Description; }
@@ -99,73 +95,30 @@ namespace prj認真版嗎.ViewModel
             get { return _product.CountryId; }
             set { _product.CountryId = value; }
         }
-        [DisplayName("成本")]
+        [DisplayName("每人成本")]
         public int Cost
         {
             get { return _product.Cost; }
             set { _product.Cost = value; }
         }
+        [DisplayName("活動介紹")]
         public string EventIntroduction
         {
             get { return _product.EventIntroduction; }
             set { _product.EventIntroduction = value; }
         }
+        [DisplayName("行前準備注意事項")]
 
         public string PreparationDescription
         {
             get { return _product.PreparationDescription; }
             set { _product.PreparationDescription = value; }
         }
+        [DisplayName("行程分類")]
+        public string TravelProductTypeName { get; set; }
+        [DisplayName("旅遊國家")]
+        public string CountryName { get; set; }
 
-        //ProductDetail屬性欄位
-
-        public int TravelProductDetailID
-        {
-            get { return _TravelProductDetail.TravelProductDetailId; }
-            set { _TravelProductDetail.TravelProductDetailId = value; }
-        }
-        public int TravelProductDetail_ProductID
-        {
-            get { return _TravelProductDetail.TravelProductId; }
-            set { _TravelProductDetail.TravelProductId = value; }
-        }
-        public int Day
-        {
-            get { return _TravelProductDetail.Day; }
-            set { _TravelProductDetail.Day = value; }
-        }
-        public int TravelProductDetail_HotelID
-        {
-            get { return (int)_TravelProductDetail.HotelId; }
-            set { _TravelProductDetail.HotelId = value; }
-        }
-        public string TravelProductDetail_DisplayHotelName //展示的旅館名稱
-        {
-            get;
-            set;
-        }
-        public string Date
-        {
-            get { return _TravelProductDetail.Date; }
-            set { _TravelProductDetail.Date = value; }
-        }
-        public string DailyDetailText
-        {
-            get { return _TravelProductDetail.DailyDetailText; }
-            set { _TravelProductDetail.DailyDetailText = value; }
-        }
-        //Trasportation屬性欄位
-        public string Trasportation_DisplayTrasportationName //展示的交通方式名稱
-        {
-            get;
-            set;
-        }
-        //View屬性欄位
-        public string View_DisplayViewName //展示的交通方式名稱
-        {
-            get;
-            set;
-        }
     }
 
 }
