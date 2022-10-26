@@ -29,9 +29,9 @@
                 <tbody>
                     @foreach (var item in Model)
                     {
-                        <tr onclick="getdata(@item.CommentId)">
-                            <td>
-                                <input class="checkchild" type="checkbox" onclick="addtr(@item.CommentId,event)" value="@item.CommentId">
+                        <tr class="左列的row" onclick="getdata(@item.CommentId)" >
+                            <td class="左列的td">
+                                <input class="checkchild" type="checkbox" onclick="addtr(@item.CommentId,event)" value="@item.CommentId" >
                             </td>
                             <td>
                                 (@item.MembersId)
@@ -46,6 +46,8 @@
         </div>
     </div>
     <div>
+
+
         <div class="評論內容">
             <div class="標題div">
                 <h3 class="標題">評價內容 / 修改</h3>
@@ -54,10 +56,11 @@
 
             </div>
         </div>
+        <button onclick="gg()" type="button">測試</button>
 
-        <div class="評論內容">
+        <div class="評論內容 多筆DIV" >
             <div class="標題div">
-                <h3 class="標題">多筆處理</h3>
+                <h3 class="標題 標題附加">多筆處理</h3>
             </div>
             <div>
                 <table class="table">
@@ -70,7 +73,7 @@
                                 客戶姓名
                             </th>
                             <th>
-                                留言時間
+                                目前狀態
                             </th>
                             <th>
                                 留言內容
@@ -78,15 +81,21 @@
                         </tr>
                     </thead>
                     <tbody id="coms">
+
+
                     </tbody>
                 </table>
-                
+                <div id="多筆按鈕">
+                    <button type="button" onclick="多筆處理(false)" class="btn btn-warning">多筆隱藏</button>
+                    <button type="button" onclick="多筆處理(true)" class="btn btn-danger">多筆解除</button>
+                </div>
             </div>
         </div>
     </div>
 </div>
 @section Scripts{
     <script>
+
         function getdata(id) {
             $("#comview").load("@Url.Content("~/Comment/Showcomment?id=")" + id)
         }
@@ -96,6 +105,41 @@
         function opens(id) {
             $("#comview").load("@Url.Content("~/Comment/opens?id=")" + id)
         }
+        let ww = [];
+        async function 多筆處理(e) {
+
+            let jsn = { id: ww, bol: e };
+            await $.ajax({
+                url: "@Url.Content("~/Comment/treat")",
+                type: "post",
+                data: { bol:jsn},
+                dataType: "json",
+                success: function (datas) {
+                    if (!datas.res) {
+                        Swal.fire({
+                            trxt:datas.msg,
+                            title:'',
+                            icon:'error',
+                        })
+                    }
+                    Swal.fire(
+                        datas.msg,
+                        '',               
+                        'success',
+                    )
+                    ww = [];
+                    var checked = document.querySelectorAll('input:checked');
+                    checked.forEach(ele => ele.checked = "")  
+
+                }
+             })
+        }
+
+        function gg() {
+
+
+        }
+        
         function addtr(id, e) {
             if (e.target.checked) {
               $.ajax({
@@ -104,20 +148,36 @@
                 data: { "CommentId": id },
                 dataType: "json"
               }).done(data => {
+                  let 狀態 = "";
+                  if (data.commentStatus)
+                      狀態 = '正常顯示';
+                  else
+                      狀態 = '隱藏中';
                   let tr = document.createElement("tr");
                   tr.id = data.commentId
                   let text = `<td>${data.commentId}</td>
                               <td>${data.會員名稱}</td>
-                              <td>${data.commentDate}</td>
+                              <td>${狀態}</td>
                               <td>${data.commentText}</td>`
                   tr.innerHTML = text
                   $("#coms").append(tr);
               })
+                ww.push(id);
+                if (ww.length != 0)
+                    document.getElementById("多筆按鈕").style.visibility = "visible";//顯示
             }
             else
             {
                 $(`#${id}`).remove();
+                ww.forEach(function (item, index, arr) {
+                    if (item === id) {
+                        arr.splice(index, 1);
+                    }
+                });
+                if (ww.length == 0)
+                    document.getElementById("多筆按鈕").style.visibility = "hidden";//隱藏
             }
         }
     </script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 }

@@ -40,10 +40,19 @@
                 decimal 手續費 = 0;
                 foreach (var item in Model)
                 {
-                    decimal 小計 = item.小計 * item.優惠內容;
-                    總小計 += 小計;
                     count++;
-                    string 優惠內容 = (item.優惠內容 * 10).ToString("###,#0") + "折";
+                    string 優惠內容 = "";
+                    decimal 小計 = 0;
+                    if (item.優惠內容 > 1) {
+                        優惠內容 ="折抵" + item.優惠內容;
+                        小計 = item.小計 - item.優惠內容;
+                        總小計 += 小計;
+                    }
+                    else {
+                        優惠內容 = (item.優惠內容 * 10).ToString("###,#0") + "折";
+                        小計 = item.小計 * item.優惠內容;
+                        總小計 += 小計;
+                    }
                     <tr class="trtd">
                         <td>
                             @count .

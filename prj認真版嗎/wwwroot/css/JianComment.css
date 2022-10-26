@@ -1,7 +1,14 @@
 ﻿
+.big {
+    margin: 10px 300px;
+}
 .標題{
     font-weight:bold;
     color:aliceblue;
+    
+}
+.標題附加 {
+    margin-bottom: 0
 }
 .標題div {
     background-color: black;
@@ -9,6 +16,8 @@
 .改字型 > label{
     font-weight:bold;
     color:black;
+    margin-bottom:0;
+    margin-top:10px;
 }
 .右下角 {
     right:0;bottom:0;
@@ -27,12 +36,11 @@
 .左列 {
     border: solid 4px black;
     border-radius: 10px;
+    width:400px;
     height:800px;
-    margin-right:50px;
+    margin-right:30px;
 }
-.big {
-    margin:10px 200px;
-}
+
 .狀態顯示{
     margin-top:30px;
     font-weight:bold;
@@ -46,10 +54,34 @@
     color:black;
 }
 .checkchild {
-    width: 15px;
-    height: 15px;
+    width: 30px;
+    height: 30px;
 }
 .tbl {
-    border-collapse:separate; 
-    border-spacing:0px 10px;
+    border-collapse: separate;
+}
+.左列的row {
+   
+}
+.左列的row > td {
+        color: black;
+        margin-bottom: 30px;
+}
+thead>tr>th{
+    color:black;
+}
+thead > tr {
+    background-color: #ffd800;
+}
+.左列的td{
+    margin-bottom:30px;
+}
+.多筆DIV{
+    position:relative;
+}
+#多筆按鈕 {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    visibility:hidden;
 }

@@ -61,7 +61,6 @@ namespace prj認真版嗎.ViewModel
             get { return _com.CommentStatus; }
             set { _com.CommentStatus = value; }
         }
-        public bool? 狀態名 { get; set; }
         public string 產品名稱 { get; set; }
         public string 會員名稱 { get; set; }
     }
