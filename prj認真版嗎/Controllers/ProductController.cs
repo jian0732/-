@@ -48,10 +48,25 @@ namespace prj認真版嗎.Controllers
                                EventIntroduction = c.EventIntroduction,
                                PreparationDescription = c.PreparationDescription,
                                TravelPicture1 = c.TravelPictures.Where(pic => pic.TravelProductId == c.TravelProductId).FirstOrDefault().TravelPicture1,
+                               ProductStatus = c.ProductStatus,
 
                            }).ToList();
 
             return View(result);
+        }
+        [HttpPost]
+        public IActionResult List(List<int> TravelProductID_Status)
+        {
+            foreach (int itemID in TravelProductID_Status)
+            {
+                var q  = _db.TravelProducts.Where(p => p.TravelProductId == itemID).FirstOrDefault();
+                if (q.ProductStatus == "未上架")
+                    q.ProductStatus = "已上架";
+                else
+                    q.ProductStatus = "未上架";
+            }
+            _db.SaveChanges();
+            return RedirectToAction("List");
         }
         [HttpGet]
         public ActionResult Create()
@@ -306,6 +321,8 @@ namespace prj認真版嗎.Controllers
 
             return View();
         }
+
+        
         public IActionResult LoadTravelProductType_ReturnJson()
         {
             var TravelProductType_JsonData = _db.TravelProductTypes.ToList();

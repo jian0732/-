@@ -8,80 +8,92 @@
 <p>
     <a asp-action="Create">建立新的旅遊行程</a>
 </p>
-<table class="table">
-    <thead>
-
-        <tr>
-            <th>
-                <p>序號</p>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().TravelProductName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().Price)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().TravelProductTypeId)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().Stocks)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().Description)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().CountryDisplayName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().Cost)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().TravelPicture1)
-            </th>
-
-
-        </tr>
-
-
-    </thead>
-    <tbody>
-        @foreach (var item in Model.產品列表)
-        {
-            count++;
-        <tr>
-            <td>
-                <p>@count</p>
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TravelProductName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Price)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TravelProductTypeDisplayName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Stocks)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Description)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.CountryDisplayName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Cost)
-            </td>
-            <td>
-                <img style="width:100px;height:100px" src="@Url.Content("~/images/TravelProductPictures/")@item.TravelPicture1" />
-            </td>
-            <td>
-                @Html.ActionLink("編輯/檢視詳細行程", "Edit", new { id = item.TravelProductId }) |
-                @Html.ActionLink("刪除行程", "Delete", new { /* id=item.PrimaryKey */ })
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<form asp-action="List" method="post">
+    <div class="d-flex justify-content-end">
+        <button type="submit">修改上下架</button>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <p>序號</p>
+                </th>
+                <th>
+                    <p>選擇</p>
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().TravelProductName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().TravelProductTypeId)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().Stocks)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().Description)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().CountryDisplayName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().Cost)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().TravelPicture1)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => Model.產品列表.FirstOrDefault().ProductStatus)
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.產品列表)
+            {
+                count++;
+                <tr>
+                    <td>
+                        <p>@count</p>
+                    </td>
+                    <td>
+                        <input type="checkbox" value="@item.TravelProductId" name="TravelProductID_Status" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TravelProductName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.TravelProductTypeDisplayName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Stocks)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Description)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.CountryDisplayName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Cost)
+                    </td>
+                    <td>
+                        <img style="width:100px;height:100px" src="@Url.Content("~/images/TravelProductPictures/")@item.TravelPicture1" />
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.ProductStatus)
+                    </td>
+                    <td>
+                        @Html.ActionLink("編輯/檢視詳細行程", "Edit", new { id = item.TravelProductId }) |
+                        @Html.ActionLink("刪除行程", "Delete", new { /* id=item.PrimaryKey */ })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</form>

@@ -39,7 +39,9 @@ namespace prj認真版嗎.ViewModel
         public string EventIntroduction { get; set; }
         [DisplayName("活動注意事項")]
         public string PreparationDescription { get; set; }
-
+        [DisplayName("產品狀態")]
+        public string ProductStatus { get; set; }
+       
     }
 
     
