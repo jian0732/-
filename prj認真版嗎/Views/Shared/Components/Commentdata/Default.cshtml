@@ -8,9 +8,10 @@
     <div class="d-flex position-relative">
         <div class="form-group col-6 改字型">
             <input asp-for="CommentId" type="hidden" class="form-control" name="CommentId" />
-            <label asp-for="MembersId"></label>
+
+            <label asp-for="MembersId">會員編號 / @Model.MembersId</label>
             <input asp-for="會員名稱" class="form-control " name="MembersId" />
-            <label asp-for="TravelProductId" class="control-label">產品編號 /@Model.TravelProductId</label>
+            <label asp-for="TravelProductId" class="control-label">產品編號 / @Model.TravelProductId</label>
             <input asp-for="產品名稱" class="form-control d-inline" id="TravelProductId" />
             <label asp-for="CommentDate"></label>
             <input asp-for="CommentDate" class="form-control" name="CommentDate" />

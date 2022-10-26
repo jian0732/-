@@ -82,10 +82,26 @@ namespace prj認真版嗎.Controllers
             {
                 comment = s,
                 產品名稱 = s.TravelProduct.TravelProductName,
-                會員名稱 = s.Members.MemberName
+                會員名稱 = s.Members.MemberName,
             }).FirstOrDefault();
 
             return Json(com);
+        }
+
+        public IActionResult treat(CCommentS bol)
+        {
+            if(bol.id != null) { 
+            Comment com = null;
+            foreach (var id in bol.id)
+            {
+                com = _db.Comments.FirstOrDefault(p => p.CommentId == id);
+                com.CommentStatus = bol.bol;
+            }
+            _db.SaveChanges();
+
+             return Json(new { Res = true, Msg = "修改成功" });
+            }
+            return Json(new { Res = false, Msg = "修改失敗" });
         }
     }
 }

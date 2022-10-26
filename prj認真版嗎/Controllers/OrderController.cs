@@ -100,8 +100,9 @@ namespace prj認真版嗎.Controllers
             {
                 order = Orders.FirstOrDefault(p => p.OrderId == i);
                 order.OrderStatusId = 3;
-                _db.SaveChanges();
+                
             }
+                _db.SaveChanges();
             }
             return RedirectToAction("List");
         }
