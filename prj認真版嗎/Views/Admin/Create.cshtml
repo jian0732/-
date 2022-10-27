@@ -7,6 +7,7 @@
 <div class="d-flex justify-content-center">
     <h1>新增管理員</h1>
 </div>
+<link href="~/css/JianAdminCreate.css" rel="stylesheet" />
 <hr />
 <div class="row">
     <div class="col-md-12">
@@ -25,15 +26,15 @@
                 <label asp-for="Password" class="control-label"></label>
                 <input asp-for="Password" class="form-control" />
             </div>
-            <div class="form-group">
+            <div class="form-group inputt">
                 <label asp-for="CommentStatus" class="control-label"></label>
-                <input asp-for="CommentStatus" type="checkbox" />&nbsp;&nbsp;
+                <input asp-for="CommentStatus" type="checkbox" class="tt" />&nbsp;&nbsp;
                 <label asp-for="MemberStatus" class="control-label"></label>
-                <input asp-for="MemberStatus" type="checkbox" />&nbsp;&nbsp;
+                <input asp-for="MemberStatus" type="checkbox" class="tt" />&nbsp;&nbsp;
                 <label asp-for="ProductStatus" class="control-label"></label>
-                <input asp-for="ProductStatus" type="checkbox" />&nbsp;&nbsp;
+                <input asp-for="ProductStatus" type="checkbox" class="tt" />&nbsp;&nbsp;
                 <label asp-for="AdminStatus1" class="control-label"></label>
-                <input asp-for="AdminStatus1" type="checkbox" />
+                <input asp-for="AdminStatus1" type="checkbox" class="tt" />
             </div>
 
             <div class="form-group">
@@ -45,17 +46,17 @@
 </div>
 
 
-    <script>
+<script>
         var Account = document.querySelector("#Account1")
         var Help = document.querySelector("#NameHelp")
-       
+
         Account.addEventListener("blur", async () => {
             let rp = await fetch('@Url.Content("~/Admin/Cy")' + `?Account=${Account.value}`)
             let data =await rp.text();
             Help.textContent = data;
         })
 
-    </script>
+</script>
 
 
 

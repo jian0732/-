@@ -366,6 +366,7 @@
             var check = $(this).prop("checked");
             $(".checkchild").prop("checked", check);
         });
+
         $("#myTable tbody").on("click", "tr", function () {
             var check = $(this).find(".checkchild").prop("checked");
             if (check && check == true) {

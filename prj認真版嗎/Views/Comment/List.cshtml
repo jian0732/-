@@ -8,87 +8,88 @@
 <div class="d-flex justify-content-center">
     <h1>評價管理</h1>
 </div>
-<div class="big d-flex">
-    <div class="左列">
-        <div class="input-group">
-            <input type="text" class="form-control bg-light border-0 small"
-                   placeholder="搜尋" aria-label="Search"
-                   aria-describedby="basic-addon2">
-            <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                    <i class="fas fa-search fa-sm"></i>
-                </button>
+<form method="post">
+    <div class="big d-flex">
+        <div class="左列">
+            <div class="input-group">
+                <input type="text" class="form-control bg-light border-0 small"
+                       placeholder="搜尋" aria-label="Search"
+                       aria-describedby="basic-addon2">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button">
+                        <i class="fas fa-search fa-sm"></i>
+                    </button>
+                </div>
+            </div>
+            <div>
+                <input type="checkbox" class="checkall" name="check" id="group_checkbox" />
+                <button id="" class="btn btn-primary" onclick="load()" type="button">全部</button>
+                <button id="onestar" class="btn btn-danger" onclick="filter(1)" type="button">1星</button>
+                <button id="twostar" class="btn btn-warning" onclick="filter(2)" type="button">2星</button>
+                <button id="hidbtn" class="btn btn-secondary" onclick="filter(3)" type="button">已隱藏</button>
+                <button id="Allhidbtn" class="btn btn-info" name="check" value="false" type="submit">一鍵隱藏</button>
+            </div>
+            <div id="List">
+                <table id="myTable tbl">
+                    <tbody id="左tbody">
+                    </tbody>
+                </table>
             </div>
         </div>
         <div>
-            <button id="" class="btn btn-primary" onclick="load()">全部</button>
-            <button id="onestar" class="btn btn-danger" onclick="filter(1)">1星</button>
-            <button id="twostar" class="btn btn-warning" onclick="filter(2)">2星</button>
-            <button id="hidbtn" class="btn btn-secondary" onclick="filter(3)" >已隱藏</button>
-        </div>
-        <div id="List">
-            <table id="myTable tbl">
-                <tbody id="左tbody">
-                   
-                </tbody>
-            </table>
-        </div>
-    </div>
-    <div>
 
 
-        <div class="評論內容">
-            <div class="標題div">
-                <h3 class="標題">評價內容 / 修改</h3>
+            <div class="評論內容">
+                <div class="標題div">
+                    <h3 class="標題">評價內容 / 修改</h3>
+                </div>
+                <div id="comview">
+
+                </div>
             </div>
-            <div id="comview">
 
-            </div>
-        </div>
-
-        <div class="評論內容 多筆DIV" >
-            <div class="標題div">
-                <h3 class="標題 標題附加">多筆處理</h3>
-            </div>
-            <div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                留言編號
-                            </th>
-                            <th>
-                                客戶姓名
-                            </th>
-                            <th>
-                                目前狀態
-                            </th>
-                            <th>
-                                留言內容
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody id="coms">
-
-
-                    </tbody>
-                </table>
-                <div id="多筆按鈕">
-                    <button type="button" onclick="多筆處理(false)" class="btn btn-warning">多筆隱藏</button>
-                    <button type="button" onclick="多筆處理(true)" class="btn btn-danger">多筆解除</button>
+            <div class="評論內容 多筆DIV">
+                <div class="標題div">
+                    <h3 class="標題 標題附加">多筆處理</h3>
+                </div>
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    留言編號
+                                </th>
+                                <th>
+                                    客戶姓名
+                                </th>
+                                <th>
+                                    目前狀態
+                                </th>
+                                <th>
+                                    留言內容
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody id="coms">
+                        </tbody>
+                    </table>
+                    <div id="多筆按鈕">
+                        <button type="button" onclick="多筆處理(false)" class="btn btn-warning">多筆隱藏</button>
+                        <button type="button" onclick="多筆處理(true)" class="btn btn-danger">多筆解除</button>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</form>
 @section Scripts{
     <script>
         (function () {
             load();
         }())
         function load() {
+            
             $("#左tbody").load("@Url.Content("~/Comment/goleft")")
-
         }
         function getdata(id) {
             $("#comview").load("@Url.Content("~/Comment/Showcomment?id=")" + id)
@@ -172,32 +173,15 @@
             }
         }
 
-        function All()
-        {
-            $.getJSON("@Url.Content("~/Comment/getAll")", function (datas) {
-                let row = document.createElement('tr');
-                row.className = '左列的row'
-                datas.map(data =>
-                    console.log(data)
-
-                    )
-
-            })
-        }
 
         function filter(prt) {
             $("#左tbody").load("@Url.Content("~/Comment/commentfilter")"+"?filter="+prt)
-             @*$.ajax({
-                url: "@Url.Content("~/Comment/commentfilter")"+"?filter="+prt,
-                type: "get",
-                 dataType: "json"
-             }).done(datas => {
-                 if (datas.length == 0) {
-                     $(".左列的row").remove();
-                 }
-
-             })*@
         }
+
+        $(".checkall").on('click', function () {
+            var check = $(this).prop("checked");
+            $(".checkchild").prop("checked", check);
+        });
     </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 }

@@ -9,5 +9,9 @@ namespace prj認真版嗎.ViewModel
     {
         public int[] id { get; set; }
         public bool bol { get; set; }
+
+        public List<int> idd  { get; set; }
+        public bool check { get; set; }
+
     }
 }

@@ -27,6 +27,20 @@ namespace prj認真版嗎.Controllers
 
             return View();
         }
+        [HttpPost]
+        public IActionResult List(CCommentS ss)
+        {
+            if (ss.idd != null) { 
+            Comment com = null;
+            foreach (var id in ss.idd)
+            {
+                com = _db.Comments.FirstOrDefault(p => p.CommentId == id);
+                com.CommentStatus =ss.check;
+            }
+            _db.SaveChanges();
+            }
+            return View();
+        }
 
         public IActionResult goleft()
         {
