@@ -3,6 +3,9 @@
 @{ ViewData["Title"] = "建立行程資訊"; }
 
 <h1>建立行程資訊作業</h1>
+<div style="position: fixed; right: 700px; top:300px">
+    <button class="btn btn-dark" id="demo">嗲某鍵</button>
+</div>
 
 
 <hr />
@@ -33,7 +36,7 @@
             </div>
             <div class="form-group">
                 <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control"></textarea>
+                <textarea asp-for="Description" class="form-control" cols="50" rows="8"></textarea>
                 <span asp-validation-for="Description" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -49,12 +52,12 @@
             </div>
             <div class="form-group">
                 <label asp-for="EventIntroduction" class="control-label"></label>
-                <textarea asp-for="EventIntroduction" class="form-control"></textarea>
+                <textarea asp-for="EventIntroduction" class="form-control" cols="50" rows="5"></textarea>
                 <span asp-validation-for="EventIntroduction" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="PreparationDescription" class="control-label"></label>
-                <textarea asp-for="PreparationDescription" class="form-control"></textarea>
+                <textarea asp-for="PreparationDescription" class="form-control" cols="50" rows="5"></textarea>
                 <span asp-validation-for="PreparationDescription" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -96,13 +99,13 @@
             </div>
             <div class="form-group">
                 <label asp-for="_TravelProductDetail[0].DailyDetailText" class="control-label"></label>
-                <textarea asp-for="_TravelProductDetail[0].DailyDetailText" class="form-control"></textarea>
+                <textarea asp-for="_TravelProductDetail[0].DailyDetailText" class="form-control" cols="50" rows="8"></textarea>
                 <span asp-validation-for="_TravelProductDetail[0].DailyDetailText" class="text-danger"></span>
             </div>
             ===========新增交通方式===========
             <fieldset>
                 <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID"  type="checkbox" value="1" id="railway">
+                    <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="1" id="railway">
                     <label class="form-check-label" for="railway">鐵路</label><br>
 
                     <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="2" id="airplane">
@@ -113,6 +116,12 @@
 
                     <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="4" id="ship" />
                     <label class="form-check-label" for="ship">遊輪</label>
+
+                    <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="5" id="motor" />
+                    <label class="form-check-label" for="motor">機車</label>
+
+                    <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="6" id="bike" />
+                    <label class="form-check-label" for="bike">腳踏車</label>
                 </div>
             </fieldset>
             ===========選擇行程景點===========
@@ -161,6 +170,84 @@
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 <script>
+    //DEMO用
+    $('#demo').on("click", function () {
+        $('#TravelProductName').val("綠島｜半農半漁深度文化生態三日遊");
+        $('#Price').val(6499);
+        $('#TravelProductTypeId').get(0).selectedIndex = 2;
+        $('#Stocks').val(30);
+        let temp = `自繁忙的工作與城市中跳脫，加入一趟3天的深度冒險旅遊#
+費用包含台東-綠島來回船票，入住星月屋渡假山莊兩晚（或同級）#
+從農、漁業文化反映綠島不同年代的轉變，並透過飲食認識綠島的傳統，原來早期島上可是主農副漁的生活#
+半農：因地質、土壤之關係，綠島旱作採番薯和花生輪種，來綠島踩田，體驗一日小農夫，並親手製作在地經典口味的花生糖！#
+半漁：鰹竿釣文化已沒落，只能用影片回顧海上的英勇，體驗從挑刺、烘烤、補漿、再次烘烤到成品，一步一步認識得來不易的奢華柴魚#
+浮潛探索七彩繽紛海底世界、參與夜間生態觀察，從不同角度觀察多面的綠島`;
+        $('#Description').val(temp);
+        $('#CountryId').get(0).selectedIndex = 1;
+        $('#Cost').val(1500);
+        temp =`體驗傳統的鰹於工序工法，接著烘烤、補漿、再次烘烤到柴魚成品完成#
+DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式品嘗頂級柴魚滋味#
+學習怎麼熏製柴魚、花生田裡踩田製作花生糖、悠遊大海，來趟3天2夜體會綠島深度冒險之旅吧！`
+        $('#EventIntroduction').val(temp);
+        temp =`容易暈眩者，強烈建議在活動前1小時服用暈眩藥#
+供應商提供高品質安全設備，且由經驗豐富的教練陪同指導，參加者不需具備游泳技能也能享有愉快、安全的體驗#
+雖非強制，仍建議於參加活動前自行購買意外／旅遊險`
+        $('#PreparationDescription').val(temp);
+        temp = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7363.943916330125!2d121.49917821924109!3d22.65483411579356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346f8df289f9d775%3A0x7590b56495b478ed!2zT0ggR09PRCDntqDls7bmsJHlrr8!5e0!3m2!1szh-TW!2stw!4v1666845107824!5m2!1szh-TW!2stw`;
+        $('#MapUrl').val(temp);
+        $('#TravelPictureText').val("綠島圖片介紹集");
+        $('#TravelProductDetail_HotelID').get(0).selectedIndex = 9;        
+        $('#zTravelProductDetail_0__Date').val("2022-10-27");
+        temp =`第1天#
+時間：#
+11:00 - 19:00#
+總時長：8小時0分鐘#
+11:00 集合地點｜富岡候船室#
+11:30 乘風破浪｜前進綠島#
+12:30 抵達綠島｜南寮港口#
+13:30 享用午餐｜慢食綠島（自理）#
+14:30 自由活動｜環島解密趣（自理）#
+17:00 享用晚餐｜慢食綠島（自理）#
+19:00 世界特有海底溫泉｜朝日溫泉（自費）`
+        $('#zTravelProductDetail_0__DailyDetailText').val(temp);        
+        $('#View_CityId0').get(0).selectedIndex = 16;
+        $('#ViewName0').val("綠島觀景步道");
+        $('#TravelProductDetail_HotelIDH2').get(0).selectedIndex = 10;
+        $('#_TravelProductDetail_Date1').val("2022-10-28");
+        temp =`第2天#
+時間：#
+08:00 - 20:00#
+總時長：12小時0分鐘#
+08:00 享用早餐｜民宿#
+​10:00 海洋生態｜浮潛體驗#
+12:30 享用午餐｜慢食綠島（自理）#
+15:00 頂級柴魚發源地｜煙仔魚手作體驗#
+17:00 享用晚餐（自理）#
+19:00 派對動物｜夜間生態觀察（時間依民宿公告為主）#
+20:00 返回民宿｜明天見`
+        $('#_TravelProductDetail_DailyDetailText1').val(temp);
+        $('#View_CityId1').get(0).selectedIndex = 16;
+        $('#ViewName1').val("綠島紫坪");
+        $('#View_CityId2').get(0).selectedIndex = 16;
+        $('#ViewName2').val("綠島紫坪生態保育區");
+        $('#_TravelProductDetail_Date2').val("2022-10-29");
+        temp =`第3天#
+時間：#
+08:00 - 13:30#
+總時長：5小時30分鐘#
+08:00 享用早餐｜民宿#
+09:00 農事體驗｜花生什麼事#
+11:00 享用午餐（自理）#
+12:30 乘風破浪｜返回台東（依當日航班時間）#
+13:30 抵達台東｜富岡候船室`
+        $('#_TravelProductDetail_DailyDetailText2').val(temp);
+        $('#View_CityId3').get(0).selectedIndex = 16;
+        $('#ViewName3').val("綠島朝日溫泉");
+        $('#View_CityId4').get(0).selectedIndex = 16;
+        $('#ViewName4').val("綠島藍洞");
+    })
+
+
     //新增、減少行程明細
     let detail_num = 2;
     let CCTPVM_Count = 0; //給CCreateTravelProductViewModel存資料用的Count
@@ -185,11 +272,11 @@
                 `</div>` +
                 `<div class="form-group">` +
                 `<label for="Date" class="control-label">日期</label>` +
-                `<input type="date" id="Date" name="_TravelProductDetail[${CCTPVM_Count}].Date" class="form-control" />` +
+                `<input type="date" id="_TravelProductDetail_Date${CCTPVM_Count}" name="_TravelProductDetail[${CCTPVM_Count}].Date" class="form-control" />` +
                 `</div>` +
                 `<div class="form-group">` +
                 `<label for="DailyDetailText" class="control-label">每日行程概述</label>` +
-                `<textarea id="DailyDetailText" name="_TravelProductDetail[${CCTPVM_Count}].DailyDetailText" class="form-control"></textarea>` +
+                `<textarea id="_TravelProductDetail_DailyDetailText${CCTPVM_Count}" name="_TravelProductDetail[${CCTPVM_Count}].DailyDetailText" class="form-control" cols="50" rows="8"></textarea>` +
                 `</div>` +
                 `=========== 新增交通方式 ===========` +
                 `<fieldset>`+
@@ -202,6 +289,10 @@
                 `<label class="form-check-label" for="bus${CCTPVM_Count}">巴士</label>` +
                 `<input class="form-check-input" name="_TravelProductDetail[${CCTPVM_Count}].TrasportationID" type="checkbox" value="4" id="ship${CCTPVM_Count}" />` +
                 `<label class="form-check-label" for="ship${CCTPVM_Count}">遊輪</label>` +
+                `<input class="form-check-input" name="_TravelProductDetail[${CCTPVM_Count}].TrasportationID" type="checkbox" value="5" id="motor${CCTPVM_Count}" />` +
+                `<label class="form-check-label" for="motor${CCTPVM_Count}">機車</label>` +
+                `<input class="form-check-input" name="_TravelProductDetail[${CCTPVM_Count}].TrasportationID" type="checkbox" value="6" id="bike${CCTPVM_Count}" />` +
+                `<label class="form-check-label" for="bike${CCTPVM_Count}">腳踏車</label>` +
                 `</div>` +
                 `</fieldset>`+
                 `=========== 選擇行程景點 ===========` +

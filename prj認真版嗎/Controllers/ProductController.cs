@@ -134,7 +134,7 @@ namespace prj認真版嗎.Controllers
                                 TravelProductDetailId = latest_DetailID,
                                 TrasportationId = TrasportationID,
                             };
-                            //_db.ProductToTransportations.Add(ptt);                            
+                            _db.ProductToTransportations.Add(ptt);
                         }
                         foreach (int ViewID in list.ViewID)
                         {
