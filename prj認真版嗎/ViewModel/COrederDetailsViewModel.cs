@@ -28,7 +28,7 @@ namespace prj認真版嗎.ViewModel
         public int OrderId
         {
             get { return _ord.OrderId; }
-            set { _ord.OrderId = (int)value; }
+            set { _ord.OrderId = value; }
         }
         public int TravelProductId
         {
@@ -54,7 +54,7 @@ namespace prj認真版嗎.ViewModel
         }
         public string 產品名稱 { get; set; }
         public string 優惠券名稱 { get; set; }
-        public decimal 優惠內容 { get; set; }
+        public decimal? 優惠內容 { get; set; }
         public decimal 小計 { get { return this.Quantity * this.UnitPrice; } }
     }
 }

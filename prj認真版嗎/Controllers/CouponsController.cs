@@ -5,10 +5,12 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using prj認真版嗎.Authorization;
 using prj認真版嗎.Models;
 
 namespace prj認真版嗎.Controllers
 {
+    [AuthorizationManeger]
     public class CouponsController : Controller
     {
         private readonly PlanetTravelContext _context;

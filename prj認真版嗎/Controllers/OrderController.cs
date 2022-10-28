@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using prj認真版嗎.Authorization;
 using prj認真版嗎.Models;
 using prj認真版嗎.ViewModel;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace prj認真版嗎.Controllers
 {
+    [AuthorizationManeger]
     public class OrderController : Controller
     {
 
@@ -15,8 +17,7 @@ namespace prj認真版嗎.Controllers
         {
             _db = db;
             _db.Coupons.ToList();
-            
-            _db.OrderDetails.ToList();
+            //_db.OrderDetails.ToList();
         }
         private PlanetTravelContext _db;
         public IActionResult List()
@@ -35,17 +36,19 @@ namespace prj認真版嗎.Controllers
         public ActionResult OrderDetail(int? id)
         {
             List<COrederDetailsViewModel> datas = null;
-            if(id != null) { 
-            datas = _db.OrderDetails.Where(p => p.OrderId == id)
-                .Select(s => new COrederDetailsViewModel
-                {
-                    orderdetail = s,
-                    優惠券名稱 = s.Coupon.CouponName,
-                    優惠內容 = s.Coupon.Discount,
-                    產品名稱 = s.TravelProduct.TravelProductName,
+            var q = _db.OrderDetails.Where(p => p.OrderId == id).ToList();
+            if (id != null)
+            {
+                datas = _db.OrderDetails.Where(p => p.OrderId == id)
+                    .Select(s => new COrederDetailsViewModel
+                    {
+                        orderdetail = s,
+                        優惠券名稱 = s.Coupon.CouponName,
+                        優惠內容 = s.Coupon.Discount,
+                        產品名稱 = s.TravelProduct.TravelProductName,
 
-                }).ToList();
-            return View(datas);
+                    }).ToList();
+                return View(datas);
             }
 
             return RedirectToAction("List");
@@ -67,12 +70,12 @@ namespace prj認真版嗎.Controllers
         public IActionResult Edit(COrderViewModel adm)
         {
             Order od = _db.Orders.FirstOrDefault(p => p.OrderId == adm.OrderId);
-            var ods =_db.OrderStatuses.ToList();
+            var ods = _db.OrderStatuses.ToList();
             var pay = _db.Payments.ToList();
             if (od != null)
             {
-                od.OrderStatusId = ods.FirstOrDefault(a=>a.OrderStatusName==adm.訂單狀態).OrderStatusId;
-                od.PaymentId = pay.FirstOrDefault(a=>a.PaymentName==adm.付款方式).PaymentId;
+                od.OrderStatusId = ods.FirstOrDefault(a => a.OrderStatusName == adm.訂單狀態).OrderStatusId;
+                od.PaymentId = pay.FirstOrDefault(a => a.PaymentName == adm.付款方式).PaymentId;
                 _db.SaveChanges();
             }
             return RedirectToAction("List");
@@ -95,15 +98,27 @@ namespace prj認真版嗎.Controllers
         public IActionResult EditStatus(COrderEditStatus id)
         {
             Order order = null;
-            var Orders = _db.Orders.ToList();
-            if (id.Orderkey != null) { 
-            foreach (var i in id.Orderkey)
+
+            if (id.Orderkey.Count != 0)
             {
-                order = Orders.FirstOrDefault(p => p.OrderId == i);
-                order.OrderStatusId = 3;
-                
-            }
+                var Orders = _db.Orders.ToList();
+                foreach (var i in id.Orderkey)
+                {
+                    order = Orders.FirstOrDefault(p => p.OrderId == i);
+                    order.OrderStatusId = 3;
+
+                }
                 _db.SaveChanges();
+            }
+            return RedirectToAction("List");
+        }
+
+        public IActionResult showreply(int? id)
+        {
+            if (id != null)
+            {
+                var data = _db.OrderCancels.FirstOrDefault(p=>p.OrderId==(int)id);
+                return View(data);
             }
             return RedirectToAction("List");
         }

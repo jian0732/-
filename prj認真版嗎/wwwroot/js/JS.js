@@ -10,3 +10,15 @@ showmodal = (url, title) => {
         }
     })
 }
+
+showmod = (url, title) => {
+    $.ajax({
+        type: "GET",
+        url: url,
+        success: function (res) {
+            $("#newstatic .modal-body").html(res);
+            $("#newstatic .modal-title").html(title);
+            $("#newstatic").modal('show');
+        }
+    })
+}

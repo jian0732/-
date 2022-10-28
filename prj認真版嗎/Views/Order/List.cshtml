@@ -3,7 +3,7 @@
 @section Styles
 {
     <link href="~/css/JianCutsomerList.css" rel="stylesheet" />
-    <link href="~/css/jiancustomer.css" rel="stylesheet" />  
+    <link href="~/css/jiancustomer.css" rel="stylesheet" />
 }
 <form method="post" action="~/Order/EditStatus">
     <div class="d-flex justify-content-center">
@@ -47,7 +47,7 @@
                 {
                     DateTime s = DateTime.Parse(item.OrderDate);
                     <tr class="trtd">
-                        <td >
+                        <td>
                             <input class="checkchild" type="checkbox" value="@item.OrderId" name="Orderkey">
                         </td>
                         <td>
@@ -69,6 +69,11 @@
                         <td>
                             <a class="btn 檢視按鈕" onclick="showmodal('@Url.Action("OrderDetail","Order",new {id=@item.OrderId},Context.Request.Scheme)',null)"><i class="fa fa-list" aria-hidden="true"></i>檢視明細</a>
                             <a class="btn 修改按鈕" onclick="showmodal('@Url.Action("Edit","Order",new {id=@item.OrderId},Context.Request.Scheme)',null)"><i class=" fas fa-fw fa-wrench"></i>修改</a>
+                            @if (item.訂單狀態 == "處理中")
+                            {
+                                <a class="btn btn-danger 處理按鈕" onclick="showmod('@Url.Action("showreply","Order",new {id=@item.OrderId},Context.Request.Scheme)',null)"><i class="bi bi-envelope-exclamation-fill"></i>訂單處理</a>
+                            }
+
                         </td>
                     </tr>
                 }
@@ -89,8 +94,17 @@
     </div>
 </div>
 <!--檢視光箱-->
-
-
+<!--反應光箱-->
+<div class="modal fade" id="newstatic" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>   
+        </div>
+    </div>
+</div>
+<!--反應光箱-->
 @section Scripts{
     <script type="text/javascript" charset="utf-8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
     <script src="~/js/JS.js"></script>
@@ -275,7 +289,7 @@
                         "clearMessage": "清空",
                         "count": "{total}",
                         "countFiltered": "{shown} ({total})",
-                       "title": "過濾條件 - %d",
+                        "title": "過濾條件 - %d",
                         "showMessage": "顯示全部",
                         "collapseMessage": "摺疊全部"
                     },

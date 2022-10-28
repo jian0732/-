@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using prjMvcCoreModel.ViewModel;
+using prj認真版嗎.Authorization;
 using prj認真版嗎.Models;
 using prj認真版嗎.ViewModel;
 using System;

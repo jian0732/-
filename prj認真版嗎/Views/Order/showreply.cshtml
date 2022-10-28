@@ -1,0 +1,32 @@
+﻿@model prj認真版嗎.Models.OrderCancel
+
+@{
+
+    Layout = null;
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="showreply">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="OrderCancelId" />
+
+            <div class="form-group">
+                <label asp-for="OrderId" class="control-label"></label>
+                <input asp-for="OrderId" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="Titel" class="control-label"></label>
+                <input asp-for="Titel" class="form-control" />
+            </div>
+            <div class="form-group">
+                <label asp-for="CancaelContent" class="control-label"></label>
+                <input asp-for="CancaelContent" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>

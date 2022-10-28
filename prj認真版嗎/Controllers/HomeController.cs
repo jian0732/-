@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using prjMvcCoreModel.ViewModel;
+using prj認真版嗎.Authorization;
 using prj認真版嗎.Models;
 using prj認真版嗎.ViewModel;
 using System;
@@ -13,15 +15,18 @@ using System.Threading.Tasks;
 
 namespace prj認真版嗎.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly PlanetTravelContext _db;
+
         public HomeController(ILogger<HomeController> logger, PlanetTravelContext Travel)
         {
             _db = Travel;
             _logger = logger;
         }
+        [AuthorizationManeger]
         public IActionResult page()
         {
             return View();
@@ -46,9 +51,12 @@ namespace prj認真版嗎.Controllers
         }
         public IActionResult Logout()
         {
+            var qq= HttpContext.Session.GetString(CDictionary.SK_Admin_Login);
             HttpContext.Session.Remove(CDictionary.SK_Admin_Login);
+            var q = HttpContext.Session.GetString(CDictionary.SK_Admin_Login);
             return RedirectToAction("Login");
         }
+        [AllowAnonymous]
         public IActionResult Login()
         {
             return View();
@@ -72,7 +80,7 @@ namespace prj認真版嗎.Controllers
                     }).FirstOrDefault();
 
                     if (qq != null) 
-                    { 
+                    {
                     string jsonUser = JsonSerializer.Serialize(qq);
                     HttpContext.Session.SetString(CDictionary.SK_Admin_Login, jsonUser);
                         return RedirectToAction("page");

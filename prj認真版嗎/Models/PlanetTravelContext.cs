@@ -30,6 +30,7 @@ namespace prj認真版嗎.Models
         public virtual DbSet<MemberStatus> MemberStatuses { get; set; }
         public virtual DbSet<Myfavorite> Myfavorites { get; set; }
         public virtual DbSet<Order> Orders { get; set; }
+        public virtual DbSet<OrderCancel> OrderCancels { get; set; }
         public virtual DbSet<OrderDetail> OrderDetails { get; set; }
         public virtual DbSet<OrderStatus> OrderStatuses { get; set; }
         public virtual DbSet<Payment> Payments { get; set; }
@@ -47,9 +48,7 @@ namespace prj認真版嗎.Models
 //            if (!optionsBuilder.IsConfigured)
 //            {
 //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-
 //                optionsBuilder.UseSqlServer("Data Source=192.168.36.26;Initial Catalog=PlanetTravel;User ID=jian;Password=0777");
-
 //            }
 //        }
 
@@ -354,6 +353,25 @@ namespace prj認真版嗎.Models
                     .HasConstraintName("FK_Order_Payment");
             });
 
+            modelBuilder.Entity<OrderCancel>(entity =>
+            {
+                entity.ToTable("OrderCancel");
+
+                entity.Property(e => e.OrderCancelId).HasColumnName("OrderCancelID");
+
+                entity.Property(e => e.OrderId).HasColumnName("OrderID");
+
+                entity.Property(e => e.Titel)
+                    .IsRequired()
+                    .HasMaxLength(50);
+
+                entity.HasOne(d => d.Order)
+                    .WithMany(p => p.OrderCancels)
+                    .HasForeignKey(d => d.OrderId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_OrderCancel_Order");
+            });
+
             modelBuilder.Entity<OrderDetail>(entity =>
             {
                 entity.ToTable("OrderDetail");
@@ -471,6 +489,8 @@ namespace prj認真版嗎.Models
 
                 entity.Property(e => e.TravelPictureId).HasColumnName("TravelPictureID");
 
+                entity.Property(e => e.PicturePurpose).HasDefaultValueSql("((2))");
+
                 entity.Property(e => e.TravelPicture1).HasColumnName("TravelPicture");
 
                 entity.Property(e => e.TravelPictureText)
@@ -519,7 +539,6 @@ namespace prj認真版嗎.Models
                 entity.HasOne(d => d.TravelProductType)
                     .WithMany(p => p.TravelProducts)
                     .HasForeignKey(d => d.TravelProductTypeId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TravelProduct_TravelProductType");
             });
 

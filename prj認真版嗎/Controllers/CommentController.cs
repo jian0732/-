@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using prj認真版嗎.Authorization;
 using prj認真版嗎.Models;
 using prj認真版嗎.ViewModel;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace prj認真版嗎.Controllers
 {
+    [AuthorizationManeger]
     public class CommentController : Controller
     {
         public CommentController(PlanetTravelContext _PTdb)

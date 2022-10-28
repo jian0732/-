@@ -32,8 +32,9 @@ namespace prj認真版嗎
             });
             services.AddMvc();
 
-            services.AddHttpContextAccessor();
+            services.AddAuthorization();//
 
+            services.AddHttpContextAccessor();
             services.AddSession();
             services.AddControllersWithViews();
         }
@@ -53,6 +54,8 @@ namespace prj認真版嗎
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+
+            app.UseAuthorization();//
 
             app.UseRouting();
             app.UseSession();
