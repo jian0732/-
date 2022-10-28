@@ -1,0 +1,143 @@
+﻿@using prj認真版嗎.ViewModel
+@model C統計表
+@section Styles{
+    <style>
+    </style>
+    <link href="~/css/JainAnalysisTable.css" rel="stylesheet" />
+}
+
+<div class="container-fluid">
+    <!-- Page Heading -->
+    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+        <h1 class="h3 mb-0 text-gray-800">儀錶板分析</h1>
+        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+            <i class="fas fa-download fa-sm text-white-50"></i> Generate Report
+        </a>
+    </div>
+
+    <!-- Content Row -->
+    <div class="row">
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-primary shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                <div class="卡片字體">當月訂單量 </div>
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                @Model.當月訂單量 筆
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-success shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+                                <div class="卡片字體">當月營業額 </div>
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                NT @Model.當月目前營業額.ToString("###,###,##0")
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Earnings (Monthly) Card Example -->
+        <div class="col-xl-3 col-md-6 mb-4">
+            <div class="card border-left-info shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+
+                            <div class="font-weight-bold text-warning text-uppercase mb-1">
+                                <div class="卡片字體">當月取消訂單筆數</div>
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="Ocount">
+                                @Model.當月取消筆數 筆
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Requests Card Example -->
+        <a href="@Url.Content("~/Order/List")" class="col-xl-3 col-md-6 mb-4" id="goorder">
+            <div class="card border-left-warning shadow h-100 py-2">
+                <div class="card-body">
+                    <div class="row no-gutters align-items-center">
+                        <div class="col mr-2">
+
+                            <div class="font-weight-bold text-warning text-uppercase mb-1">
+                                <div class="卡片字體">待處理訂單</div>
+                            </div>
+                            <div class="h5 mb-0 font-weight-bold text-gray-800" id="Ocount">
+                                @Model.待處理 筆
+                            </div>
+                        </div>
+
+                        <div class="col-auto">
+                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+</div>
+
+
+
+<div>
+    <div class="container-fluid">
+        <button type="button" id="A" data-title="Awesome Button">111</button>
+        <button type="button" id="B">222</button>
+        <button type="button">333</button>
+        <button type="button">444</button>
+        <button type="button">555</button>
+    </div>
+</div>
+<div>
+    <div id="Component"></div>
+
+</div>
+
+
+
+
+@section Scripts{
+    <script>
+        $("#A").on("click", function () {
+            $("#Component").load("@Url.Content("~/AnalysisTable/AA")")
+        })
+        $("#B").on("click", function () {
+            $("#Component").load("@Url.Content("~/AnalysisTable/BB")")
+        })
+    </script>
+
+
+}

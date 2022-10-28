@@ -122,5 +122,16 @@ namespace prj認真版嗎.Controllers
             }
             return RedirectToAction("List");
         }
+        [HttpPost]
+        public IActionResult showreply(OrderCancel data)
+        {
+            if (data != null)
+            {
+                var q = _db.Orders.FirstOrDefault(p => p.OrderId == data.OrderId);
+                q.OrderStatusId = 4;
+                _db.SaveChanges();
+            }
+            return RedirectToAction("List");
+        }
     }
 }

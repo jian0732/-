@@ -67,11 +67,11 @@
                             @Html.DisplayFor(modelItem => item.付款方式)
                         </td>
                         <td>
-                            <a class="btn 檢視按鈕" onclick="showmodal('@Url.Action("OrderDetail","Order",new {id=@item.OrderId},Context.Request.Scheme)',null)"><i class="fa fa-list" aria-hidden="true"></i>檢視明細</a>
-                            <a class="btn 修改按鈕" onclick="showmodal('@Url.Action("Edit","Order",new {id=@item.OrderId},Context.Request.Scheme)',null)"><i class=" fas fa-fw fa-wrench"></i>修改</a>
+                            <a class="btn 檢視按鈕 附加事件" onclick="showmodal('@Url.Action("OrderDetail","Order",new {id=@item.OrderId},Context.Request.Scheme)',null)"><i class="fa fa-list" aria-hidden="true"></i>檢視明細</a>
+                            <a class="btn 修改按鈕 附加事件" onclick="showmodal('@Url.Action("Edit","Order",new {id=@item.OrderId},Context.Request.Scheme)',null)"><i class=" fas fa-fw fa-wrench"></i>修改</a>
                             @if (item.訂單狀態 == "處理中")
                             {
-                                <a class="btn btn-danger 處理按鈕" onclick="showmod('@Url.Action("showreply","Order",new {id=@item.OrderId},Context.Request.Scheme)',null)"><i class="bi bi-envelope-exclamation-fill"></i>訂單處理</a>
+                                <a class="btn btn-danger 處理按鈕 附加事件" onclick="showmod('@Url.Action("showreply","Order",new {id=@item.OrderId},Context.Request.Scheme)',null)"><i class="bi bi-envelope-exclamation-fill"></i>訂單處理</a>
                             }
 
                         </td>
@@ -381,13 +381,14 @@
             $(".checkchild").prop("checked", check);
         });
 
-        $("#myTable tbody").on("click", "tr", function () {
-            var check = $(this).find(".checkchild").prop("checked");
+        $("#myTable tbody tr td:nth-child(-n+6)").on("click", function () {
+            var check = $(this).closest("tr").find(".checkchild").prop("checked");
             if (check && check == true) {
-                $(this).find('.checkchild').prop("checked", false);
+                $(this).closest("tr").find('.checkchild').prop("checked", false);
             } else {
-                $(this).find('.checkchild').prop("checked", true);
+                $(this).closest("tr").find('.checkchild').prop("checked", true);
             }
         });
+
     </script>
 }
