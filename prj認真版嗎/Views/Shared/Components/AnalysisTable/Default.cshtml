@@ -1,77 +1,91 @@
 ﻿@using prj認真版嗎.ViewModel
-@model C年份營業額統計
+@model List<C年份營業額統計>
 @{
     Layout = null;
 }
 
-<div class="container">
-    <canvas id="myChart" width="400" height="200"></canvas>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous">
+
+<div class="d-flex" style="width:500px;height:200px">
+    <canvas id="myChart" width="100" height="100"></canvas>
+    <canvas id="myChartO" width="100" height="100"></canvas>
 </div>
+
+
+<input type="hidden" id="c" value="@ViewBag.國家" />
+<input type="hidden" id="p" value="@ViewBag.營業額" />
+<input type="hidden" id="g" value="@ViewBag.性別" />
+<input type="hidden" id="gp" value="@ViewBag.性別比例" />
+<input type="hidden" id="gg" value="@ViewBag.消費比數" />
+
+
 <script>
+
+    var count = document.querySelector("#c").value.split(",").length - 1
+    var c = document.querySelector("#c").value.split(",");
+    var p = document.querySelector("#p").value.split(",");
+    var color = "";
+    (function () {
+        go();
+    }());
+
+    function go() {
+        for (var i = 0; i <= count - 1; i++) {
+
+            color += '#' + Math.floor(Math.random() * 16777215).toString(16) + ',';
+        }
+    }
     var ctx = document.getElementById('myChart').getContext('2d');
+
     var myChart = new Chart(ctx, {
         type: 'bar',
         data: {
-            labels: ['銷售量排行'],
-            datasets: [
-                {
-                    label:'日本',
-                    data: [5],
-                    backgroundColor:'rgba(255, 99, 132, 0.5)',
-                    borderColor:'rgba(255, 99, 132, 1)',
-                }, {
-                    label:'韓國',
-                    data: [3],
-                    backgroundColor:'rgba(54, 162, 235, 0.5)',
-                    borderColor:'rgba(54, 162, 235, 1)',
-                },{
-                    label:'台灣',
-                    data: [3],
-                    backgroundColor: 'rgba(255, 206, 86, 0.5)',
-                    borderColor: 'rgba(255, 206, 86, 1)',
-                },{
-                    label:'美國',
-                    data: [3],
-                    backgroundColor: 'rgba(75, 192, 192, 0.5)',
-                    borderColor: 'rgba(75, 192, 192, 1)',
-                },{
-                    label:'泰國',
-                    data: [5],
-                    backgroundColor: 'rgba(153, 102, 255, 0.5)',
-                    borderColor: 'rgba(153, 102, 255, 1)',
-                },{
-                    label:'中國',
-                    data: [20],
-                    backgroundColor:'rgba(54, 162, 235, 0.5)',
-                    borderColor:'rgba(54, 162, 235, 1)',
-                },{
-                    label:'新加坡',
-                    data: [2],
-                    backgroundColor: 'rgba(255, 159, 64, 0.5)',
-                    borderColor: 'rgba(255, 159, 64, 1)',
-                }
-            ]
+            labels: c,
+            datasets: [{
+                label: "各國營業額",
+                data: p,
+                backgroundColor: color.split(","),
+            }]
         },
         options: {
-            responsive: true,
-            title: {
-                display: true,
-                text: 'Grid Line Settings'
-            },
             scales: {
                 yAxes: [{
-                    gridLines: {
-                        drawBorder: false,
-                        color: ['pink', 'red', 'orange', 'yellow', 'green', 'blue', 'indigo', 'purple']
-                    },
                     ticks: {
-                        min: 0,
-                        max: 100,
-                        stepSize: 10
+
                     }
                 }]
             }
-        }
+        },
     });
+
+
+
+
+    var ctxO = document.getElementById('myChartO').getContext('2d');
+
+    var g = document.querySelector("#g").value.split(",");
+    var gp = document.querySelector("#gp").value.split(",");
+    var gg = document.querySelector("#gg").value.split(",");
+
+    var data = {
+        labels: g,
+        datasets: [{
+            label: 'My First dataset',
+            data: gg,
+            backgroundColor: [
+                'rgb(255, 99, 132,0.3)',
+                'rgb(54, 162, 235,0.3)',
+            ],
+            hoverOffset: 4
+        }]
+    };
+    var myChart = new Chart(ctxO, {
+        type: 'pie',
+        data: data,
+
+    });
+
 </script>
-<script type="text/javascript" sre="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>

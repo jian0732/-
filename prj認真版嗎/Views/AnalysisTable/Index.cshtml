@@ -112,17 +112,11 @@
 
 
 
+
 <div>
-    <div class="container-fluid">
-        <button type="button" id="A" data-title="Awesome Button">111</button>
-        <button type="button" id="B">222</button>
-        <button type="button">333</button>
-        <button type="button">444</button>
-        <button type="button">555</button>
+    <div id="Component">
+
     </div>
-</div>
-<div>
-    <div id="Component"></div>
 
 </div>
 
@@ -131,12 +125,8 @@
 
 @section Scripts{
     <script>
-        $("#A").on("click", function () {
-            $("#Component").load("@Url.Content("~/AnalysisTable/AA")")
-        })
-        $("#B").on("click", function () {
-            $("#Component").load("@Url.Content("~/AnalysisTable/BB")")
-        })
+        $("#Component").load("@Url.Content("~/AnalysisTable/AA")")
+    
     </script>
 
 

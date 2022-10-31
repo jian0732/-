@@ -11,7 +11,7 @@ namespace prj認真版嗎.ViewComponents
 {
     public class AnalysisTableViewComponent : ViewComponent
     {
-        public async Task<IViewComponentResult> InvokeAsync(C年份營業額統計 x)
+        public async Task<IViewComponentResult> InvokeAsync(List<C年份營業額統計> x)
         {
             return View(x);
         }
