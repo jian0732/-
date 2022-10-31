@@ -75,7 +75,7 @@ namespace prj認真版嗎.ViewModel
         }
         public int TravelProductTypeId
         {
-            get { return _product.TravelProductTypeId; }
+            get { return (int)_product.TravelProductTypeId; }
             set { _product.TravelProductTypeId = value; }
         }
         [DisplayName("剩餘人數")]

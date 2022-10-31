@@ -3,6 +3,7 @@ using prj認真版嗎.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,13 +32,16 @@ namespace prj認真版嗎.ViewModel
             get { return _member.MemberName; }
             set { _member.MemberName = value; }
         }
+
+        
         [DisplayName("密碼")]
+        [DisplayFormat(DataFormatString = "{0:*******####}", ApplyFormatInEditMode = true)]
         public string Password
         {
             get { return _member.Password; }
             set { _member.Password = value; }
         }
-
+        
         [DisplayName("電話")]
         public string Phone
         {

@@ -10,7 +10,7 @@ namespace prj認真版嗎.Models
         public Coupon()
         {
             CouponLists = new HashSet<CouponList>();
-            OrderDetails = new HashSet<OrderDetail>();
+            Orders = new HashSet<Order>();
         }
 
         public int CouponId { get; set; }
@@ -22,6 +22,6 @@ namespace prj認真版嗎.Models
         public bool Useful { get; set; }
 
         public virtual ICollection<CouponList> CouponLists { get; set; }
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<Order> Orders { get; set; }
     }
 }

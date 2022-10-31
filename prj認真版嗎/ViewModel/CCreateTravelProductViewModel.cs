@@ -65,7 +65,7 @@ namespace prj認真版嗎.ViewModel
         [DisplayName("行程分類")]
         public int TravelProductTypeId
         {
-            get { return _product.TravelProductTypeId; }
+            get { return (int)_product.TravelProductTypeId; }
             set { _product.TravelProductTypeId = value; }
         }
         [DisplayName("行程總人數")]

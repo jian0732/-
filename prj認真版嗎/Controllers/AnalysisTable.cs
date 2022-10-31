@@ -32,7 +32,7 @@ namespace prj認真版嗎.Controllers
             j統計.當月目前營業額 = Od.Where(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(p.OrderDate).Month == DateTime.Now.Month)
                 .Select(p => p.OrderDetails.Select(p => p.UnitPrice * p.Quantity).Sum()).Sum();
 
-            j統計.當月取消筆數 = Od.Where(p => p.OrderStatus.OrderStatusName == "取消訂單").ToList().Count();
+            j統計.當月取消筆數 = Od.Where(p => p.OrderStatusId == 4).ToList().Count();
 
             return View(j統計);
         }

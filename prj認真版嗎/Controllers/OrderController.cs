@@ -17,7 +17,8 @@ namespace prj認真版嗎.Controllers
         {
             _db = db;
             _db.Coupons.ToList();
-            //_db.OrderDetails.ToList();
+            _db.OrderDetails.ToList();
+            _db.Orders.ToList();
         }
         private PlanetTravelContext _db;
         public IActionResult List()
@@ -35,6 +36,7 @@ namespace prj認真版嗎.Controllers
 
         public ActionResult OrderDetail(int? id)
         {
+           
             List<COrederDetailsViewModel> datas = null;
             var q = _db.OrderDetails.Where(p => p.OrderId == id).ToList();
             if (id != null)
@@ -43,11 +45,19 @@ namespace prj認真版嗎.Controllers
                     .Select(s => new COrederDetailsViewModel
                     {
                         orderdetail = s,
-                        優惠券名稱 = s.Coupon.CouponName,
-                        優惠內容 = s.Coupon.Discount,
+                        優惠券名稱 = s.Order.Coupon.CouponName,
+                        優惠內容 = s.Order.Coupon.Discount,
                         產品名稱 = s.TravelProduct.TravelProductName,
-
                     }).ToList();
+                
+                var CCid = _db.Orders.FirstOrDefault(p=>p.OrderId==id&& p.OrderStatusId==4);
+                ViewBag.CCid = CCid;
+                if (CCid != null)
+                {
+                    
+                    ViewBag.取消理由 = _db.OrderCancels.FirstOrDefault(p => p.OrderId == id).Titel;
+                    ViewBag.詳細說明 = _db.OrderCancels.FirstOrDefault(p => p.OrderId == id).CancaelContent;
+                }
                 return View(datas);
             }
 
@@ -99,7 +109,7 @@ namespace prj認真版嗎.Controllers
         {
             Order order = null;
 
-            if (id.Orderkey.Count != 0)
+            if (id.Orderkey != null)
             {
                 var Orders = _db.Orders.ToList();
                 foreach (var i in id.Orderkey)

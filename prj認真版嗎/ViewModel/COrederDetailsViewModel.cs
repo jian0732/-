@@ -47,14 +47,13 @@ namespace prj認真版嗎.ViewModel
             get { return _ord.Quantity; }
             set { _ord.Quantity = value; }
         }
-        public int? CouponId
-        {
-            get { return _ord.CouponId; }
-            set { _ord.CouponId = value; }
-        }
         public string 產品名稱 { get; set; }
         public string 優惠券名稱 { get; set; }
         public decimal? 優惠內容 { get; set; }
         public decimal 小計 { get { return this.Quantity * this.UnitPrice; } }
+
+        public int? 取消id  { get; set; }
+        public string 取消理由 { get; set; }
+        public string 詳細說明 { get; set; }
     }
 }

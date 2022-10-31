@@ -9,18 +9,18 @@
         <form asp-action="showreply" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="OrderCancelId" />
-
+            <input type="hidden" asp-for="OrderId" />
             <div class="form-group">
-                <label asp-for="OrderId" class="control-label" >訂單編號</label>
-                <input asp-for="OrderId" class="form-control" disabled="disabled"/>
+                <label asp-for="OrderId" class="control-label">訂單編號</label>
+                <input asp-for="OrderId" class="form-control" disabled="disabled" />
             </div>
             <div class="form-group">
-                <label asp-for="Titel" class="control-label">取消狀況</label>
-                <input asp-for="Titel" class="form-control" disabled="disabled"/>
+                <label asp-for="Titel" class="control-label">取消理由</label>
+                <input asp-for="Titel" class="form-control" disabled="disabled" />
             </div>
             <div class="form-group">
                 <label asp-for="CancaelContent" class="control-label">詳細說明</label>
-                <input asp-for="CancaelContent" class="form-control" disabled="disabled"/>
+                <input asp-for="CancaelContent" class="form-control" disabled="disabled" />
             </div>
             <div class="form-group">
                 <input type="submit" value="確認(取消訂單)" class="btn btn-primary form-control" />

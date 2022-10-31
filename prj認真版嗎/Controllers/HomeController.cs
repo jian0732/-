@@ -51,9 +51,7 @@ namespace prj認真版嗎.Controllers
         }
         public IActionResult Logout()
         {
-            var qq= HttpContext.Session.GetString(CDictionary.SK_Admin_Login);
             HttpContext.Session.Remove(CDictionary.SK_Admin_Login);
-            var q = HttpContext.Session.GetString(CDictionary.SK_Admin_Login);
             return RedirectToAction("Login");
         }
         [AllowAnonymous]
