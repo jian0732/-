@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using prj認真版嗎.Authorization;
 using prj認真版嗎.Models;
+using prj認真版嗎.MViewModel;
 
 namespace prj認真版嗎.Controllers
 {
@@ -50,9 +51,7 @@ namespace prj認真版嗎.Controllers
             return View();
         }
 
-        // POST: Coupons/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+       
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CouponId,GiftKey,CouponName,Discount,ExDate,Condition,GetDate")] Coupon coupon)
@@ -69,52 +68,46 @@ namespace prj認真版嗎.Controllers
         // GET: Coupons/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+     
 
             var coupon = await _context.Coupons.FindAsync(id);
-            if (coupon == null)
-            {
-                return NotFound();
-            }
-            return View(coupon);
+            
+            Coupon cou = new Coupon();
+            CCoupon aa = new CCoupon();
+            aa = (from s in _context.Coupons.Where(a => a.CouponId == id)
+                         select new CCoupon
+                         {
+                            CouponId=s.CouponId,
+                            CouponName=s.CouponName,
+                            Expdate=DateTime.Parse(s.ExDate),
+                            Condition=s.Condition,
+                            Useful=s.Useful,
+                            Discount=s.Discount,
+                            GiftKey=s.GiftKey
+                         }
+                       ).FirstOrDefault();
+           
+            return View(aa);
         }
 
-        // POST: Coupons/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CouponId,GiftKey,CouponName,Discount,ExDate,Condition,GetDate")] Coupon coupon)
-        {
-            if (id != coupon.CouponId)
-            {
-                return NotFound();
-            }
+       
 
-            if (ModelState.IsValid)
+          
+        //[ValidateAntiForgeryToken]
+        [HttpPost]
+        public IActionResult Edit(CCoupon coc)
+        {
+            if (coc != null)
             {
-                try
-                {
-                    _context.Update(coupon);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CouponExists(coupon.CouponId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
+
+                var a = _context.Coupons.FirstOrDefault(a => a.CouponId == coc.CouponId);
+                a.ExDate= Convert.ToString(coc.Expdate);
+                a.Useful = coc.Useful;
+                
             }
-            return View(coupon);
+            _context.SaveChanges();
+       
+            return Json(new {Res=true});
         }
 
         // GET: Coupons/Delete/5
