@@ -35,13 +35,13 @@ namespace prj認真版嗎.ViewModel
 
         
         [DisplayName("密碼")]
-        [DisplayFormat(DataFormatString = "{0:*******####}", ApplyFormatInEditMode = true)]
+        [DisplayFormat(DataFormatString = "{0:*******}", ApplyFormatInEditMode = true)]
         public string Password
         {
             get { return _member.Password; }
             set { _member.Password = value; }
         }
-        
+
         [DisplayName("電話")]
         public string Phone
         {

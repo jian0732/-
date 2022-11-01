@@ -66,9 +66,7 @@
                         }
                     </td>
                     <td>
-                        <input type="text" value="@item.Password" />
-                        <input type="text" asp-for="@item.Password" />
-                        @Html.DisplayFor(modelItem => item.Password)
+                        @Html.DisplayFor(modelItem => item.member.Password)
                     </td>
                     <td>
                         @Html.DisplayFor(modelItem => item.Phone)
