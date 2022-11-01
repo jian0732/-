@@ -1,4 +1,7 @@
-﻿
+﻿#List {
+    overflow-y: scroll;
+    height: 710px;
+}
 .big {
     margin: 10px 300px;
 }

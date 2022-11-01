@@ -1,64 +1,115 @@
-﻿@model prj認真版嗎.Models.Coupon
+﻿@model prj認真版嗎.MViewModel.CCoupon
 
 @{
     ViewData["Title"] = "Edit";
     Layout = null;
 }
 
-<h1>Edit</h1>
+<h1>優惠券修改</h1>
 
-<h4>Coupon</h4>
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Edit">
+        @*<form asp-action="Edit">*@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="CouponId" />
+            <input id="coid" type="hidden" value="@Model.CouponId" asp-for="CouponId" />
             <div class="form-group">
-                <label asp-for="GiftKey" class="control-label"></label>
-                <input asp-for="GiftKey" class="form-control" />
+                <label class="control-label">優惠券序號</label>
+                <input id="key" asp-for="GiftKey" class="form-control" />
                 <span asp-validation-for="GiftKey" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="CouponName" class="control-label"></label>
-                <input asp-for="CouponName" class="form-control" />
+                <label class="control-label">優惠券名稱</label>
+                <input id="name" asp-for="CouponName" class="form-control" />
                 <span asp-validation-for="CouponName" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Discount" class="control-label"></label>
-                <input asp-for="Discount" class="form-control" />
+                <label class="control-label">優惠金額</label>
+                <input id="price" asp-for="Discount" class="form-control" />
                 <span asp-validation-for="Discount" class="text-danger"></span>
             </div>
+          
+
             <div class="form-group">
-                <label asp-for="ExDate" class="control-label"></label>
-                <input asp-for="ExDate" class="form-control" />
+                <label class="control-label">到期日</label>
+                <input id="ex" asp-for="@Model.Expdate" />
                 <span asp-validation-for="ExDate" class="text-danger"></span>
             </div>
+
+
+
             <div class="form-group">
-                <label asp-for="Condition" class="control-label"></label>
-                <input asp-for="Condition" class="form-control" />
+                <label class="control-label">使用條件</label>
+                <input id="con" asp-for="Condition" class="form-control" />
                 <span asp-validation-for="Condition" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Useful" class="control-label"></label>
-                <input asp-for="Useful" class="form-control" />
+                <label class="control-label">有效Y/N</label>
+                <select id="use" asp-for="Useful" class="form-control">
+                    <option value="true">
+                        有效
+                    </option>
+                    <option value="false">
+                        無效
+                    </option>
+                </select>
+
                 <span asp-validation-for="Useful" class="text-danger"></span>
             </div>
             @*<div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>*@
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>*@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <input type="submit" value="Save" class="btn btn-primary" />
+                <input type="submit" onclick="ck()" value="Save" class="btn btn-primary" />
             </div>
-        </form>
+        @*</form>*@
     </div>
 </div>
+<script>
+    function ck() {
+        var data =
+        {
+            CouponId: $("#coid").val(),
+            GiftKey:$("#key").val(),
+            CouponName: $("#name").val(),
+            Discount: $("#price").val(),
+            Expdate: $("#ex").val(),
+            Condition: $("#con").val(),
+            Useful: $("#use").val(),
+        }
+        console.log(data)
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+         $.ajax({
+            url: '@Url.Action("Edit","Coupons")',
+            method: 'Post',
+            dataType:'Json',
+            data: { coc: data },
+            success: function (datas) {
+                Swal.fire(
+                    '您的變更已儲存!',
+                    '讚啦!',
+                    'success'
+                )
+            }
+        }).then(function () {
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+            window.location.reload()
+        })
+    }
+
+</script>
+
+
+@section Scripts{ 
+<script>
+    
+
+
+
+</script>
 }
+<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+@*@{await Html.RenderPartialAsync("_ValidationScriptsPartial");}*@

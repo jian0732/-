@@ -125,6 +125,8 @@ namespace prj認真版嗎.Models
 
                 entity.Property(e => e.MembersId).HasColumnName("MembersID");
 
+                entity.Property(e => e.OrderId).HasColumnName("OrderID");
+
                 entity.Property(e => e.TravelProductId).HasColumnName("TravelProductID");
 
                 entity.HasOne(d => d.Members)
@@ -543,6 +545,7 @@ namespace prj認真版嗎.Models
                 entity.HasOne(d => d.TravelProductType)
                     .WithMany(p => p.TravelProducts)
                     .HasForeignKey(d => d.TravelProductTypeId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_TravelProduct_TravelProductType");
             });
 

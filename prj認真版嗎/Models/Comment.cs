@@ -14,6 +14,7 @@ namespace prj認真版嗎.Models
         public int Star { get; set; }
         public string CommentDate { get; set; }
         public bool? CommentStatus { get; set; }
+        public int? OrderId { get; set; }
 
         public virtual Member Members { get; set; }
         public virtual TravelProduct TravelProduct { get; set; }

@@ -40,7 +40,7 @@
         </div>
 
         <!-- Earnings (Monthly) Card Example -->
-        <div class="col-xl-3 col-md-6 mb-4">
+        <div class="col-xl-3 col-md-6 mb-4" id="MC">
             <div class="card border-left-success shadow h-100 py-2">
                 <div class="card-body">
                     <div class="row no-gutters align-items-center">
@@ -91,16 +91,16 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
 
-                            <div class="font-weight-bold text-warning text-uppercase mb-1">
+                            <div class="font-weight-bold text-danger text-uppercase mb-1">
                                 <div class="卡片字體">待處理訂單</div>
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800" id="Ocount">
-                                @Model.待處理 筆
+                                <div class="待處理"> @Model.待處理 筆</div>
                             </div>
                         </div>
 
                         <div class="col-auto">
-                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                            <i class="fa fa-exclamation-triangle fa-2x text-gray-300"></i>
                         </div>
 
                     </div>
@@ -114,6 +114,9 @@
 
 
 <div>
+    <div id="Mm">
+
+    </div>
     <div id="Component">
 
     </div>
@@ -126,7 +129,13 @@
 @section Scripts{
     <script>
         $("#Component").load("@Url.Content("~/AnalysisTable/AA")")
-    
+
+        $("#MC").click(function () {
+            $("#Component").load("@Url.Content("~/AnalysisTable/BB")")
+             $("#Mm").load("@Url.Content("~/AnalysisTable/Mm")")
+
+        })
+
     </script>
 
 
