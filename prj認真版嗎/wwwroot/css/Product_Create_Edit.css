@@ -1,0 +1,67 @@
+﻿.ProductSection {
+    margin:40px 0 0 40px;
+}
+.ProductSectionTitle > hr {
+    border: 5px solid #655b6b;
+}
+.CreateProductForm {
+    margin-left:60px;
+}
+
+label {
+    font-weight: 800;
+    font-size: 18px;
+}
+
+.Transportation_Check{
+    margin:5px;
+}
+    .Transportation_Check > label,
+    .Transportation_Check > input {
+        font-weight: 600;
+        font-size: 20px;
+    }
+
+.prod_basic {
+    width: 1085px;
+    background-color: #dfd3e6;
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 40px;
+}
+.prod_detail {
+    background-color: #dde4eb;
+    margin-top: 40px;
+    border-radius: 10px;
+    width: 1090px;
+    padding: 20px;
+}
+.prod_detail2 {
+    background-color: #ebe1c7;
+    margin-top: 40px;
+    border-radius: 10px;
+    width: 1200px;
+    padding: 20px;
+}
+
+.prod_menu {
+    position: fixed;
+    right: 150px;
+    top: 600px;    
+    padding:10px;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+}
+.btnDetail {
+    margin-top:40px;
+    background-color:oldlace;
+    width:fit-content;   
+    padding:20px;
+    border-radius:15px;
+}
+
+
+/** {
+    border:1px solid red;
+}*/

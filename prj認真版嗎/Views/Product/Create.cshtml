@@ -2,174 +2,236 @@
 
 @{ ViewData["Title"] = "建立行程資訊"; }
 
-<h1>建立行程資訊作業</h1>
-<div style="position: fixed; right: 700px; top:300px">
-    <button class="btn btn-dark" id="demo">嗲某鍵</button>
-</div>
+@section Styles{
+    <link href="~/css/Product_Create_Edit.css" rel="stylesheet" />
+}
 
-
-<hr />
-<div class="row">
-    <div class="col-md-6">
-        <form asp-action="Create" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="TravelProductName" class="control-label"></label>
-                <input asp-for="TravelProductName" class="form-control" />
-                <span asp-validation-for="TravelProductName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Price" class="control-label"></label>
-                <input asp-for="Price" class="form-control" />
-                <span asp-validation-for="Price" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="TravelProductTypeId" class="control-label"></label>
-                <select asp-for="TravelProductTypeId" class="form-select">
-                    <option value="-1">請選擇行程分類</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Stocks" class="control-label"></label>
-                <input asp-for="Stocks" class="form-control" />
-                <span asp-validation-for="Stocks" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <textarea asp-for="Description" class="form-control" cols="50" rows="8"></textarea>
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="CountryId" class="control-label"></label>
-                <select asp-for="CountryId" class="form-select">
-                    <option value="-1">請選擇行程所在國家</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="Cost" class="control-label"></label>
-                <input asp-for="Cost" class="form-control" />
-                <span asp-validation-for="Cost" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="EventIntroduction" class="control-label"></label>
-                <textarea asp-for="EventIntroduction" class="form-control" cols="50" rows="5"></textarea>
-                <span asp-validation-for="EventIntroduction" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="PreparationDescription" class="control-label"></label>
-                <textarea asp-for="PreparationDescription" class="form-control" cols="50" rows="5"></textarea>
-                <span asp-validation-for="PreparationDescription" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="MapUrl" class="control-label"></label>
-                <input asp-for="MapUrl" class="form-control" />
-                <span asp-validation-for="MapUrl" class="text-danger"></span>
-            </div>
-
-            =========新增旅遊產品介紹照片=========
-            <div id="pic_group">
-                <div class="form-group">
-                    <label class="control-label">旅遊產品介紹照片</label>
-                    <p>Tips:按住ctrl可進行多筆上傳</p>
-                    <input type="file" name="photo" multiple />
-                </div>
-                <div class="form-group">
-                    <label asp-for="TravelPictureText" class="control-label"></label>
-                    <input asp-for="TravelPictureText" class="form-control" />
-                    <span asp-validation-for="TravelPictureText" class="text-danger"></span>
-                </div>
-            </div>
-            ===========新增每日行程明細===========
-
-            <div class="form-group">
-                <label asp-for="_TravelProductDetail[0].Day" class="control-label"></label>
-                <input asp-for="_TravelProductDetail[0].Day" class="form-control" value="1" readonly="readonly" />
-                <span asp-validation-for="_TravelProductDetail[0].Day" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="_TravelProductDetail[0].HotelId" class="control-label"></label>
-                <select asp-for="_TravelProductDetail[0].HotelId" id="TravelProductDetail_HotelID" class="form-select">
-                    <option value="-1">請選擇下榻飯店</option>
-                </select>
-            </div>
-            <div class="form-group">
-                <label asp-for="_TravelProductDetail[0].Date" class="control-label"></label>
-                <input type="date" asp-for="_TravelProductDetail[0].Date" class="form-control" />
-                <span asp-validation-for="_TravelProductDetail[0].Date" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="_TravelProductDetail[0].DailyDetailText" class="control-label"></label>
-                <textarea asp-for="_TravelProductDetail[0].DailyDetailText" class="form-control" cols="50" rows="8"></textarea>
-                <span asp-validation-for="_TravelProductDetail[0].DailyDetailText" class="text-danger"></span>
-            </div>
-            ===========新增交通方式===========
-            <fieldset>
-                <div class="form-check form-check-inline">
-                    <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="1" id="railway">
-                    <label class="form-check-label" for="railway">鐵路</label><br>
-
-                    <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="2" id="airplane">
-                    <label class="form-check-label" for="airplane">飛機</label><br>
-
-                    <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="3" id="bus" />
-                    <label class="form-check-label" for="bus">巴士</label>
-
-                    <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="4" id="ship" />
-                    <label class="form-check-label" for="ship">遊輪</label>
-
-                    <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="5" id="motor" />
-                    <label class="form-check-label" for="motor">機車</label>
-
-                    <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="6" id="bike" />
-                    <label class="form-check-label" for="bike">腳踏車</label>
-                </div>
-            </fieldset>
-            ===========選擇行程景點===========
-            <div class="form-group">
-                <label name="_TravelProductDetail[0].ViewID" class="control-label">選擇行程景點</label>
-                <select name="_TravelProductDetail[0].ViewID" class="form-select" id="_ViewV">
-                    <option value="-1">請選擇行程景點</option>
-                </select>
-            </div>
-
-            <div id="createExistView1">
-            </div>
-            <div>
-                <button type="button" onclick="removeExistViewFunc(1)">－選擇景點</button>
-                <button type="button" onclick="createExistViewFunc(1)">＋選擇景點</button>
-            </div>
-            <div id="createNewView1">
-            </div>
-            <div>
-                <button type="button" onclick="removeNewViewFunc(1)">－自訂景點</button>
-                <button type="button" onclick="createNewViewFunc(1)">＋自訂景點</button>
-            </div>
-            ===========新增行程明細===========
-            <div id="createNewTravelDetail">
-
-            </div>
-            <div>
-                <button type="button" onclick="removeNewTravelDetaiFunc()">－行程明細</button>
-                <button type="button" onclick="createNewTravelDetaiFunc()">＋行程明細</button>
-            </div>
-           
-            <div class="form-group" style="margin-top:70px">
-                <input type="submit" value="建立新行程" class="btn btn-primary" />
-            </div>
-        </form>
-
-
-        
+<div class="prod_menu">
+    <div class="list-group">
+        <button class="list-group-item list-group-item-action list-group-item-dark" id="demo">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-app-indicator" viewBox="0 0 16 16">
+                <path d="M5.5 2A3.5 3.5 0 0 0 2 5.5v5A3.5 3.5 0 0 0 5.5 14h5a3.5 3.5 0 0 0 3.5-3.5V8a.5.5 0 0 1 1 0v2.5a4.5 4.5 0 0 1-4.5 4.5h-5A4.5 4.5 0 0 1 1 10.5v-5A4.5 4.5 0 0 1 5.5 1H8a.5.5 0 0 1 0 1H5.5z" />
+                <path d="M16 3a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+            </svg>　嗲某鍵
+        </button>
+        <button class="list-group-item list-group-item-action list-group-item-info" onclick="createBtn()">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
+                <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
+            </svg>　新增產品
+        </button>
+        <button class="list-group-item list-group-item-action" id="jq-goTop">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M8 15a.5.5 0 0 0 .5-.5V2.707l3.146 3.147a.5.5 0 0 0 .708-.708l-4-4a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L7.5 2.707V14.5a.5.5 0 0 0 .5.5z" />
+            </svg>　回到最上方
+        </button>
+        <a asp-action="list" class="list-group-item list-group-item-action list-group-item-warning">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-up" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M4.854 1.146a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L4 2.707V12.5A2.5 2.5 0 0 0 6.5 15h8a.5.5 0 0 0 0-1h-8A1.5 1.5 0 0 1 5 12.5V2.707l3.146 3.147a.5.5 0 1 0 .708-.708l-4-4z" />
+            </svg>　回到產品一覽表
+        </a>
     </div>
 </div>
 
-<div>
-    <a asp-action="list">回到產品一覽表</a>
-</div>
 
+
+<section class="ProductSection">
+    <div class="ProductSectionTitle">
+        <h1>建立行程資訊作業</h1>
+        <hr />
+    </div>
+
+    <div class="CreateProductForm">
+        <form asp-action="Create" enctype="multipart/form-data">
+            <div class="row">
+                <div class="d-flex prod_basic">
+                    <div class="d-flex row col-6">
+                        <div>
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="form-group">
+                                <label asp-for="TravelProductName" class="control-label"></label>
+                                <input asp-for="TravelProductName" class="form-control" />
+                                <span asp-validation-for="TravelProductName" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="TravelProductTypeId" class="control-label"></label>
+                                <select asp-for="TravelProductTypeId" class="form-select">
+                                    <option value="-1">請選擇行程分類</option>
+                                </select>
+                            </div>                            
+                            <div class="form-group">
+                                <label asp-for="Price" class="control-label"></label>
+                                <div class="input-group mb-3">
+                                    <input asp-for="Price" class="form-control" />
+                                    <span class="input-group-text">元</span>
+                                    <span asp-validation-for="Price" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Stocks" class="control-label"></label>
+                                <div class="input-group mb-3">
+                                    <input asp-for="Stocks" class="form-control" />
+                                    <span class="input-group-text">人</span>
+                                    <span asp-validation-for="Stocks" class="text-danger"></span>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label asp-for="CountryId" class="control-label"></label>
+                                <select asp-for="CountryId" class="form-select">
+                                    <option value="-1">請選擇行程所在國家</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Cost" class="control-label"></label>
+                                <div class="input-group mb-3">
+                                    <input asp-for="Cost" class="form-control" />
+                                    <span class="input-group-text">元</span>
+                                    <span asp-validation-for="Cost" class="text-danger"></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-4 m-sm-4">
+                        <div id="pic_group">
+                            <div class="form-group">
+                                <div class="">
+                                    <label class="control-label">旅遊產品介紹照片</label>
+                                    <img id="Upload_File_PicPreview" src='@Url.Content("~/images/ProductDefaultImage.jpg")' width="370" height="260" class="d-block" />
+                                </div>
+                                <p>Tips:按住ctrl可進行多筆上傳</p>
+                                <label class="btn btn-info">
+                                    <input id="Upload_File" style="display:none;" type="file" name="photo" multiple onchange="checkFiles()">
+                                    <i class="fa fa-photo"></i> +新增多筆圖片
+                                </label>
+                                <p id="Upload_File_Count">　</p>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="TravelPictureText" class="control-label"></label>
+                                <input asp-for="TravelPictureText" class="form-control" />
+                                <span asp-validation-for="TravelPictureText" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ">
+                <div class="col-8 prod_detail">
+                    <div class="form-group">
+                        <label asp-for="Description" class="control-label"></label>
+                        <textarea asp-for="Description" class="form-control" cols="50" rows="12"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="EventIntroduction" class="control-label"></label>
+                        <textarea asp-for="EventIntroduction" class="form-control" cols="50" rows="12"></textarea>
+                        <span asp-validation-for="EventIntroduction" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="PreparationDescription" class="control-label"></label>
+                        <textarea asp-for="PreparationDescription" class="form-control" cols="50" rows="10"></textarea>
+                        <span asp-validation-for="PreparationDescription" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="MapUrl" class="control-label"></label>
+                        <input asp-for="MapUrl" class="form-control" />
+                        <span asp-validation-for="MapUrl" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-8 prod_detail">
+
+                    <div class="form-group">
+                        <label asp-for="_TravelProductDetail[0].Day" class="control-label"></label>
+                        <input asp-for="_TravelProductDetail[0].Day" class="form-control" value="1" readonly="readonly" />
+                        <span asp-validation-for="_TravelProductDetail[0].Day" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="_TravelProductDetail[0].HotelId" class="control-label"></label>
+                        <select asp-for="_TravelProductDetail[0].HotelId" id="TravelProductDetail_HotelID" class="form-select">
+                            <option value="-1">請選擇下榻飯店</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="_TravelProductDetail[0].Date" class="control-label"></label>
+                        <input type="date" asp-for="_TravelProductDetail[0].Date" class="form-control" />
+                        <span asp-validation-for="_TravelProductDetail[0].Date" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="_TravelProductDetail[0].DailyDetailText" class="control-label"></label>
+                        <textarea asp-for="_TravelProductDetail[0].DailyDetailText" class="form-control" cols="50" rows="8"></textarea>
+                        <span asp-validation-for="_TravelProductDetail[0].DailyDetailText" class="text-danger"></span>
+                    </div>
+
+                    <label class="control-label">新增交通方式</label>
+                    <fieldset>
+                        <div class="form-check form-check-inline">
+                            <div class="Transportation_Check">
+                                <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="1" id="railway">
+                                <label class="form-check-label" for="railway">鐵路</label><br>
+                            </div>
+                            <div class="Transportation_Check">
+                                <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="2" id="airplane">
+                                <label class="form-check-label" for="airplane">飛機</label><br>
+                            </div>
+                            <div class="Transportation_Check">
+                                <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="3" id="bus" />
+                                <label class="form-check-label" for="bus">巴士</label>
+                            </div>
+                            <div class="Transportation_Check">
+                                <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="4" id="ship" />
+                                <label class="form-check-label" for="ship">遊輪</label>
+                            </div>
+                            <div class="Transportation_Check">
+                                <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="5" id="motor" />
+                                <label class="form-check-label" for="motor">機車</label>
+                            </div>
+                            <div class="Transportation_Check">
+                                <input class="form-check-input" name="_TravelProductDetail[0].TrasportationID" type="checkbox" value="6" id="bike" />
+                                <label class="form-check-label" for="bike">腳踏車</label>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <div class="form-group">
+                        <label name="_TravelProductDetail[0].ViewID" class="control-label">行程景點</label>
+                        <select name="_TravelProductDetail[0].ViewID" class="form-select" id="_ViewV">
+                            <option value="-1">請選擇行程景點</option>
+                        </select>
+                    </div>
+
+                    <div id="createExistView1">
+                    </div>
+                    <div>
+                        <button class="btn btn-warning m-2" type="button" onclick="removeExistViewFunc(1)">－選擇景點</button>
+                        <button class="btn btn-warning m-2" type="button" onclick="createExistViewFunc(1)">＋選擇景點</button>
+                    </div>
+                    <div id="createNewView1">
+                    </div>
+                    <div style="margin-top:20px">
+                        <button class="btn btn-success m-2" type="button" onclick="removeNewViewFunc(1)">－自訂景點</button>
+                        <button class="btn btn-success m-2" type="button" onclick="createNewViewFunc(1)">＋自訂景點</button>
+                    </div>
+                </div>
+            </div>
+            <div id="createNewTravelDetail" class="row">
+
+            </div>
+            <div class="btnDetail">
+                <button class="btn btn-secondary me-3" type="button" onclick="removeNewTravelDetaiFunc()">－行程明細</button>
+                <button class="btn btn-secondary" type="button" onclick="createNewTravelDetaiFunc()">＋行程明細</button>
+            </div>
+
+            <div class="form-group" style="margin-top:70px">
+                <input id="createNewProductBtn" type="submit" value="建立新行程" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+
+</section>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-<script>
+    <script>
     //DEMO用
     $('#demo').on("click", function () {
         $('#TravelProductName').val("綠島｜半農半漁深度文化生態三日遊");
@@ -196,7 +258,7 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
         temp = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7363.943916330125!2d121.49917821924109!3d22.65483411579356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346f8df289f9d775%3A0x7590b56495b478ed!2zT0ggR09PRCDntqDls7bmsJHlrr8!5e0!3m2!1szh-TW!2stw!4v1666845107824!5m2!1szh-TW!2stw`;
         $('#MapUrl').val(temp);
         $('#TravelPictureText').val("綠島圖片介紹集");
-        $('#TravelProductDetail_HotelID').get(0).selectedIndex = 9;        
+        $('#TravelProductDetail_HotelID').get(0).selectedIndex = 9;
         $('#zTravelProductDetail_0__Date').val("2022-10-27");
         temp =`第1天#
 時間：#
@@ -209,7 +271,7 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
 14:30 自由活動｜環島解密趣（自理）#
 17:00 享用晚餐｜慢食綠島（自理）#
 19:00 世界特有海底溫泉｜朝日溫泉（自費）`
-        $('#zTravelProductDetail_0__DailyDetailText').val(temp);        
+        $('#zTravelProductDetail_0__DailyDetailText').val(temp);
         $('#View_CityId0').get(0).selectedIndex = 16;
         $('#ViewName0').val("綠島觀景步道");
         $('#TravelProductDetail_HotelIDH2').get(0).selectedIndex = 10;
@@ -258,7 +320,7 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
         CCTPVM_Count++;
         if (detail_num < 6) {
             let p = document.createElement("div")
-            
+            p.setAttribute("class", "col-8 prod_detail");
             const temp =
                 `<div class="form-group">` +
                 `<label for="Day" class="control-label">行程第${detail_num}天</label>` +
@@ -278,26 +340,37 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
                 `<label for="DailyDetailText" class="control-label">每日行程概述</label>` +
                 `<textarea id="_TravelProductDetail_DailyDetailText${CCTPVM_Count}" name="_TravelProductDetail[${CCTPVM_Count}].DailyDetailText" class="form-control" cols="50" rows="8"></textarea>` +
                 `</div>` +
-                `=========== 新增交通方式 ===========` +
+                `<label class="control-label">新增交通方式</label>`+
                 `<fieldset>`+
                 `<div class="form-check form-check-inline">` +
+                `<div class="Transportation_Check">`+
                 `<input class="form-check-input" name="_TravelProductDetail[${CCTPVM_Count}].TrasportationID" type="checkbox" value="1" id="railway${CCTPVM_Count}">` +
                 `<label class="form-check-label" for="railway${CCTPVM_Count}">鐵路</label><br>` +
+                `</div>` +
+                ` <div class="Transportation_Check">`+
                 `<input class="form-check-input" name="_TravelProductDetail[${CCTPVM_Count}].TrasportationID" type="checkbox" value="2" id="airplane${CCTPVM_Count}">` +
                 `<label class="form-check-label" for="airplane${CCTPVM_Count}">飛機</label><br>` +
+                `</div>` +
+                ` <div class="Transportation_Check">`+
                 `<input class="form-check-input" name="_TravelProductDetail[${CCTPVM_Count}].TrasportationID" type="checkbox" value="3" id="bus${CCTPVM_Count}" />` +
                 `<label class="form-check-label" for="bus${CCTPVM_Count}">巴士</label>` +
+                `</div>` +
+                ` <div class="Transportation_Check">`+
                 `<input class="form-check-input" name="_TravelProductDetail[${CCTPVM_Count}].TrasportationID" type="checkbox" value="4" id="ship${CCTPVM_Count}" />` +
                 `<label class="form-check-label" for="ship${CCTPVM_Count}">遊輪</label>` +
+                `</div>` +
+                ` <div class="Transportation_Check">`+
                 `<input class="form-check-input" name="_TravelProductDetail[${CCTPVM_Count}].TrasportationID" type="checkbox" value="5" id="motor${CCTPVM_Count}" />` +
                 `<label class="form-check-label" for="motor${CCTPVM_Count}">機車</label>` +
+                `</div>` +
+                ` <div class="Transportation_Check">`+
                 `<input class="form-check-input" name="_TravelProductDetail[${CCTPVM_Count}].TrasportationID" type="checkbox" value="6" id="bike${CCTPVM_Count}" />` +
                 `<label class="form-check-label" for="bike${CCTPVM_Count}">腳踏車</label>` +
+                `</div>`+
                 `</div>` +
-                `</fieldset>`+
-                `=========== 選擇行程景點 ===========` +
+                `</fieldset>`+                
                 `<div class="form-group">` +
-                `<label for="_ViewV${detail_num}" class="control-label">選擇行程景點</label>` +
+                `<label for="_ViewV${detail_num}" class="control-label">行程景點</label>` +
                 `<select id="_ViewV${detail_num}" name="_TravelProductDetail[${CCTPVM_Count}].ViewID" class="form-select">` +
                 `<option value="-1">請選擇行程景點</option>` +
                 `</select>` +
@@ -305,16 +378,15 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
                 `<div id="createExistViewE${detail_num}">` +
                 `</div>` +
                 `<div>` +
-                `<button type="button" onclick="removeExistViewFunc('E${detail_num}')">－選擇景點</button>` +
-                `<button type="button" onclick="createExistViewFunc('E${detail_num}')">＋選擇景點</button>` +
+                `<button class="btn btn-warning m-2" type="button" onclick="removeExistViewFunc('E${detail_num}')">－選擇景點</button>` +
+                `<button class="btn btn-warning m-2" type="button" onclick="createExistViewFunc('E${detail_num}')">＋選擇景點</button>` +
                 `</div>` +
                 `<div id="createNewViewV${detail_num}">` +
                 `</div>` +
                 `<div>` +
-                `<button type="button" onclick="removeNewViewFunc('V${detail_num}')">－自訂景點</button>` +
-                `<button type="button" onclick="createNewViewFunc('V${detail_num}')">＋自訂景點</button>` +
-                `</div>` +
-                `==================================`;
+                `<button class="btn btn-success m-2" type="button" onclick="removeNewViewFunc('V${detail_num}')">－自訂景點</button>` +
+                `<button class="btn btn-success m-2" type="button" onclick="createNewViewFunc('V${detail_num}')">＋自訂景點</button>` +
+                `</div>` ;
             p.innerHTML += temp;
             createNewTravelDetailNode.appendChild(p);
             LoadViewName(`V${detail_num}`);
@@ -402,7 +474,7 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
         if (_CreateViewCount > 0)
             _CreateViewCount--;
         else
-            _CreateViewCount = 0;        
+            _CreateViewCount = 0;
     }
 
     //新增、減少交通方式
@@ -491,13 +563,38 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
         })
     }*@
 
+        //圖片專區 計算幾張圖、顯示第一張圖
+        function checkFiles() {
+            const hint = document.getElementById("Upload_File_Count");
+            let count =document.getElementById("Upload_File").files.length;
+            hint.innerText = `已上傳${count}張照片`;
+            const file = document.getElementById("Upload_File").files[0];
+            const objectURL = URL.createObjectURL(file);
+            $('#Upload_File_PicPreview').attr('src', objectURL);
+        }
+
+        //連動新增行程button
+        function createBtn() {
+            const createBtn = $('#createNewProductBtn');
+            createBtn.click();
+        }
+        //回到最上層
+        $("#jq-goTop").click(function (e) {
+            e.preventDefault();
+            $("html,body").animate(
+                {
+                    scrollTop: 0,
+                },
+                600
+            );
+        });
 
     LoadTravelProductType();
     LoadCountryName();
     LoadHotelName("");
     LoadViewName("V");
 
-</script>
+    </script>
 
 
 }
