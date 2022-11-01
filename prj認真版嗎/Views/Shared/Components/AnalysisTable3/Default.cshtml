@@ -1,0 +1,30 @@
+﻿
+@{
+    Layout = null;
+}
+<script src="~/lib/jian/main.js"></script>
+
+<div class="d-flex" style="width:700px;height:300px">
+    <div id="calendar"></div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', async function () {
+        var calendarEl = document.getElementById('calendar');
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'zh-tw',
+        });
+        await calendar.render();
+
+
+</script>
+<script src="~/lib/jquery/jquery.min.js"></script>
+<script src="~/lib/jian/main.js"></script>
+<script src="~/lib/jian/locales-all.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar-scheduler@5.10.1/main.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+
+
+
+

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace prj認真版嗎.ViewComponents
 {
-    public class AnalysisTableViewComponent : ViewComponent
+    public class AnalysisTable3ViewComponent : ViewComponent
     {
         public async Task<IViewComponentResult> InvokeAsync()
         {

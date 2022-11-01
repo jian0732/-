@@ -4,13 +4,22 @@
     Layout = null;
 }
 
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-      crossorigin="anonymous">
+@*<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+      crossorigin="anonymous">*@
 
-<div class="d-flex" style="width:500px;height:200px">
-    <canvas id="myChart" width="100" height="100"></canvas>
-    <canvas id="myChartO" width="100" height="100"></canvas>
-</div>
+    <div class="d-flex justify-content-center container">
+        <div>
+            <h1>今年營業額</h1>
+        </div>
+        <div>
+            <h1>@ViewBag.今年營業總額</h1>
+        </div>
+    </div>
+    <div class="d-flex justify-content-center container" style="width:700px;height:300px">
+        <canvas id="myChart" width="100" height="100"></canvas>
+        <canvas id="myChartO" width="100" height="100"></canvas>
+    </div>
+
 
 
 <input type="hidden" id="c" value="@ViewBag.國家" />
@@ -43,18 +52,28 @@
         data: {
             labels: c,
             datasets: [{
-                label: "各國營業額",
+                label: "今年熱賣國家",
                 data: p,
                 backgroundColor: color.split(","),
             }]
         },
         options: {
-            scales: {
-                yAxes: [{
-                    ticks: {
-
-                    }
-                }]
+            "hover": {
+                "animationDuration": 0
+            },
+            "animation": {
+                "duration": 1,
+                "onComplete": function () {
+                    var chartInstance = this.chart,
+                        ctx = chartInstance.ctx;
+                    this.data.datasets.forEach(function (dataset, i) {
+                        var meta = chartInstance.controller.getDatasetMeta(i);
+                        meta.data.forEach(function (pie, index) {
+                            var data = dataset.data[index];
+                            ctx.fillText(data, pie._model.x -20, pie._model.y - 10);
+                        });
+                    });
+                }
             }
         },
     });
@@ -80,10 +99,13 @@
             hoverOffset: 4
         }]
     };
+
     var myChart = new Chart(ctxO, {
+        labels:gg,
         type: 'pie',
         data: data,
-
+        options: {
+        },
     });
 
 </script>

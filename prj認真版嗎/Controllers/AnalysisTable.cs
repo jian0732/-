@@ -23,7 +23,7 @@ namespace prj認真版嗎.Controllers
             var Od = _db.Orders.ToList();
 
             C統計表 j統計 = new C統計表();
-            var j當年當月表訂單表 = Od.Select(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(p.OrderDate).Month == DateTime.Now.Month).ToList();
+            var j當年當月表訂單表 = Od.Where(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(p.OrderDate).Month == DateTime.Now.Month).ToList();
 
             j統計.待處理 = Od.Where(p => p.OrderStatusId == 1).ToList().Count();
 
@@ -32,7 +32,7 @@ namespace prj認真版嗎.Controllers
             j統計.當月目前營業額 = Od.Where(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(p.OrderDate).Month == DateTime.Now.Month)
                 .Select(p => p.OrderDetails.Select(p => p.UnitPrice * p.Quantity).Sum()).Sum();
 
-            j統計.當月取消筆數 = Od.Where(p => p.OrderStatusId == 4).ToList().Count();
+            j統計.當月取消筆數 = Od.Where(p => p.OrderStatusId == 4 && Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(p.OrderDate).Month == DateTime.Now.Month).ToList().Count();
 
             return View(j統計);
         }
@@ -66,16 +66,19 @@ namespace prj認真版嗎.Controllers
 
             string 國家 = "";
             string 營業額 = "";
+            decimal 營業總額 = 0;
             foreach (var i in j年份)
             {
+                營業總額 += i.營業額;
                 國家 += i.國家 + ",";
                 營業額 += i.營業額.ToString("0") + ",";
             }
+            ViewBag.今年營業總額 = 營業總額.ToString("C0");
             ViewBag.國家 = 國家;
             ViewBag.營業額 = 營業額;
             j年份 = _db.Orders.GroupBy(s => s.Members.Gender).Select(p => new C年份營業額統計
             {
-                性別 = p.Key+ (Convert.ToDouble(p.Count()) / Convert.ToDouble(Od.Count())) * 100+"%",
+                性別 = p.Key+ ((Convert.ToDouble(p.Count()) / Convert.ToDouble(Od.Count())) * 100).ToString("#.#0")+"%",
                 比例 = (Convert.ToDouble(p.Count()) / Convert.ToDouble(Od.Count()))*100,
                 消費比數= p.Count(),
             }).ToList();
@@ -108,7 +111,54 @@ namespace prj認真版嗎.Controllers
         }
         public IActionResult BB()
         {
+            _db.Members.ToList();
+            var Od = _db.Orders.ToList();
+            var Odd = _db.OrderDetails.ToList();
+            var Tp = _db.TravelProducts.ToList();
+            _db.Countries.ToList();
+            List<C年份營業額統計> j年份 = new List<C年份營業額統計>();
+
+            j年份 = Od.Where(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(p.OrderDate).Month == DateTime.Now.Month)
+     .Join(
+         Odd,
+         comp => comp.OrderId,
+         sect => sect.OrderId,
+         (comp, sect) => new { order = comp, orderdetail = sect })
+     .Join(
+         Tp,
+         cs => cs.orderdetail.TravelProductId,
+         dsi => dsi.TravelProductId,
+         (cs, dsi) => new { cs.order, cs.orderdetail, Products = dsi })
+     .GroupBy(c => c.Products.Country.CountryName).Select(s => new C年份營業額統計
+     {
+         國家 = s.Key,
+         營業額 = s.Sum(p => p.orderdetail.Quantity * p.orderdetail.UnitPrice)
+     }).ToList();
+
+            string 國家 = "";
+            string 營業額 = "";
+            foreach (var i in j年份)
+            {
+                國家 += i.國家 + ",";
+                營業額 += i.營業額.ToString("0") + ",";
+            }
+            if (國家.Substring(國家.Length - 1, 1) == ",")
+            {
+                國家 = 國家.Substring(0, 國家.Length - 1);
+            }
+            if (營業額.Substring(營業額.Length - 1, 1) == ",")
+            {
+                營業額 = 營業額.Substring(0, 營業額.Length - 1);
+            }
+            ViewBag.M國家 = 國家;
+            ViewBag.M營業額 = 營業額;
+
+
             return ViewComponent("AnalysisTable2");
+        }
+        public IActionResult Mm()
+        {
+            return ViewComponent("AnalysisTable3");
         }
     }
 }
