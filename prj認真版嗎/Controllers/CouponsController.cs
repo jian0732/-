@@ -53,16 +53,20 @@ namespace prj認真版嗎.Controllers
 
        
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CouponId,GiftKey,CouponName,Discount,ExDate,Condition,GetDate")] Coupon coupon)
+        public IActionResult Create(CCoupon cou)
         {
-            if (ModelState.IsValid)
-            {
-                _context.Add(coupon);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(coupon);
+           
+                Coupon cc = new Coupon();
+                cc.CouponName = cou.CouponName;
+                cc.Discount = cou.Discount;
+                cc.ExDate = cou.Expdate.ToString();
+                cc.GiftKey = cou.GiftKey;
+                cc.Condition = cou.Condition;
+                cc.Useful = true;
+                _context.Coupons.Add(cc);
+                 _context.SaveChanges();
+                return RedirectToAction("Index");
+         
         }
 
         // GET: Coupons/Edit/5
@@ -81,7 +85,7 @@ namespace prj認真版嗎.Controllers
                             CouponName=s.CouponName,
                             Expdate=DateTime.Parse(s.ExDate),
                             Condition=s.Condition,
-                            Useful=s.Useful,
+                            Useful=(bool)s.Useful,
                             Discount=s.Discount,
                             GiftKey=s.GiftKey
                          }
