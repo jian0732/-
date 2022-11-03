@@ -25,7 +25,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                <div class="卡片字體">當月訂單量 </div>
+                                <div class="卡片字體">當月訂單量 /@DateTime.Now.Month 月</div>
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                 @Model.當月訂單量 筆
@@ -46,7 +46,7 @@
                     <div class="row no-gutters align-items-center">
                         <div class="col mr-2">
                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                <div class="卡片字體">當月營業額 </div>
+                                <div class="卡片字體">當月營業額 /@DateTime.Now.Month 月</div>
                             </div>
                             <div class="h5 mb-0 font-weight-bold text-gray-800">
                                 NT @Model.當月目前營業額.ToString("###,###,##0")
@@ -132,8 +132,7 @@
 
         $("#MC").click(function () {
             $("#Component").load("@Url.Content("~/AnalysisTable/BB")")
-             $("#Mm").load("@Url.Content("~/AnalysisTable/Mm")")
-
+            //$("#Mm").load("@Url.Content("~/AnalysisTable/Mm")")
         })
 
     </script>

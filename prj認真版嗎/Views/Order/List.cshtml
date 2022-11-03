@@ -383,7 +383,7 @@
 
         $("#myTable tbody tr td:nth-child(-n+6)").on("click", function () {
             var check = $(this).closest("tr").find(".checkchild").prop("checked");
-            if (check && check == true) {
+            if (check == true) {
                 $(this).closest("tr").find('.checkchild').prop("checked", false);
             } else {
                 $(this).closest("tr").find('.checkchild').prop("checked", true);

@@ -39,7 +39,7 @@
                 </div>
                 <div class="sidebar-brand-text mx-3">星球旅遊 <sup>D</sup></div>
             </a>
-
+            @Html.ActionLink("儀錶板", "ccc", "AnalysisTable", null, new { @class = "nav-link 超連結", style = "display:inline" })
             @{
                 if (Accessor.HttpContext.Session.Keys.Contains(CDictionary.SK_Admin_Login))
                 {
