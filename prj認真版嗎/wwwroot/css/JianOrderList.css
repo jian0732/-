@@ -7,7 +7,8 @@
 .thbkc {
     height: 50px;
     background-color: black;
-    font-weight: bold
+    font-weight: bold;
+    
 }
 
 .thbkc > th {
@@ -20,9 +21,18 @@
 }
 .金額顯示 {
     color: #ed0808;
-    font:bold;
+    font: bold;
 }
 #理由 {
     font-weight: bold;
     color: black
+}
+.產品值 {
+    word-break: break-all;
+    max-width:300px;
+}
+.中排 {
+    height: 50px;
+    background-color: black;
+    font-weight: bold;
 }

@@ -47,7 +47,7 @@ namespace prj認真版嗎.Controllers
 
             List<C年份營業額統計> j年份 = new List<C年份營業額統計>();
 
-            j年份 = Od.Where(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year)
+            j年份 = Od.Where(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && p.OrderStatusId == 3)
      .Join(
          Odd,
          comp => comp.OrderId,
@@ -76,10 +76,11 @@ namespace prj認真版嗎.Controllers
             ViewBag.今年營業總額 = 營業總額.ToString("C0");
             ViewBag.國家 = 國家;
             ViewBag.營業額 = 營業額;
-            j年份 = _db.Orders.GroupBy(s => s.Members.Gender).Select(p => new C年份營業額統計
+            var 正常筆數 = Od.Where(p => p.OrderStatusId == 3).Count();
+            j年份 = _db.Orders.Where(p=> p.OrderStatusId == 3).GroupBy(s => s.Members.Gender).Select(p => new C年份營業額統計
             {
-                性別 = p.Key+ ((Convert.ToDouble(p.Count()) / Convert.ToDouble(Od.Count())) * 100).ToString("#.#0")+"%",
-                比例 = (Convert.ToDouble(p.Count()) / Convert.ToDouble(Od.Count()))*100,
+                性別 = p.Key+ ((Convert.ToDouble(p.Count()) /Convert.ToDouble(正常筆數)) * 100).ToString("#.#0")+"%",
+                比例 = (Convert.ToDouble(p.Count()) / Convert.ToDouble(正常筆數))*100,
                 消費比數= p.Count(),
             }).ToList();
 
@@ -118,7 +119,7 @@ namespace prj認真版嗎.Controllers
             _db.Countries.ToList();
             List<C年份營業額統計> j年份 = new List<C年份營業額統計>();
 
-            j年份 = Od.Where(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(p.OrderDate).Month == DateTime.Now.Month)
+            j年份 = Od.Where(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(p.OrderDate).Month == DateTime.Now.Month && p.OrderStatusId == 3)
      .Join(
          Odd,
          comp => comp.OrderId,
@@ -159,6 +160,10 @@ namespace prj認真版嗎.Controllers
         public IActionResult Mm()
         {
             return ViewComponent("AnalysisTable3");
+        }
+        public IActionResult ccc()
+        {
+            return View();
         }
     }
 }
