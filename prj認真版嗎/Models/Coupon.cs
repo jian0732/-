@@ -19,7 +19,7 @@ namespace prj認真版嗎.Models
         public decimal Discount { get; set; }
         public string ExDate { get; set; }
         public string Condition { get; set; }
-        public bool Useful { get; set; }
+        public bool? Useful { get; set; }
 
         public virtual ICollection<CouponList> CouponLists { get; set; }
         public virtual ICollection<Order> Orders { get; set; }

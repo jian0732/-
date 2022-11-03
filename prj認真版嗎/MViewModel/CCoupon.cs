@@ -50,7 +50,7 @@ namespace prj認真版嗎.MViewModel
             get { return _co.Condition; }
             set { _co.Condition = value; }
         }
-        public bool Useful
+        public bool? Useful
         {
             get { return (bool)_co.Useful; }
             set { _co.Useful = value; }

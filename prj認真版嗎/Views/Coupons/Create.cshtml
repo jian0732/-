@@ -1,4 +1,4 @@
-﻿@model prj認真版嗎.Models.Coupon
+﻿@model prj認真版嗎.MViewModel.CCoupon
 
 @{
     ViewData["Title"] = "Create";
@@ -28,18 +28,19 @@
             </div>
             <div class="form-group">
                 <label class="control-label">到期日</label>
-                <input asp-for="ExDate" class="form-control" />
+                <input id="ex" asp-for="@Model.Expdate" />
                 <span asp-validation-for="ExDate" class="text-danger"></span>
             </div>
 
 
-            @*<div class="form-group">
-                <label @Html.LabelFor(Model.) class="control-label">到期日</label>
-                <input asp-for="ExDate" class="form-control" />
-                <span asp-validation-for="ExDate" class="text-danger"></span>
-            </div>*@
 
-     
+            @*<div class="form-group">
+            <label @Html.LabelFor(Model.) class="control-label">到期日</label>
+            <input asp-for="ExDate" class="form-control" />
+            <span asp-validation-for="ExDate" class="text-danger"></span>
+        </div>*@
+
+
 
 
 
@@ -48,11 +49,11 @@
                 <input asp-for="Condition" class="form-control" required />
                 <span asp-validation-for="Condition" class="text-danger"></span>
             </div>
-            <div class="form-group">
-                <label class="control-label">有效Y/N</label>
-                <input asp-for="Useful" class="form-control" required />
-                <span asp-validation-for="Useful" class="text-danger"></span>
-            </div>
+            @*<div class="form-group">
+            <label class="control-label">有效Y/N</label>
+            <input asp-for="Useful" class="form-control" required />
+            <span asp-validation-for="Useful" class="text-danger"></span>
+        </div>*@
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -63,10 +64,8 @@
     </div>
 </div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+ 
 }
