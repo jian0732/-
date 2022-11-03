@@ -29,6 +29,7 @@ namespace prj認真版嗎.ViewModel
             get;
             set;
         }
+        [DisplayName("圖片描述")]
         public List<string> TravelPictureText //圖片描述
         {
             get;
@@ -78,7 +79,14 @@ namespace prj認真版嗎.ViewModel
             get { return (int)_product.TravelProductTypeId; }
             set { _product.TravelProductTypeId = value; }
         }
-        [DisplayName("剩餘人數")]
+        [DisplayName("最大人數")]
+
+        public int Quantity
+        {
+            get { return _product.Quantity; }
+            set { _product.Quantity = value; }
+        }
+        [DisplayName("剩餘數量")]
         public int Stocks
         {
             get { return _product.Stocks; }
@@ -118,6 +126,19 @@ namespace prj認真版嗎.ViewModel
         public string TravelProductTypeName { get; set; }
         [DisplayName("旅遊國家")]
         public string CountryName { get; set; }
+        [DisplayName("Google地圖連結")]
+
+        public string MapUrl
+        {
+            get { return _product.MapUrl; }
+            set { _product.MapUrl = value; }
+        }
+        [DisplayName("其他行程出團日")]
+        public string AnotherDepartureDate
+        {
+            get { return _product.AnotherDepartureDate; }
+            set { _product.AnotherDepartureDate = value; }
+        }
 
     }
 

@@ -54,14 +54,19 @@ label {
     justify-content:center;
 }
 .btnDetail {
-    margin-top:40px;
-    background-color:oldlace;
+    margin-top:20px;    
     width:fit-content;   
-    padding:20px;
+    padding:15px;
     border-radius:15px;
 }
 #photo_group >img{
     display:block; 
+}
+
+/*封面圖*/
+#photo-0 {
+    width:450px;
+    height:370px
 }
 /** {
     border:1px solid red;

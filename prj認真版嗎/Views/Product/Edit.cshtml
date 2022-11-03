@@ -56,15 +56,28 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Price" class="control-label"></label>
-                                <input asp-for="Price" class="form-control" />
-                                <span asp-validation-for="Price" class="text-danger"></span>
+                                <div class="input-group">
+                                    <input asp-for="Price" class="form-control" type="number" value='@Model.Price.ToString("0")'>
+                                    <span class="input-group-text">元</span>
+                                    <span asp-validation-for="Price" class="text-danger"></span>
+                                </div>
                             </div>
-
+                            <div class="form-group">
+                                <label asp-for="Quantity" class="control-label"></label>
+                                <div class="input-group">
+                                    <input asp-for="Quantity" class="form-control" />
+                                    <span class="input-group-text">人</span>
+                                    <span asp-validation-for="Quantity" class="text-danger"></span>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label asp-for="Stocks" class="control-label"></label>
-                                <input asp-for="Stocks" class="form-control" />
-                                <span asp-validation-for="Stocks" class="text-danger"></span>
-                            </div>                          
+                                <div class="input-group">
+                                    <input asp-for="Stocks" class="form-control" />
+                                    <span class="input-group-text">人</span>
+                                    <span asp-validation-for="Stocks" class="text-danger"></span>
+                                </div>
+                            </div>
                             <div class="form-group">
                                 <label asp-for="CountryName" class="control-label"></label>
                                 <input asp-for="CountryName" class="form-control" />
@@ -72,23 +85,47 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="Cost" class="control-label"></label>
-                                <input asp-for="Cost" class="form-control" />
-                                <span asp-validation-for="Cost" class="text-danger"></span>
+                                <div class="input-group">
+                                    <input asp-for="Cost" class="form-control" />
+                                    <span class="input-group-text">元</span>
+                                    <span asp-validation-for="Cost" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">出團日期</label>
+                                <input value="@Model._CTravelDetailForEditViewModel[0]._TravelProductDetail.Date" class="form-control" readonly />
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label">行程總天數</label>
+                                <div class="input-group">
+                                    <input value="@Model._CTravelDetailForEditViewModel.Count()" class="form-control" readonly />
+                                    <span class="input-group-text">天</span>
+                                </div>
                             </div>
                         </div>
                     </div>
-                    <div class="row col-4">
+                    <div class="row col-5 ms-3 ">
                         <div id="cover_photo" class="form-group">
                             <img id="photo-0" src="~/images/TravelProductPictures/@Model.TravelPicturePath[0]" />
                             <input type="hidden" asp-for="TravelPictureId" value="@Model.TravelPictureId[0]" />
                             <input type="hidden" asp-for="PictureCount" value="0" id="hiddenPictureCount[0]" />
-                            <label class="control-label">更改行程照片</label>
+                            <label class="control-label">行程封面圖</label>
                             <input asp-for="photo" type="file" id="photoUpload[0]">
                         </div>
                         <div class="form-group">
-                            <label class="control-label"></label>
+                            <label asp-for="TravelPictureText" class="control-label"></label>
                             <input class="form-control" asp-for="TravelPictureText" value="@Model.TravelPictureText[0]" type="text" />
                             <span class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="AnotherDepartureDate" class="control-label"></label>
+                            <input asp-for="AnotherDepartureDate" class="form-control" />
+                            <span asp-validation-for="AnotherDepartureDate" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="MapUrl" class="control-label"></label>
+                            <input asp-for="MapUrl" class="form-control" />
+                            <span asp-validation-for="MapUrl" class="text-danger"></span>
                         </div>
                     </div>
                 </div>
@@ -98,23 +135,21 @@
                 <div class="col-8 prod_detail">
                     <div class="form-group">
                         <label asp-for="Description" class="control-label"></label>
-                        <textarea asp-for="Description" class="form-control" cols="50" rows="5"></textarea>
+                        <textarea asp-for="Description" class="form-control" cols="50" rows="8"></textarea>
                         <span asp-validation-for="Description" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="EventIntroduction" class="control-label"></label>
-                        <input asp-for="EventIntroduction" class="form-control" />
+                        <textarea asp-for="EventIntroduction" class="form-control" cols="50" rows="8"></textarea>
                         <span asp-validation-for="EventIntroduction" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="PreparationDescription" class="control-label"></label>
-                        <input asp-for="PreparationDescription" class="form-control" />
+                        <textarea asp-for="PreparationDescription" class="form-control" cols="50" rows="5"></textarea>
                         <span asp-validation-for="PreparationDescription" class="text-danger"></span>
                     </div>
                 </div>
             </div>
-
-
 
             @{int DetailCount = 1; }
             @foreach (var detail in Model._CTravelDetailForEditViewModel)
@@ -123,7 +158,7 @@
                     <div class="col-8 prod_detail">
                         <div class="form-group">
                             <label asp-for="@detail._TravelProductDetail.Day" class="control-label"></label>
-                            <input asp-for="@detail._TravelProductDetail.Day" class="form-control" />
+                            <input asp-for="@detail._TravelProductDetail.Day" class="form-control"  readonly />
                             <span asp-validation-for="@detail._TravelProductDetail.Day" class="text-danger"></span>
                         </div>
                         <div class="form-group">
@@ -133,7 +168,7 @@
                         </div>
                         <div class="form-group">
                             <label asp-for="@detail._TravelProductDetail.DailyDetailText" class="control-label">行程概述</label>
-                            <textarea asp-for="@detail._TravelProductDetail.DailyDetailText" class="form-control" cols="50" rows="5"></textarea>
+                            <textarea asp-for="@detail._TravelProductDetail.DailyDetailText" class="form-control" cols="50" rows="8"></textarea>
                             <span asp-validation-for="@detail._TravelProductDetail.DailyDetailText" class="text-danger"></span>
                         </div>
                         @if (detail.HotelName != null)
@@ -149,9 +184,9 @@
                             @foreach (string trans in detail.TrasportationName)
                             {
                                 TPnum++;
-                                <div class="form-group">
-                                    <label asp-for="@trans" class="control-label">當日使用交通方式-@TPnum</label>
-                                    <input asp-for="@trans" class="form-control" />
+                                <div class="form-group me-2">
+                                    <label asp-for="@trans" class="control-label">交通 @TPnum</label>
+                                    <input asp-for="@trans" class="form-control" size="3"/>
                                     <span asp-validation-for="@trans" class="text-danger"></span>
                                 </div>
                             }
@@ -161,9 +196,9 @@
                             @foreach (string vn in detail.ViewName)
                             {
                                 VNnum++;
-                                <div class="form-group">
-                                    <label asp-for="@vn" class="control-label">景點-@VNnum</label>
-                                    <input asp-for="@vn" class="form-control" />
+                                <div class="form-group me-2">
+                                    <label asp-for="@vn" class="control-label">景點 @VNnum</label>
+                                    <input asp-for="@vn" class="form-control" size="8"/>
                                     <span asp-validation-for="@vn" class="text-danger"></span>
                                 </div>
                             }
@@ -179,7 +214,7 @@
                         @for (int i = 1; i < Model.TravelPictureId.Count; i++)
                         {
                             <div id="photo_group" class="form-group">
-                                <img id="photo-@i" src="~/images/TravelProductPictures/@Model.TravelPicturePath[i]" />
+                                <img id="photo-@i" style="width:100%" src="~/images/TravelProductPictures/@Model.TravelPicturePath[i]" />
                                 <input type="hidden" asp-for="TravelPictureId" value="@Model.TravelPictureId[i]" />
                                 <input type="hidden" asp-for="PictureCount" value="0" id="hiddenPictureCount[@i]" />
                                 <label class="control-label">更改行程照片</label>
@@ -189,31 +224,37 @@
                                 <label class="control-label"></label>
                                 <input class="form-control" asp-for="TravelPictureText" value="@Model.TravelPictureText[i]" type="text" />
                                 <span class="text-danger"></span>
-                            </div>                                                       
+                            </div>
                         }
                     </div>
                 </div>
             </div>
             <div id="createNewPic" class="row">
-                              
-            </div>
 
+            </div>
 
             <div class="form-group">
-                <input id="editProductBtn" type="submit" value="修改並儲存" class="btn btn-primary" />
+                <input id="editProductBtn" type="submit" value="修改並儲存" class="btn btn-primary mt-4" style="display:none"/>
             </div>
         </form>
-        <div id="btnControl">
-            <button id="minus" onclick="minus()">減少圖片上傳欄位</button>
-            <button id="plus" onclick="plus()">新增圖片上傳欄位</button>
+
+        <div class="btnDetail" id="btnControl">
+            <button class="btn btn-secondary me-3" id="minus" onclick="minus()" type="button">減少圖片上傳欄位</button>
+            <button class="btn btn-secondary" id="plus" onclick="plus()" type="button">新增圖片上傳欄位</button>
         </div>
+
+
     </div>
 </section>
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+<script src="//cdn.ckeditor.com/4.20.0/standard/ckeditor.js"></script>
 <script>
-
+    CKEDITOR.replace('Description');
+    CKEDITOR.replace('EventIntroduction');
+    CKEDITOR.replace('PreparationDescription');
+    
     for (var i = 0; i < @Model.TravelPictureId.Count; i++) {
         let photoUpload = document.getElementById(`photoUpload[${i}]`)
         let hiddenPictureCount = document.getElementById(`hiddenPictureCount[${i}]`);
@@ -242,7 +283,7 @@
         let pic_div =
         `<div class="col-10">`+
         `<div id="photo_group" class="form-group">` +
-        `<img id="preview${num}" src="@Url.Content("~/images/ProductDefaultImage.jpg")" />` +
+        `<img id="preview${num}" src="@Url.Content("~/images/ProductDefaultImage.jpg")" style="width:100%"/>` +
         `<input type="hidden" name="TravelPictureId" value="-1" />` +
         `<input type="hidden" name="PictureCount111" value="0" id="ActivedHiddenPictureCount[${num}]" />` +
         `<label class="control-label">更改行程照片</label>` +

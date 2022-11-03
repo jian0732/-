@@ -538,8 +538,6 @@ namespace prj認真版嗎.Models
                     .IsRequired()
                     .HasDefaultValueSql("('未上架')");
 
-                entity.Property(e => e.Quentity).HasColumnName("quentity");
-
                 entity.Property(e => e.TravelProductName)
                     .IsRequired()
                     .HasMaxLength(50);

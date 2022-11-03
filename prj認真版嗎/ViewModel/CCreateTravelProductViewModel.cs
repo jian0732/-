@@ -110,10 +110,16 @@ namespace prj認真版嗎.ViewModel
             get { return _product.MapUrl; }
             set { _product.MapUrl = value; }
         }
+        [DisplayName("其他行程出團日")]
+        public string AnotherDepartureDate
+        {
+            get { return _product.AnotherDepartureDate; }
+            set { _product.AnotherDepartureDate = value; }
+        }
 
         //Trasportation屬性欄位
         //public List<int> TrasportationID { get; set; }
-      
+
 
     }
 }

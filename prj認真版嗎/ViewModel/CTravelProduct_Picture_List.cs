@@ -1,6 +1,7 @@
 ﻿using prj認真版嗎.Models;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace prj認真版嗎.ViewModel
 {
@@ -20,6 +21,7 @@ namespace prj認真版嗎.ViewModel
         [DisplayName("行程名稱")]
         public string TravelProductName { get; set; }
         [DisplayName("每人行程價格")]
+        [DisplayFormat(DataFormatString = "{0:C0}")]
         public decimal Price { get; set; }
         [DisplayName("行程類型")]
         public int TravelProductTypeId { get; set; }

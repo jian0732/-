@@ -15,7 +15,7 @@ namespace prj認真版嗎.Controllers
 {
     public class ProductController : Controller
     {
-        //1014-product edit
+        
         private IWebHostEnvironment _enviro;
         private PlanetTravelContext _db;
         public ProductController(IWebHostEnvironment p, PlanetTravelContext q)
@@ -23,12 +23,7 @@ namespace prj認真版嗎.Controllers
             _db = q;
             _enviro = p;
         }
-        //public ActionResult testList()
-        //{
-        //    CTravelProduct_Picture_List abc = new CTravelProduct_Picture_List();
-        //    abc.pro = _db.TravelProducts.Select(p=>p).ToList();
-        //    return View(abc);
-        //}
+     
         public IActionResult List()
         {
 
@@ -49,8 +44,7 @@ namespace prj認真版嗎.Controllers
                                EventIntroduction = c.EventIntroduction,
                                PreparationDescription = c.PreparationDescription,
                                TravelPicture1 = c.TravelPictures.Where(pic => pic.TravelProductId == c.TravelProductId).FirstOrDefault().TravelPicture1,
-                               ProductStatus = c.ProductStatus,
-
+                               ProductStatus = c.ProductStatus,                               
                            }).ToList();
 
             return View(result);
@@ -78,7 +72,7 @@ namespace prj認真版嗎.Controllers
         [HttpPost]
         public ActionResult Create(CCreateTravelProductViewModel newProduct)
         {
-#warning 封面圖的指示input未製作
+
             if (newProduct != null)
             {
 
@@ -88,12 +82,14 @@ namespace prj認真版嗎.Controllers
                     Price = newProduct.Price,
                     TravelProductTypeId = newProduct.TravelProductTypeId,                   
                     Stocks = newProduct.Stocks,
+                    Quantity= newProduct.Stocks,
                     Description = newProduct.Description,                    
                     CountryId = newProduct.CountryId,
                     Cost = newProduct.Cost,
                     EventIntroduction = newProduct.EventIntroduction,
                     PreparationDescription = newProduct.PreparationDescription,
                     MapUrl = newProduct.MapUrl,
+                    AnotherDepartureDate = newProduct.AnotherDepartureDate,
                 };
                 _db.TravelProducts.Add(tp);
                 _db.SaveChanges();
@@ -201,7 +197,9 @@ namespace prj認真版嗎.Controllers
                                                TravelPictureId = s.TravelPictures.Select(p => p.TravelPictureId).ToList(),
                                                TravelPicturePath = s.TravelPictures.Select(p => p.TravelPicture1).ToList(),
                                                TravelPictureText = s.TravelPictures.Select(p => p.TravelPictureText).ToList(),
-
+                                               MapUrl = s.MapUrl,
+                                               Quantity = s.Quantity,
+                                               AnotherDepartureDate = s.AnotherDepartureDate,
                                                _CTravelDetailForEditViewModel = s.TravelProductDetails.Select(p => new CTravelDetailForEditViewModel
                                                {
                                                    _TravelProductDetail = p,
@@ -225,16 +223,16 @@ namespace prj認真版嗎.Controllers
             TravelProduct c = _db.TravelProducts.FirstOrDefault(p => p.TravelProductId == inProd.TravelProductId);
             if (c != null)
             {
-                //c.TravelProductName = inProd.TravelProductName;
-                //c.Price = inProd.Price;
+                c.TravelProductName = inProd.TravelProductName;
+                c.Price = inProd.Price;
                 //c.TravelProductTypeId = inProd.TravelProductTypeId;
-                //c.Stocks = inProd.Stocks;
-                //c.Description = inProd.Description;
+                c.Stocks = inProd.Stocks;
+                c.Description = inProd.Description;
                 //c.CountryId = inProd.CountryId;
-                //c.Cost = inProd.Cost;
-                //c.EventIntroduction = inProd.EventIntroduction;
-                //c.PreparationDescription = inProd.PreparationDescription;
-                //_db.SaveChanges();
+                c.Cost = inProd.Cost;
+                c.EventIntroduction = inProd.EventIntroduction;
+                c.PreparationDescription = inProd.PreparationDescription;
+                _db.SaveChanges();
                 if (inProd.photo != null)
                 {
                     int tempCount = 0;
