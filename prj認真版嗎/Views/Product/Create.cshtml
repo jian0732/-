@@ -4,6 +4,7 @@
 
 @section Styles{
     <link href="~/css/Product_Create_Edit.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" rel="stylesheet" />
 }
 
 <div class="prod_menu">
@@ -17,7 +18,7 @@
         <button class="list-group-item list-group-item-action list-group-item-info" onclick="createBtn()">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-archive" viewBox="0 0 16 16">
                 <path d="M0 2a1 1 0 0 1 1-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1v7.5a2.5 2.5 0 0 1-2.5 2.5h-9A2.5 2.5 0 0 1 1 12.5V5a1 1 0 0 1-1-1V2zm2 3v7.5A1.5 1.5 0 0 0 3.5 14h9a1.5 1.5 0 0 0 1.5-1.5V5H2zm13-3H1v2h14V2zM5 7.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5z" />
-            </svg>　新增產品
+            </svg>　建立新行程
         </button>
         <button class="list-group-item list-group-item-action" id="jq-goTop">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-up" viewBox="0 0 16 16">
@@ -27,12 +28,10 @@
         <a asp-action="list" class="list-group-item list-group-item-action list-group-item-warning">
             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-up" viewBox="0 0 16 16">
                 <path fill-rule="evenodd" d="M4.854 1.146a.5.5 0 0 0-.708 0l-4 4a.5.5 0 1 0 .708.708L4 2.707V12.5A2.5 2.5 0 0 0 6.5 15h8a.5.5 0 0 0 0-1h-8A1.5 1.5 0 0 1 5 12.5V2.707l3.146 3.147a.5.5 0 1 0 .708-.708l-4-4z" />
-            </svg>　回到產品一覽表
+            </svg>　回到行程一覽表
         </a>
     </div>
 </div>
-
-
 
 <section class="ProductSection">
     <div class="ProductSectionTitle">
@@ -57,7 +56,7 @@
                                 <select asp-for="TravelProductTypeId" class="form-select">
                                     <option value="-1">請選擇行程分類</option>
                                 </select>
-                            </div>                            
+                            </div>
                             <div class="form-group">
                                 <label asp-for="Price" class="control-label"></label>
                                 <div class="input-group mb-3">
@@ -94,16 +93,26 @@
                     <div class="row col-4 m-sm-4">
                         <div id="pic_group">
                             <div class="form-group">
-                                <div class="">
+                                <div>
                                     <label class="control-label">旅遊產品介紹照片</label>
-                                    <img id="Upload_File_PicPreview" src='@Url.Content("~/images/ProductDefaultImage.jpg")' width="370" height="260" class="d-block" />
+                                    <div>
+                                        <div class="swiper mySwiper6 mt-0 mb-1">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide"><img id="swip0" src="" /></div>
+                                                <div class="swiper-slide"><img id="swip1" src="" /></div>
+                                                <div class="swiper-slide"><img id="swip2" src="" /></div>
+                                                <div class="swiper-slide"><img id="swip3" src="" /></div>
+                                                <div class="swiper-slide"><img id="swip4" src="" /></div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                                 <p>Tips:按住ctrl可進行多筆上傳</p>
                                 <label class="btn btn-info">
                                     <input id="Upload_File" style="display:none;" type="file" name="photo" multiple onchange="checkFiles()">
                                     <i class="fa fa-photo"></i> +新增多筆圖片
                                 </label>
-                                <p id="Upload_File_Count">　</p>
+                                <p style="display:inline" id="Upload_File_Count">　</p>
                             </div>
                             <div class="form-group">
                                 <label asp-for="TravelPictureText" class="control-label"></label>
@@ -114,6 +123,7 @@
                     </div>
                 </div>
             </div>
+
             <div class="row ">
                 <div class="col-8 prod_detail">
                     <div class="form-group">
@@ -140,7 +150,7 @@
             </div>
             <div class="row">
                 <div class="col-8 prod_detail">
-
+                    <label for="Day" class="control-label">行程第1天</label>
                     <div class="form-group">
                         <label asp-for="_TravelProductDetail[0].Day" class="control-label"></label>
                         <input asp-for="_TravelProductDetail[0].Day" class="form-control" value="1" readonly="readonly" />
@@ -231,6 +241,7 @@
 </section>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
     <script>
     //DEMO用
     $('#demo').on("click", function () {
@@ -368,7 +379,7 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
                 `<label class="form-check-label" for="bike${CCTPVM_Count}">腳踏車</label>` +
                 `</div>`+
                 `</div>` +
-                `</fieldset>`+                
+                `</fieldset>`+
                 `<div class="form-group">` +
                 `<label for="_ViewV${detail_num}" class="control-label">行程景點</label>` +
                 `<select id="_ViewV${detail_num}" name="_TravelProductDetail[${CCTPVM_Count}].ViewID" class="form-select">` +
@@ -568,9 +579,13 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
             const hint = document.getElementById("Upload_File_Count");
             let count =document.getElementById("Upload_File").files.length;
             hint.innerText = `已上傳${count}張照片`;
-            const file = document.getElementById("Upload_File").files[0];
-            const objectURL = URL.createObjectURL(file);
-            $('#Upload_File_PicPreview').attr('src', objectURL);
+            const file = document.getElementById("Upload_File").files;
+            for (let i = 0; i < file.length; i++) {
+                if (i < 6) {
+                    let objectURL = URL.createObjectURL(file[i]);
+                    $(`#swip${i}`).attr('src', objectURL);
+                }
+            }
         }
 
         //連動新增行程button
@@ -588,6 +603,26 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
                 600
             );
         });
+
+        //跑馬燈
+            var swiper6 = new Swiper(".mySwiper6", {
+                grabCursor: true,
+                effect: "creative",
+                creativeEffect: {
+                    prev: {
+                        shadow: true,
+                        origin: "left center",
+                        translate: ["-5%", 0, -200],
+                        rotate: [0, 100, 0],
+                    },
+                    next: {
+                        origin: "right center",
+                        translate: ["5%", 0, -200],
+                        rotate: [0, -100, 0],
+                    },
+                },
+            });
+
 
     LoadTravelProductType();
     LoadCountryName();

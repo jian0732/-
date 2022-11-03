@@ -52,7 +52,7 @@ namespace prj認真版嗎.MViewModel
         }
         public bool Useful
         {
-            get { return _co.Useful; }
+            get { return (bool)_co.Useful; }
             set { _co.Useful = value; }
         }
         [DataType(DataType.Date)]

@@ -78,6 +78,7 @@ namespace prj認真版嗎.Controllers
         [HttpPost]
         public ActionResult Create(CCreateTravelProductViewModel newProduct)
         {
+#warning 封面圖的指示input未製作
             if (newProduct != null)
             {
 
