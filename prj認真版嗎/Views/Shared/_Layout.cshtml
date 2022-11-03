@@ -117,16 +117,6 @@
 
                     }
 
-                    if (data.ProductStatus == true)
-                    {
-                        <li class="nav-item active ">
-                            <div class="nav-link ">
-                                <i class=" fas fa-fw fa-wallet" id="Jimg"></i>
-                                @Html.ActionLink("PowerBI報表", "Index", "", null, new { @class = "nav-link 超連結", style = "display:inline" })
-                            </div>
-                        </li>
-
-                    }
                     @Html.ActionLink("登出", "Logout", "Home", null, new { @class = "btn btn-dark" })
                 }
 

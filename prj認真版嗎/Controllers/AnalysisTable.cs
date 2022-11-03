@@ -8,9 +8,9 @@ using System.Threading.Tasks;
 
 namespace prj認真版嗎.Controllers
 {
-    public class AnalysisTableController : Controller
+    public class AnalysisTable : Controller
     {
-        public AnalysisTableController(PlanetTravelContext db)
+        public AnalysisTable(PlanetTravelContext db)
         {
             _db = db;
 
