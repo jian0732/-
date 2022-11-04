@@ -1,0 +1,52 @@
+﻿
+.tab
+{
+    margin-top:30px;
+    margin-left:20px;
+    background-color:#eff5e9;
+    color:#000000;
+    font-weight:bold;
+    border-color:#dcdbdb
+}
+
+.tab > tr 
+{
+    border-color: #808080
+}
+.yo 
+{
+    margin-top: 30px;
+    margin-left: 20px;
+
+}
+.罩包 {
+    position: relative;
+    border: 2px solid #808080;
+    border-radius:10px;
+}
+.冠軍圖1 {
+    position: absolute;
+    top: -30px;
+}
+上d {
+    margin-top: 30px;
+}
+.aaa {
+    border: 1px groove #ddd !important;
+    padding: 0 1.4em 1.4em 1.4em !important;
+    margin: 0 0 1.5em 0 !important;
+    -webkit-box-shadow: 0px 0px 0px 0px #000;
+    box-shadow: 0px 0px 0px 0px #000;
+    margin-top: 30px !important;
+}
+.bbb {
+    font-size: 1.2em !important;
+    font-weight: bold !important;
+    text-align: left !important;
+    width: auto;
+    padding: 0 10px;
+    border-bottom: none;
+    margin-top: -15px;
+    background-image: url('/images/gold-medal.png');
+    color: black;
+}

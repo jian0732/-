@@ -19,9 +19,11 @@
     <link href="~/css/sb-admin-2.min.css" rel="stylesheet" />
     <link href="~/css/JianCss.css" rel="stylesheet" />
     @await RenderSectionAsync("Styles", required: false)
+
 </head>
 
 <body id="page-top">
+
     @using Microsoft.AspNetCore.Http
     @using System.Text.Json;
     @using prj認真版嗎.ViewModel
@@ -39,7 +41,6 @@
                 </div>
                 <div class="sidebar-brand-text mx-3">星球旅遊 <sup>D</sup></div>
             </a>
-            @Html.ActionLink("儀錶板", "ccc", "AnalysisTable", null, new { @class = "nav-link 超連結", style = "display:inline" })
             @{
                 if (Accessor.HttpContext.Session.Keys.Contains(CDictionary.SK_Admin_Login))
                 {
@@ -66,6 +67,15 @@
                         </li>
                     }
 
+                    if (data.ProductStatus == true)
+                    {
+                        <li class="nav-item active ">
+                            <div class="nav-link ">
+                                <i class="fas fa-fw fa-calendar" id="Jimg"></i>
+                                @Html.ActionLink("行事曆", "Index", "Calendar", null, new { @class = "nav-link 超連結", style = "display:inline" })
+                            </div>
+                        </li>
+                    }
                     if (data.ProductStatus == true)
                     {
                         <li class="nav-item active ">
