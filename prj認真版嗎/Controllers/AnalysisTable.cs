@@ -45,11 +45,11 @@ namespace prj認真版嗎.Controllers
 
             C年份營業額統計 j年份 = new C年份營業額統計();
 
-            j年份.月份10 = Od.Where(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(p.OrderDate).Month == 10)
-                                .Select(p => p.OrderDetails.Select(p => p.UnitPrice * p.Quantity).Sum()).Sum();
+            //j年份.月份10 = Od.Where(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(p.OrderDate).Month == 10)
+            //                    .Select(p => p.OrderDetails.Select(p => p.UnitPrice * p.Quantity).Sum()).Sum();
 
-            j年份.男 = Od.Where(p => p.Members.Gender == "男").ToList().Count();
-            j年份.女 = Od.Where(p => p.Members.Gender == "女").ToList().Count();
+            //j年份.男 = Od.Where(p => p.Members.Gender == "男").ToList().Count();
+            //j年份.女 = Od.Where(p => p.Members.Gender == "女").ToList().Count();
             return ViewComponent("AnalysisTable",j年份);
         }
         public IActionResult BB()

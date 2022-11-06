@@ -56,6 +56,7 @@ namespace prj認真版嗎.MViewModel
             set { _co.Useful = value; }
         }
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{yyyy/MM/dd}")]
         public DateTime Expdate
         {
             get;

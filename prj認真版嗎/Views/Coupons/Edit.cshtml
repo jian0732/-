@@ -32,8 +32,8 @@
 
             <div class="form-group">
                 <label class="control-label">到期日</label>
-                <input id="ex" asp-for="@Model.Expdate" />
-                <span asp-validation-for="ExDate" class="text-danger"></span>
+                <input asp-format="{0:yyyy/MM/dd}" id="ex"asp-for="@Model.Expdate"  />
+                <span  asp-validation-for="ExDate" class="text-danger"></span>
             </div>
 
 

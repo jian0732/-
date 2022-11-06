@@ -28,7 +28,7 @@
             </div>
             <div class="form-group">
                 <label class="control-label">到期日</label>
-                <input id="ex" asp-for="@Model.Expdate" />
+                <input id="ex" asp-format="{0:yyyy/MM/dd}" asp-for="@Model.Expdate" />
                 <span asp-validation-for="ExDate" class="text-danger"></span>
             </div>
 
@@ -54,6 +54,20 @@
             <input asp-for="Useful" class="form-control" required />
             <span asp-validation-for="Useful" class="text-danger"></span>
         </div>*@
+
+            <div class="form-group">
+                <label class="control-label">有效Y/N</label>
+                <select id="use" asp-for="Useful" class="form-control">
+                    <option value="true">
+                        有效
+                    </option>
+                    <option value="false">
+                        無效
+                    </option>
+                </select>
+
+                <span asp-validation-for="Useful" class="text-danger"></span>
+            </div>
 
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -59,7 +59,7 @@ namespace prj認真版嗎.Controllers
                 Coupon cc = new Coupon();
                 cc.CouponName = cou.CouponName;
                 cc.Discount = cou.Discount;
-                cc.ExDate = cou.Expdate.ToString();
+                cc.ExDate = cou.Expdate.ToString("yyyy/MM/dd");
                 cc.GiftKey = cou.GiftKey;
                 cc.Condition = cou.Condition;
                 cc.Useful = true;
@@ -83,7 +83,7 @@ namespace prj認真版嗎.Controllers
                          {
                             CouponId=s.CouponId,
                             CouponName=s.CouponName,
-                            Expdate=DateTime.Parse(s.ExDate),
+                            Expdate=Convert.ToDateTime(s.ExDate),
                             Condition=s.Condition,
                             Useful=(bool)s.Useful,
                             Discount=s.Discount,
@@ -105,7 +105,7 @@ namespace prj認真版嗎.Controllers
             {
 
                 var a = _context.Coupons.FirstOrDefault(a => a.CouponId == coc.CouponId);
-                a.ExDate= Convert.ToString(coc.Expdate);
+                a.ExDate= coc.Expdate.ToString("yyyy/MM/dd");
                 a.Useful = coc.Useful;
                 
             }
