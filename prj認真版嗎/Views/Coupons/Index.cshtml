@@ -46,13 +46,15 @@
                     @Html.DisplayFor(modelItem => item.CouponName)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Discount)
+                    @*@Html.DisplayFor(modelItem => item.Discount)*@
+                    @item.Discount.ToString("###,###")元
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.ExDate)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Condition)
+                    @Html.DisplayFor(modelItem => item.Condition)元
+                    
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item.Useful)
