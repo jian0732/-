@@ -172,7 +172,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="_TravelProductDetail[0].HotelId" class="control-label"></label>
-                        <select asp-for="_TravelProductDetail[0].HotelId" id="TravelProductDetail_HotelID" class="form-select">
+                        <select asp-for="_TravelProductDetail[0].HotelId" id="TravelProductDetail_HotelID" class="form-select forHotelMethod">
                             <option value="-1">請選擇下榻飯店</option>
                         </select>
                     </div>
@@ -219,7 +219,7 @@
 
                     <div class="form-group">
                         <label name="_TravelProductDetail[0].ViewID" class="control-label">行程景點</label>
-                        <select name="_TravelProductDetail[0].ViewID" class="form-select" id="_ViewV">
+                        <select name="_TravelProductDetail[0].ViewID" class="form-select forViewMethod" id="_ViewV">
                             <option value="-1">請選擇行程景點</option>
                         </select>
                     </div>
@@ -270,17 +270,17 @@
 從農、漁業文化反映綠島不同年代的轉變，並透過飲食認識綠島的傳統，原來早期島上可是主農副漁的生活#
 半農：因地質、土壤之關係，綠島旱作採番薯和花生輪種，來綠島踩田，體驗一日小農夫，並親手製作在地經典口味的花生糖！#
 半漁：鰹竿釣文化已沒落，只能用影片回顧海上的英勇，體驗從挑刺、烘烤、補漿、再次烘烤到成品，一步一步認識得來不易的奢華柴魚#
-浮潛探索七彩繽紛海底世界、參與夜間生態觀察，從不同角度觀察多面的綠島`;        
+浮潛探索七彩繽紛海底世界、參與夜間生態觀察，從不同角度觀察多面的綠島`;
         CKEDITOR.instances['Description'].setData(temp);
         $('#CountryId').get(0).selectedIndex = 1;
         $('#Cost').val(1500);
         temp =`體驗傳統的鰹於工序工法，接著烘烤、補漿、再次烘烤到柴魚成品完成#
 DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式品嘗頂級柴魚滋味#
-學習怎麼熏製柴魚、花生田裡踩田製作花生糖、悠遊大海，來趟3天2夜體會綠島深度冒險之旅吧！`        
+學習怎麼熏製柴魚、花生田裡踩田製作花生糖、悠遊大海，來趟3天2夜體會綠島深度冒險之旅吧！`
         CKEDITOR.instances['EventIntroduction'].setData(temp);
         temp =`容易暈眩者，強烈建議在活動前1小時服用暈眩藥#
 供應商提供高品質安全設備，且由經驗豐富的教練陪同指導，參加者不需具備游泳技能也能享有愉快、安全的體驗#
-雖非強制，仍建議於參加活動前自行購買意外／旅遊險`        
+雖非強制，仍建議於參加活動前自行購買意外／旅遊險`
         CKEDITOR.instances['PreparationDescription'].setData(temp);
         temp = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7363.943916330125!2d121.49917821924109!3d22.65483411579356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346f8df289f9d775%3A0x7590b56495b478ed!2zT0ggR09PRCDntqDls7bmsJHlrr8!5e0!3m2!1szh-TW!2stw!4v1666845107824!5m2!1szh-TW!2stw`;
         $('#MapUrl').val(temp);
@@ -355,7 +355,7 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
                 `</div>` +
                 `<div class="form-group">` +
                 `<label for="TravelProductDetail_HotelIDH${detail_num}" class="control-label">住宿地點</label>` +
-                `<select id="TravelProductDetail_HotelIDH${detail_num}" name="_TravelProductDetail[${CCTPVM_Count}].HotelId" class="form-select">` +
+                `<select id="TravelProductDetail_HotelIDH${detail_num}" name="_TravelProductDetail[${CCTPVM_Count}].HotelId" class="form-select forHotelMethod">` +
                 `<option value="-1">請選擇下榻飯店</option>` +
                 ` </select>` +
                 `</div>` +
@@ -398,7 +398,7 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
                 `</fieldset>`+
                 `<div class="form-group">` +
                 `<label for="_ViewV${detail_num}" class="control-label">行程景點</label>` +
-                `<select id="_ViewV${detail_num}" name="_TravelProductDetail[${CCTPVM_Count}].ViewID" class="form-select">` +
+                `<select id="_ViewV${detail_num}" name="_TravelProductDetail[${CCTPVM_Count}].ViewID" class="form-select forViewMethod">` +
                 `<option value="-1">請選擇行程景點</option>` +
                 `</select>` +
                 `</div>` +
@@ -416,8 +416,9 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
                 `</div>` ;
             p.innerHTML += temp;
             createNewTravelDetailNode.appendChild(p);
-            LoadViewName(`V${detail_num}`);
-            LoadHotelName(`H${detail_num}`);
+            let CountryName = $('#CountryId').find("option:selected").text();
+            LoadViewName(`V${detail_num}`, CountryName,1);
+            LoadHotelName(`H${detail_num}`, CountryName,1);
             detail_num++;
         }
         else
@@ -449,14 +450,15 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
         const temp =
             `<div class="form-group">` +
             `<label for="_ViewE${view_exist_num}" class="control-label">景點</label>` +
-            `<select name="_TravelProductDetail[${CCTPVM_Count}].ViewID" id="_ViewE${view_exist_num}" class="form-select">` +
+            `<select name="_TravelProductDetail[${CCTPVM_Count}].ViewID" id="_ViewE${view_exist_num}" class="form-select forViewMethod">` +
             ` <option value="-1">請選擇行程景點</option>` +
             `</select>` +
             `</div>`;
 
         p.innerHTML += temp;
         createExistViewNode.appendChild(p);
-        LoadViewName(`E${view_exist_num}`);
+        let CountryName = $('#CountryId').find("option:selected").text();
+        LoadViewName(`E${view_exist_num}`, CountryName,1);
         view_exist_num++;
 
     }
@@ -483,17 +485,18 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
         const temp =
             `<div class="form-group">` +
             `<label for="View_CityId${view_num}" class="control-label">城市</label>` +
-            `<select name="_TravelProductDetail[${CCTPVM_Count}]._CreateView[${_CreateViewCount}].CreateViewCityID" id="View_CityId${view_num}" class="form-select">` +
+            `<select name="_TravelProductDetail[${CCTPVM_Count}]._CreateView[${_CreateViewCount}].CreateViewCityID" id="View_CityId${view_num}" class="form-select forViewCityMethod">` +
             ` <option value="-1">請選擇景點所在城市</option>` +
             `</select>` +
             `<label for="ViewName${view_num}">請輸入景點名字</label>` +
             `<input type="text" name="_TravelProductDetail[${CCTPVM_Count}]._CreateView[${_CreateViewCount}].CreateViewName" id="ViewName${view_num}" />` +
             `</div>`;
-            p.innerHTML += temp;
-            createNewViewNode.appendChild(p);
-            LoadCityName();
-            view_num++;
-            _CreateViewCount++;
+        p.innerHTML += temp;
+        createNewViewNode.appendChild(p);
+        let CountryName = $('#CountryId').find("option:selected").text();
+        LoadCityName(CountryName,1);
+        view_num++;
+        _CreateViewCount++;
 
     }
     function removeNewViewFunc(id) {
@@ -549,47 +552,69 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
         })
     }
     //抓資料庫城市的名字
-    async function LoadCityName() {
-        let selCityName = document.querySelector(`#View_CityId${view_num}`)
-        let response = await fetch("@Url.Content("~/Product/LoadCityName_ReturnJson")")
+        async function LoadCityName(Country, para) {
+            let selCityName = document.querySelectorAll(`#View_CityId${view_num}`);
+            if (para === 0) { //參數0=歸零清空選項，1不清空
+                selCityName = document.querySelectorAll(`.forViewCityMethod`);
+                selCityName.forEach(selCity => {
+                    const opt0 = new Option("請選擇景點所在城市", -1)
+                    selCity.options.length = 0;
+                    selCity.options.add(opt0)
+                })
+            }
+
+        let response = await fetch(`@Url.Content("~/Product/LoadCityName_ReturnJson")?Country=${Country}`)
         let datas = await response.json()
-        datas.forEach(City => {
-            const opt = new Option(City['cityName'], City['cityId'])
-            selCityName.options.add(opt)
+        selCityName.forEach(selCity => {
+            datas.forEach(City => {
+                const opt = new Option(City['cityName'], City['cityId'])
+                selCity.options.add(opt)
+            })
         })
     }
+
 
     //抓資料庫旅館的名字
-        async function LoadHotelName(id) {
-            let selHotelName = document.querySelector(`#TravelProductDetail_HotelID${id}`)
-        let response = await fetch("@Url.Content("~/Product/LoadHotelName_ReturnJson")")
+        async function LoadHotelName(id, Country,para) {
+            let selHotelName = document.querySelectorAll(`#TravelProductDetail_HotelID${id}`)
+            if (para === 0) { //參數0=歸零清空選項，1不清空
+                selHotelName = document.querySelectorAll(`.forHotelMethod`);
+                selHotelName.forEach(selHotel => {
+                    const opt0 = new Option("請選擇下榻飯店", -1)
+                    selHotel.options.length = 0;
+                    selHotel.options.add(opt0)
+                })
+            }
+            let response = await fetch(`@Url.Content("~/Product/LoadHotelName_ReturnJson")?Country=${Country}`)
         let datas = await response.json()
-            datas.forEach(Hotel => {
-                const opt = new Option(Hotel['hotelName'], Hotel['hotelId'])
-                selHotelName.options.add(opt)
-        })
+            selHotelName.forEach(selHotel => {
+                datas.forEach(Hotel => {
+                    const opt = new Option(Hotel['hotelName'], Hotel['hotelId'])
+                    selHotel.options.add(opt)
+                })
+            })
+
     }
     //抓資料庫景點的名字
-        async function LoadViewName(id) {
-            let selViewName = document.querySelector(`#_View${id}`)
-        let response = await fetch("@Url.Content("~/Product/LoadViewName_ReturnJson")")
-        let datas = await response.json()
-            datas.forEach(View => {
-                const opt = new Option(View['viewName'], View['viewId'])
-                selViewName.options.add(opt)
-        })
+        async function LoadViewName(id, Country,para) {
+            let selViewName = document.querySelectorAll(`#_View${id}`)
+        if (para === 0) { //參數0=歸零清空選項，1不清空
+            selViewName = document.querySelectorAll(`.forViewMethod`);
+            selViewName.forEach(selView => {
+                const opt0 = new Option("請選擇行程景點", -1)
+                selView.options.length = 0;
+                selView.options.add(opt0)
+            })
+        }
+        let response = await fetch(`@Url.Content("~/Product/LoadViewName_ReturnJson")?Country=${Country}`)
+            let datas = await response.json()
+            selViewName.forEach(selView => {
+                datas.forEach(View => {
+                    const opt = new Option(View['viewName'], View['viewId'])
+                    selView.options.add(opt)
+                })
+            })
     }
-    //抓資料庫交通的方式
-    @*async function LoadTrasportationName(id) {
-        let selTrasportationName = document.querySelector(`#Trasportation_TrasportationID${id}`)
-        let response = await fetch("@Url.Content("~/Product/LoadTrasportationName_ReturnJson")")
-        let datas = await response.json()
-        datas.forEach(Trasportation => {
-            const opt = new Option(Trasportation['trasportationName'], Trasportation['trasportationId'])
-                selTrasportationName.options.add(opt)
-        })
-    }*@
-
         //圖片專區 計算幾張圖、顯示第一張圖
         function checkFiles() {
             const hint = document.getElementById("Upload_File_Count");
@@ -643,11 +668,18 @@ DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式�
         CKEDITOR.replace('EventIntroduction');
         CKEDITOR.replace('PreparationDescription');
 
-        
+    //讀取下拉式選單欄位
     LoadTravelProductType();
     LoadCountryName();
-    LoadHotelName("");
-    LoadViewName("V");
+    //LoadViewName("V");
+
+     //當國家改變時其他選項也跟著改變
+    $('#CountryId').change(function () {
+        let CountryName = $('#CountryId').find("option:selected").text();
+        LoadCityName(CountryName, 0);
+        LoadHotelName("", CountryName, 0);
+        LoadViewName("V", CountryName,0);
+    })
 
     </script>
 

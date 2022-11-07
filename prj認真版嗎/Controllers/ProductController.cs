@@ -341,19 +341,19 @@ namespace prj認真版嗎.Controllers
             var CountryName_JsonData = _db.Countries.ToList();
             return Json(CountryName_JsonData);
         }
-        public IActionResult LoadCityName_ReturnJson()
+        public IActionResult LoadCityName_ReturnJson(string Country)
         {
-            var CityName_JsonData = _db.Cities.ToList();
+            var CityName_JsonData = _db.Cities.Where(c=>c.Country.CountryName==Country).ToList();
             return Json(CityName_JsonData);
         }
-        public IActionResult LoadHotelName_ReturnJson()
+        public IActionResult LoadHotelName_ReturnJson(string Country)
         {
-            var HotelName_JsonData = _db.Hotels.ToList();
+            var HotelName_JsonData = _db.Hotels.Where(h=>h.City.Country.CountryName==Country).ToList();
             return Json(HotelName_JsonData);
         }
-        public IActionResult LoadViewName_ReturnJson()
+        public IActionResult LoadViewName_ReturnJson(string Country)
         {
-            var ViewName_JsonData = _db.Views.ToList();
+            var ViewName_JsonData = _db.Views.Where(v=>v.City.Country.CountryName== Country).ToList();
             return Json(ViewName_JsonData);
         }
         public IActionResult LoadTrasportationName_ReturnJson()
