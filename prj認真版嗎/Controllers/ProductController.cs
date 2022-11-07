@@ -9,6 +9,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace prj認真版嗎.Controllers
@@ -26,7 +27,7 @@ namespace prj認真版嗎.Controllers
      
         public IActionResult List()
         {
-
+            string[] aaa ;
             CTravelProduct_Picture_List result = new CTravelProduct_Picture_List();
             result.產品列表 = (from c in _db.TravelProducts
                            select new 產品格式
@@ -37,7 +38,7 @@ namespace prj認真版嗎.Controllers
                                TravelProductTypeId = c.TravelProductTypeId,
                                TravelProductTypeDisplayName = c.TravelProductType.TravelProductTypeName,
                                Stocks = c.Stocks,
-                               Description = c.Description,
+                               Description = StripHTML(c.Description),
                                CountryId = c.CountryId,
                                CountryDisplayName = c.Country.CountryName,
                                Cost = c.Cost,
@@ -49,6 +50,10 @@ namespace prj認真版嗎.Controllers
 
             return View(result);
         }
+        // 把描述中的html標籤去除
+        public static string StripHTML(string input) 
+        { if (input == null) return ""; 
+            return Regex.Replace(input, "<[a-zA-Z/].*?>", String.Empty); }
         [HttpPost]
         public IActionResult List(List<int> TravelProductID_Status)
         {
