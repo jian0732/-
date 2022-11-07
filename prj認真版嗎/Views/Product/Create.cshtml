@@ -90,7 +90,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="control-label">行程總天數</label>
-                                <input class="form-control">
+                                <input class="form-control" id="TotalDay">
                             </div>
                             <div class="form-group">
                                 <label asp-for="MapUrl" class="control-label"></label>
@@ -131,7 +131,7 @@
                         </div>
                         <div class="form-group">
                             <label class="control-label">行程出團日</label>
-                            <input class="form-control">
+                            <input class="form-control" id="DepartureDay">
                         </div>
                         <div class="form-group">
                             <label asp-for="AnotherDepartureDate" class="control-label"></label>
@@ -261,79 +261,75 @@
     <script>
     //DEMO用
     $('#demo').on("click", function () {
-        $('#TravelProductName').val("綠島｜半農半漁深度文化生態三日遊");
-        $('#Price').val(6499);
-        $('#TravelProductTypeId').get(0).selectedIndex = 2;
-        $('#Stocks').val(30);
-        let temp = `自繁忙的工作與城市中跳脫，加入一趟3天的深度冒險旅遊#
-費用包含台東-綠島來回船票，入住星月屋渡假山莊兩晚（或同級）#
-從農、漁業文化反映綠島不同年代的轉變，並透過飲食認識綠島的傳統，原來早期島上可是主農副漁的生活#
-半農：因地質、土壤之關係，綠島旱作採番薯和花生輪種，來綠島踩田，體驗一日小農夫，並親手製作在地經典口味的花生糖！#
-半漁：鰹竿釣文化已沒落，只能用影片回顧海上的英勇，體驗從挑刺、烘烤、補漿、再次烘烤到成品，一步一步認識得來不易的奢華柴魚#
-浮潛探索七彩繽紛海底世界、參與夜間生態觀察，從不同角度觀察多面的綠島`;
+        $('#TravelProductName').val("河內｜越南3天2夜沙壩小鎮深度之旅");
+        $('#Price').val(7699);
+        $('#TravelProductTypeId').get(0).selectedIndex = 4;
+        $('#Stocks').val(40);
+        let temp = `<p>當您在 3 天的行程中游覽不起眼的<a href="https://goo.gl/maps/GJUJvGXrnsscejXr7">沙巴鎮</a>時，發現越南的另一面 在老柴村、塔文村了解沙巴當地人的傳統和文化......</p>
+<p>與常駐家庭互動，完全沉浸在文化中 通過 Dcar 的便捷接送服務、越南美食等來完成冒險</p>`;
         CKEDITOR.instances['Description'].setData(temp);
-        $('#CountryId').get(0).selectedIndex = 1;
-        $('#Cost').val(1500);
-        temp =`體驗傳統的鰹於工序工法，接著烘烤、補漿、再次烘烤到柴魚成品完成#
-DIY親手將鰹魚烘乾炮製成美味可口的柴魚片，用奢侈的方式品嘗頂級柴魚滋味#
-學習怎麼熏製柴魚、花生田裡踩田製作花生糖、悠遊大海，來趟3天2夜體會綠島深度冒險之旅吧！`
+        $('#CountryId').get(0).selectedIndex = 9;
+        $('#Cost').val(3400);
+        $('#TotalDay').val(3);
+        temp =`<ul>
+	<li>捕捉沙巴令人嘆為觀止的<a href="https://www.google.com/search?q=%E6%B2%99%E5%B7%B4%E9%8E%AE&amp;tbm=isch&amp;ved=2ahUKEwj2p7ef_Jv7AhUPhZQKHXHOC3wQ2-cCegQIABAA&amp;oq=%E6%B2%99%E5%B7%B4%E9%8E%AE&amp;gs_lcp=CgNpbWcQDFAAWABgAGgAcAB4AIABAIgBAJIBAJgBAKoBC2d3cy13aXotaW1n&amp;sclient=img&amp;ei=lOxoY_aNIo-K0gTxnK_gBw&amp;rlz=1C1ONGR_zh-TWTW949TW949">自然景觀</a></li>
+	<li>在整個迷人的鄉村享受這個為期 3 天的行程，體驗沙巴的傳統和文化</li>
+	<li>沙巴的梯田被美國《旅遊與休閒》雜誌的讀者評選為亞洲和世界七大最美麗、最令人印象深刻的稻田之一</li>
+	<li>一起來探索迷人的沙巴小鎮吧！</li>
+</ul>`
         CKEDITOR.instances['EventIntroduction'].setData(temp);
-        temp =`容易暈眩者，強烈建議在活動前1小時服用暈眩藥#
-供應商提供高品質安全設備，且由經驗豐富的教練陪同指導，參加者不需具備游泳技能也能享有愉快、安全的體驗#
-雖非強制，仍建議於參加活動前自行購買意外／旅遊險`
+        temp = `<ul>
+	<li>不建議行動者不便參加活動</li>
+	<li>不建議參加活動、等情況的情況</li>
+	<li>供應商可能拒絕酒醉者參加活動且不接受</li>
+	<li>餐活動無法配合提供特殊的飲食需求點（如過敏、麩質過敏、食物素食等）</li>
+	<li>請視當日天候穿著合宜服裝</li>
+	<li>如遇天候差等不可抗力的情況，將取消時間，並安排改期或日期</li>
+</ul>`;
         CKEDITOR.instances['PreparationDescription'].setData(temp);
-        temp = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d7363.943916330125!2d121.49917821924109!3d22.65483411579356!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346f8df289f9d775%3A0x7590b56495b478ed!2zT0ggR09PRCDntqDls7bmsJHlrr8!5e0!3m2!1szh-TW!2stw!4v1666845107824!5m2!1szh-TW!2stw`;
+        temp = `https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d118080.82854609472!2d103.76835813013622!3d22.35265118152092!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x36cd40a503ec6395%3A0x49032814dedb2fb8!2z6LaK5Y2X6ICB6KGX5rKZ5aOp57ij!5e0!3m2!1szh-TW!2stw!4v1667820823656!5m2!1szh-TW!2stw`;
         $('#MapUrl').val(temp);
-        $('#TravelPictureText').val("綠島圖片介紹集");
-        $('#TravelProductDetail_HotelID').get(0).selectedIndex = 9;
-        $('#zTravelProductDetail_0__Date').val("2022-10-27");
-        temp =`第1天#
-時間：#
-11:00 - 19:00#
-總時長：8小時0分鐘#
-11:00 集合地點｜富岡候船室#
-11:30 乘風破浪｜前進綠島#
-12:30 抵達綠島｜南寮港口#
-13:30 享用午餐｜慢食綠島（自理）#
-14:30 自由活動｜環島解密趣（自理）#
-17:00 享用晚餐｜慢食綠島（自理）#
-19:00 世界特有海底溫泉｜朝日溫泉（自費）`
+        $('#TravelPictureText').val("沙壩小鎮之旅圖片介紹集");
+        $('#DepartureDay').val("2022/12/25")
+        $('#AnotherDepartureDate').val("2023/02/28 # 2023/04/07")
+        $('#TravelProductDetail_HotelID').get(0).selectedIndex = 3;
+        $('#zTravelProductDetail_0__Date').val("2022-12-25");
+        temp =`第 1 天：#
+06:30 - 07:00，老城區酒店或集合點接載#
+08:00 - 09:00，老城區巴士觀光#
+出發前往沙巴#
+10:00 - 12:00，抵達沙巴，在沙巴中心漫遊#
+享用午餐#
+14:00-參觀老柴 - Ta Van 村或 Ma Tra - Ta Phin 村#
+在沙巴享用晚餐並過夜#`
         $('#zTravelProductDetail_0__DailyDetailText').val(temp);
-        $('#View_CityId0').get(0).selectedIndex = 16;
-        $('#ViewName0').val("綠島觀景步道");
-        $('#TravelProductDetail_HotelIDH2').get(0).selectedIndex = 10;
-        $('#_TravelProductDetail_Date1').val("2022-10-28");
-        temp =`第2天#
-時間：#
-08:00 - 20:00#
-總時長：12小時0分鐘#
-08:00 享用早餐｜民宿#
-​10:00 海洋生態｜浮潛體驗#
-12:30 享用午餐｜慢食綠島（自理）#
-15:00 頂級柴魚發源地｜煙仔魚手作體驗#
-17:00 享用晚餐（自理）#
-19:00 派對動物｜夜間生態觀察（時間依民宿公告為主）#
-20:00 返回民宿｜明天見`
+        $('#View_CityId0').get(0).selectedIndex = 1;
+        $('#ViewName0').val("老柴塔番村");
+        $('#TravelProductDetail_HotelIDH2').get(0).selectedIndex = 4;
+        $('#_TravelProductDetail_Date1').val("2022-12-26");
+        temp =`第 2 天：#
+07:00 - 08:00，在酒店享用早餐#
+09:00 - 12:00，參觀咸榮#
+享用午餐#
+14:00 -參觀番西邦山（纜車票自費）#
+在沙巴過夜`
         $('#_TravelProductDetail_DailyDetailText1').val(temp);
-        $('#View_CityId1').get(0).selectedIndex = 16;
-        $('#ViewName1').val("綠島紫坪");
-        $('#View_CityId2').get(0).selectedIndex = 16;
-        $('#ViewName2').val("綠島紫坪生態保育區");
-        $('#_TravelProductDetail_Date2').val("2022-10-29");
-        temp =`第3天#
-時間：#
-08:00 - 13:30#
-總時長：5小時30分鐘#
-08:00 享用早餐｜民宿#
-09:00 農事體驗｜花生什麼事#
-11:00 享用午餐（自理）#
-12:30 乘風破浪｜返回台東（依當日航班時間）#
-13:30 抵達台東｜富岡候船室`
+        $('#View_CityId1').get(0).selectedIndex = 1;
+        $('#ViewName1').val("河內咸榮");
+        $('#View_CityId2').get(0).selectedIndex = 1;
+        $('#ViewName2').val("番西邦山");
+        $('#_TravelProductDetail_Date2').val("2022-12-27");
+        temp =`第 3 天：#
+07:00 - 08:00，在酒店享用早餐#
+09:00 - 12:00，參觀薩霸鎮#
+享用午餐#
+14:00 - 17:00，參訪薩帕提市場#
+18:00 - 前往機場，返回甜蜜的家！`
         $('#_TravelProductDetail_DailyDetailText2').val(temp);
-        $('#View_CityId3').get(0).selectedIndex = 16;
-        $('#ViewName3').val("綠島朝日溫泉");
-        $('#View_CityId4').get(0).selectedIndex = 16;
-        $('#ViewName4').val("綠島藍洞");
+        $('#View_CityId3').get(0).selectedIndex = 1;
+        $('#ViewName3').val("薩霸鎮");
+        $('#View_CityId4').get(0).selectedIndex = 1;
+        $('#ViewName4').val("薩帕提市場");
     })
 
 
