@@ -36,7 +36,6 @@ namespace prj認真版嗎.Controllers
             j統計.當月目前營業額 = Od.Where(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(p.OrderDate).Month == DateTime.Now.Month && p.OrderStatusId == 3)
                 .Select(p => p.OrderDetails.Select(p => p.UnitPrice * p.Quantity).Sum()).Sum();
 
-            j統計.當月取消筆數 = Od.Where(p => p.OrderStatus.OrderStatusName == "取消訂單").ToList().Count();
 
             return View(j統計);
         }
@@ -46,8 +45,11 @@ namespace prj認真版嗎.Controllers
             var Od = _db.Orders.ToList();
             _db.OrderDetails.ToList();
             _db.Members.ToList();
+            var Od = _db.Orders.ToList();
+            var Odd = _db.OrderDetails.ToList();
+            var Tp = _db.TravelProducts.ToList();
+            _db.Countries.ToList();
 
-<<<<<<<< HEAD:prj認真版嗎/Controllers/AnalysisTableController.cs
             string 國家 = "";
             string 營業額 = "";
             decimal 營業總額 = 0;
@@ -97,13 +99,6 @@ namespace prj認真版嗎.Controllers
 ========
             C年份營業額統計 j年份 = new C年份營業額統計();
 
-            //j年份.月份10 = Od.Where(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(p.OrderDate).Month == 10)
-            //                    .Select(p => p.OrderDetails.Select(p => p.UnitPrice * p.Quantity).Sum()).Sum();
->>>>>>>> 1107 1019:prj認真版嗎/Controllers/AnalysisTable.cs
-
-            //j年份.男 = Od.Where(p => p.Members.Gender == "男").ToList().Count();
-            //j年份.女 = Od.Where(p => p.Members.Gender == "女").ToList().Count();
-            return ViewComponent("AnalysisTable",j年份);
         }
         public IActionResult BB()
         {
@@ -173,20 +168,9 @@ namespace prj認真版嗎.Controllers
              產品編號最多訂單量=s.Count(),
          }).OrderByDescending(p=>p.產品編號最多訂單量).Take(3).ToList();
 
-            //var qwe = Odd.GroupBy(p => p.TravelProductId).Select(s => new C當月訂單統計
-            //{
-            //    國家 = s.Where(s => Convert.ToDateTime(s.Order.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(s.Order.OrderDate).Month == DateTime.Now.Month && s.Order.OrderStatusId == 3).Select(s => s.TravelProduct.Country.CountryName).FirstOrDefault(),
-            //    產品編號最多 = s.Where(s => Convert.ToDateTime(s.Order.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(s.Order.OrderDate).Month == DateTime.Now.Month && s.Order.OrderStatusId == 3).Select(s=>s.TravelProductId).FirstOrDefault(),
-            //    產品編號最多訂單量 = s.Where(s => Convert.ToDateTime(s.Order.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(s.Order.OrderDate).Month == DateTime.Now.Month && s.Order.OrderStatusId == 3).Count(),
 
-            //}).ToList();
 
-            //var qqqq = Od.Where(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(p.OrderDate).Month == DateTime.Now.Month && p.OrderStatusId == 3)
-            //   .Select(s => s.OrderDetails.Where(w => w.OrderId == w.Order.OrderId).GroupBy(p => p.TravelProductId).Select(s => new C當月訂單統計 {
-            //       產品編號最多 = s.Key,
-            //       產品編號最多訂單量 = s.Count(),
 
-            //   })).ToList();
 
 
             var 訂單國 = Od.Where(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(p.OrderDate).Month == DateTime.Now.Month && p.OrderStatusId == 3)
@@ -199,12 +183,9 @@ namespace prj認真版嗎.Controllers
         {
             國家 = s.Key,
             訂單量 = s.Count(),
-        }).OrderByDescending(p => p.訂單量).Take(3).ToList();
 
 
 
-            C當月訂單[0].產編訂單量 = 訂單量;
-            C當月訂單[0].國家訂單量 = 訂單國;
 
 
 
