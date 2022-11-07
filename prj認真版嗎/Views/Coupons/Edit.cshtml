@@ -32,7 +32,7 @@
 
             <div class="form-group">
                 <label class="control-label">到期日</label>
-                <input asp-format="{0:yyyy/MM/dd}" id="ex"asp-for="@Model.Expdate"  />
+                <input  asp-format="{0:yyyy/MM/dd}" id="ex"asp-for="@Model.Expdate"/>
                 <span  asp-validation-for="ExDate" class="text-danger"></span>
             </div>
 
@@ -61,13 +61,13 @@
         </div>*@
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                <input type="submit" onclick="ck()" value="Save" class="btn btn-primary" />
+                <input type="submit" @*onclick="ck()"*@ value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 <script>
-    function ck() {
+    @*function ck() {
         var data =
         {
             CouponId: $("#coid").val(),
@@ -86,13 +86,19 @@
             dataType:'Json',
             data: { coc: data },
             success: function (datas) {
-           
-            }
-        }).then(function () {
+                if (datas.res) {
+                    Swal.fire(
+                        '您的變更已儲存!',
+                        '',
+                        'success'
+                    )
+                }
+            }.then(function () {
 
-            window.location.reload()
+                window.location.reload()
         })
-    }
+        })
+    }*@
 
 </script>
 

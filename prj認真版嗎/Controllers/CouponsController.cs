@@ -107,11 +107,13 @@ namespace prj認真版嗎.Controllers
                 var a = _context.Coupons.FirstOrDefault(a => a.CouponId == coc.CouponId);
                 a.ExDate= coc.Expdate.ToString("yyyy/MM/dd");
                 a.Useful = coc.Useful;
+                a.CouponName = coc.CouponName;
+                a.GiftKey=coc.GiftKey;
                 
             }
             _context.SaveChanges();
        
-            return Json(new {Res=true});
+            return RedirectToAction("Index");
         }
 
         // GET: Coupons/Delete/5
