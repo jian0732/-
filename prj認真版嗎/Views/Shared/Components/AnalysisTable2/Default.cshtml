@@ -73,7 +73,7 @@
             <div class="罩包 上d">
                 <div class="冠軍圖1">
                     <div>
-                        <img src="~/images/gold-medal.png" />
+                        <img src="~/images/champion.png" />
                     </div>
                 </div>
                 <div style="margin-top:35px">
@@ -113,36 +113,43 @@
                 </div>
             </div>
             <div class="罩包">
-                <table class="上table">
-                    <thead>
-                        @{
-                            <tr class="th標題2">
-                                <th>
-                                    國家
-                                </th>
-                                <th>
-                                    訂單量
-                                </th>
-                            </tr>
-
-                        }
-                    </thead>
-                    <tbody>
-                        @{
-                            @foreach (var i in Model[0].國家訂單量)
-                            {
-                                <tr>
-                                    <td>
-                                        @i.國家
-                                    </td>
-                                    <td>
-                                        @i.訂單量
-                                    </td>
+                <div class="冠軍圖1">
+                    <div>
+                        <img src="~/images/earth-day.png" />
+                    </div>
+                </div>
+                <div style="margin-top:35px">
+                    <table class="上table">
+                        <thead>
+                            @{
+                                <tr class="th標題2">
+                                    <th>
+                                        國家
+                                    </th>
+                                    <th>
+                                        下單數
+                                    </th>
                                 </tr>
+
                             }
-                        }
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @{
+                                @foreach (var i in Model[0].國家訂單量)
+                                {
+                                    <tr>
+                                        <td>
+                                            @i.國家
+                                        </td>
+                                        <td>
+                                            @i.訂單量
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
 
         </div>
