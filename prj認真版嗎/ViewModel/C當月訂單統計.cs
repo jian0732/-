@@ -18,7 +18,5 @@ namespace prj認真版嗎.ViewModel
         public int 產品編號最多 { get; set; }
         public int 產品編號最多訂單量 { get; set; }
 
-        public List<C當月訂單統計> 產編訂單量 { get; set; }
-        public List<C當月訂單統計> 國家訂單量 { get; set; }
     }    
 }

@@ -63,68 +63,39 @@
     </div>
     <div class="yo">
         <div class="罩包">
-            <div class="冠軍圖1" >
+            <div class="冠軍圖1">
                 <img src="~/images/gold-medal.png" />
             </div>
-            <table style="margin-top:100px">
+            <table>
                 <thead>
                     @{
                         <tr>
+
+                            @foreach (var i in ViewBag.訂單量)
+                            {
                             <th>
-                                產編
+                               
                             </th>
-                            <th>
-                                訂單量
-                            </th>
+                            }
+
+
                         </tr>
                     }
                 </thead>
                 <tbody>
-                    @foreach (var i in Model[0].產編訂單量)
-                    {
+                    @{
+
                         <tr>
                             <td>
-                                @i.產品編號最多
-                            </td>
-                            <td>
-                                @i.產品編號最多訂單量
+                               
                             </td>
                         </tr>
-
                     }
                 </tbody>
             </table>
         </div>
         <div class="card">
-            <table>
-                <thead>
-                    @{
-                        <tr>
-                            <th>
-                                國家
-                            </th>
-                            <th>
-                                訂單量
-                            </th>
-                        </tr>
-                    }
-                </thead>
-                <tbody>
-                    @{
-                        @foreach (var i in Model[0].國家訂單量)
-                        {
-                            <tr>
-                                <td>
-                                    @i.國家
-                                </td>
-                                <td>
-                                    @i.訂單量
-                                </td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
+
         </div>
 
     </div>
