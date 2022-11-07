@@ -30,6 +30,7 @@ namespace prj認真版嗎.Controllers
             
             CTravelProduct_Picture_List result = new CTravelProduct_Picture_List();
             result.產品列表 = (from c in _db.TravelProducts
+                           orderby c.TravelProductId descending
                            select new 產品格式
                            {
                                TravelProductName = c.TravelProductName,
