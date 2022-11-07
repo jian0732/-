@@ -27,7 +27,7 @@ namespace prj認真版嗎.Controllers
      
         public IActionResult List()
         {
-            string[] aaa ;
+            
             CTravelProduct_Picture_List result = new CTravelProduct_Picture_List();
             result.產品列表 = (from c in _db.TravelProducts
                            select new 產品格式
@@ -225,6 +225,7 @@ namespace prj認真版嗎.Controllers
         [HttpPost]
         public ActionResult Edit(CProductViewModel inProd)
         {
+            //部分功能未完善，待補
             TravelProduct c = _db.TravelProducts.FirstOrDefault(p => p.TravelProductId == inProd.TravelProductId);
             if (c != null)
             {
