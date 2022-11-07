@@ -1,16 +1,16 @@
 ﻿
-.tab
-{
-    margin-top:30px;
-    margin-left:20px;
-    background-color:#eff5e9;
-    color:#000000;
-    font-weight:bold;
-    border-color:#dcdbdb
+.tab {
+    margin-top: 30px;
+    margin-left: 20px;
+    background-color: #eff5e9;
+    color: #000000;
+    font-weight: bold;
+    border-color: #dcdbdb;
+    height: 700px;
+    overflow: auto;
 }
 
-.tab > tr 
-{
+.tab > tr {
     border-color: #808080
 }
 .yo 
@@ -21,15 +21,21 @@
 }
 .罩包 {
     position: relative;
-    border: 2px solid #808080;
-    border-radius:10px;
+    border: 2px solid #e9fffb;
+    border-radius: 10px;
+    background-color: #e9fffb;
+}
+.上table {
+    text-align: center;
+    background-color: #e9fffb;
 }
 .冠軍圖1 {
     position: absolute;
     top: -30px;
+    right:190px;
 }
-上d {
-    margin-top: 30px;
+.上d {
+    margin-bottom: 50px;
 }
 .aaa {
     border: 1px groove #ddd !important;
@@ -49,4 +55,20 @@
     margin-top: -15px;
     background-image: url('/images/gold-medal.png');
     color: black;
+}
+
+.th標題 > th {
+    width: 150px;
+}
+.訂單tr{
+    background-color:#d8f575
+}
+
+.產品名稱{
+     max-width:120px;
+     overflow:hidden;
+     text-overflow:ellipsis;
+}
+.th標題2 > th {
+    width: 100px;
 }

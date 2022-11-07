@@ -16,10 +16,10 @@
                         @Html.DisplayNameFor(model => model.First().訂單日期)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.First().產品編號)
+                        @Html.DisplayNameFor(model => model.First().訂單編號)
                     </th>
                     <th>
-                        @Html.DisplayNameFor(model => model.First().旅遊地區)
+                        購買人數
                     </th>
                     <th style="text-align:right">
                         @Html.DisplayNameFor(model => model.First().金額)
@@ -35,18 +35,26 @@
                             <td>
                                 @Html.DisplayFor(modelItem => item.訂單日期)
                             </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.產品編號)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.旅遊地區)
-                            </td>
-                            <td style="text-align:right">
-                                @item.金額.ToString("###,###")
-                            </td>
+
                         </tr>
-                        total += item.金額;
-                    }
+                        @foreach (var i in item.訂單明細)
+                        {
+                            <tr class="訂單tr">
+                                <td></td>
+                                <td style="text-align:center">
+                                    @Html.DisplayFor(modelItem => i.OrderId)
+                                </td>
+                                <td style="text-align:center">
+                                    @Html.DisplayFor(modelItem => i.Quantity)
+                                </td>
+                                <td style="text-align:right">
+                                    @Html.DisplayFor(modelItem => i.UnitPrice)
+                                </td>
+                            </tr>
+                        }
+
+                    total += item.金額;
+                }
                 }
                 <tr>
                 </tr>
@@ -54,137 +62,143 @@
                     <td></td>
                     <td></td>
                     <td></td>
-                    <td>
+                    <td style="text-align:right">
                         NT$@Convert.ToInt32(total).ToString("###,###")
                     </td>
                 </tr>
-            </tbody>
-        </table>
+                </tbody>
+            </table>
     </div>
-    <div class="yo">
-        <div class="罩包">
-            <div class="冠軍圖1">
-                <img src="~/images/gold-medal.png" />
+        <div class="yo">
+            <div class="罩包 上d">
+                <div class="冠軍圖1">
+                    <div>
+                        <img src="~/images/gold-medal.png" />
+                    </div>
+                </div>
+                <div style="margin-top:35px">
+                    <table class="上table">
+                        <thead>
+                            <tr class="th標題">
+                                <th>
+                                    產編
+                                </th>
+                                <th>
+                                    產品名稱
+                                </th>
+                                <th>
+                                    訂單量
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @{
+                                @foreach (var i in Model[0].產編訂單量)
+                                {
+                                    <tr>
+                                        <td>
+                                            @i.產品編號最多
+                                        </td>
+                                        <td class="產品名稱">
+                                            @i.產品名稱
+                                        </td>
+                                        <td>
+                                            @i.產品編號最多訂單量
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
-            <table>
-                <thead>
-                    @{
-                        <tr>
-                            <th>
-                                產編
-                            </th>
-                            <th>
-                                訂單量
-                            </th>
-                        </tr>
-
-                    }
-                </thead>
-                <tbody>
-                    @{
-                        @foreach (var i in Model[0].產編訂單量)
-                        {
-                            <tr>
-                                <td>
-                                    @i.產品編號最多
-                                </td>
-                                <td>
-                                    @i.產品編號最多訂單量
-                                </td>
+            <div class="罩包">
+                <table class="上table">
+                    <thead>
+                        @{
+                            <tr class="th標題2">
+                                <th>
+                                    國家
+                                </th>
+                                <th>
+                                    訂單量
+                                </th>
                             </tr>
+
                         }
-                    }
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        @{
+                            @foreach (var i in Model[0].國家訂單量)
+                            {
+                                <tr>
+                                    <td>
+                                        @i.國家
+                                    </td>
+                                    <td>
+                                        @i.訂單量
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
 
         </div>
-        <div class="card">
-            <table>
-                <thead>
-                    @{
-                        <tr>
-                            <th>
-                                國家
-                            </th>
-                            <th>
-                                訂單量
-                            </th>
-                        </tr>
-
-                    }
-                </thead>
-                <tbody>
-                    @{
-                        @foreach (var i in Model[0].國家訂單量)
-                        {
-                            <tr>
-                                <td>
-                                    @i.國家
-                                </td>
-                                <td>
-                                    @i.訂單量
-                                </td>
-                            </tr>
-                        }
-                    }
-                </tbody>
-            </table>
-        </div>
-
     </div>
-</div>
-<input type="hidden" id="c" value="@ViewBag.M國家" />
-<input type="hidden" id="p" value="@ViewBag.M營業額" />
+    <input type="hidden" id="c" value="@ViewBag.M國家" />
+    <input type="hidden" id="p" value="@ViewBag.M營業額" />
 
-<script>
-    var x = document.querySelector("#c").value.split(",");
-    var s = document.querySelector("#p").value.split(",");
+    <script>
+        var x = document.querySelector("#c").value.split(",");
+        var s = document.querySelector("#p").value.split(",");
 
 
-    var bkc = [
-        'rgba(255, 99, 132, 0.2)',
-        'rgba(255, 159, 64, 0.2)',
-        'rgba(255, 205, 86, 0.2)',
-        'rgba(75, 192, 192, 0.2)',
-        'rgba(54, 162, 235, 0.2)',
-        'rgba(153, 102, 255, 0.2)',
-        'rgba(201, 203, 207, 0.2)'
-    ];
+        var bkc = [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(255, 159, 64, 0.2)',
+            'rgba(255, 205, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(201, 203, 207, 0.2)'
+        ];
 
-    var bdc = [
-        'rgb(255, 99, 132)',
-        'rgb(255, 159, 64)',
-        'rgb(255, 205, 86)',
-        'rgb(75, 192, 192)',
-        'rgb(54, 162, 235)',
-        'rgb(153, 102, 255)',
-        'rgb(201, 203, 207)'
-    ];
+        var bdc = [
+            'rgb(255, 99, 132)',
+            'rgb(255, 159, 64)',
+            'rgb(255, 205, 86)',
+            'rgb(75, 192, 192)',
+            'rgb(54, 162, 235)',
+            'rgb(153, 102, 255)',
+            'rgb(201, 203, 207)'
+        ];
 
-    var ctxx = document.getElementById('myChart').getContext('2d');
-    var myChart = new Chart(ctxx, {
-        type: 'bar',
-        data: {
-            labels: x,
-            datasets: [{
-                label: "當月熱賣國家",
-                data: s,
-                backgroundColor: bkc,
-                borderColor: bdc,
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
+        var ctxx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctxx, {
+            type: 'bar',
+            data: {
+                labels: x,
+                datasets: [{
+                    label: "當月熱賣國家",
+                    data: s,
+                    backgroundColor: bkc,
+                    borderColor: bdc,
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
                 }
-            }
-        },
-    });
+            },
+        });
 
 
-</script>
+    </script>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>

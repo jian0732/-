@@ -161,8 +161,8 @@ namespace prj認真版嗎.Controllers
                 .Select(p => new C當月訂單統計
                 {
                     訂單日期 = Convert.ToDateTime(p.OrderDate).ToString("yyyy-MM-dd"),
-                    產品編號 = p.OrderId,
-                    旅遊地區 = p.OrderDetails.Where(q => q.OrderId == p.OrderId).Select(p => p.TravelProduct.Country.CountryName).FirstOrDefault(),
+                    訂單編號 = p.OrderId,
+                    訂單明細 = Odd.Where(s => s.OrderId == p.OrderId).ToList(),
                     金額 = p.OrderDetails.Where(q => q.OrderId == p.OrderId).Sum(s => s.Quantity * s.UnitPrice),
                 }).ToList();
 
@@ -175,47 +175,32 @@ namespace prj認真版嗎.Controllers
          (comp, sect) => new { order = comp, orderdetail = sect })
          .GroupBy(p => p.orderdetail.TravelProductId).Select(s => new C當月訂單統計
          {
-             //國家=s.First(s=>s.orderdetail.TravelProduct.Country.CountryName),
              產品編號最多 = s.Key,
+             產品名稱=s.Select(p=>p.orderdetail.TravelProduct.TravelProductName).FirstOrDefault(),
              產品編號最多訂單量 = s.Count(),
          }).OrderByDescending(p => p.產品編號最多訂單量).Take(3).ToList();
 
-            //var qwe = Odd.GroupBy(p => p.TravelProductId).Select(s => new C當月訂單統計
-            //{
-            //    國家 = s.Where(s => Convert.ToDateTime(s.Order.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(s.Order.OrderDate).Month == DateTime.Now.Month && s.Order.OrderStatusId == 3).Select(s => s.TravelProduct.Country.CountryName).FirstOrDefault(),
-            //    產品編號最多 = s.Where(s => Convert.ToDateTime(s.Order.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(s.Order.OrderDate).Month == DateTime.Now.Month && s.Order.OrderStatusId == 3).Select(s=>s.TravelProductId).FirstOrDefault(),
-            //    產品編號最多訂單量 = s.Where(s => Convert.ToDateTime(s.Order.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(s.Order.OrderDate).Month == DateTime.Now.Month && s.Order.OrderStatusId == 3).Count(),
-
-            //}).ToList();
-
-            //var qqqq = Od.Where(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(p.OrderDate).Month == DateTime.Now.Month && p.OrderStatusId == 3)
-            //   .Select(s => s.OrderDetails.Where(w => w.OrderId == w.Order.OrderId).GroupBy(p => p.TravelProductId).Select(s => new C當月訂單統計 {
-            //       產品編號最多 = s.Key,
-            //       產品編號最多訂單量 = s.Count(),
-
-            //   })).ToList();
-
-
+            var qwe = Odd.GroupBy(p => p.TravelProduct.Country.CountryName).Select(s => new C當月訂單統計
+            {
+                國家 = s.Key,
+                訂單量 = s.Where(s => Convert.ToDateTime(s.Order.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(s.Order.OrderDate).Month == DateTime.Now.Month && s.Order.OrderStatusId == 3).Where(s=>s.Order.OrderId==s.OrderId).Count(),
+            }).ToList();
+            
             var 訂單國 = Od.Where(p => Convert.ToDateTime(p.OrderDate).Year == DateTime.Now.Year && Convert.ToDateTime(p.OrderDate).Month == DateTime.Now.Month && p.OrderStatusId == 3)
         .Join(
         Odd,
         comp => comp.OrderId,
         sect => sect.OrderId,
         (comp, sect) => new { order = comp, orderdetail = sect })
-        .GroupBy(p => p.orderdetail.TravelProduct.Country.CountryName).Select(s => new C當月訂單統計
+        .GroupBy(p => p.orderdetail.TravelProduct.Country.CountryName)
+        .Select(s => new C當月訂單統計
         {
             國家 = s.Key,
-            訂單量 = s.Count(),
+            訂單量 = s.Where(s=>s.order.OrderId==s.orderdetail.OrderId).Count(),
         }).OrderByDescending(p => p.訂單量).Take(3).ToList();
-
-
 
             C當月訂單[0].產編訂單量 = 訂單量;
             C當月訂單[0].國家訂單量 = 訂單國;
-
-
-
-
 
             return ViewComponent("AnalysisTable2", C當月訂單);
         }
