@@ -13,17 +13,17 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label class="control-label">優惠券序號</label>
-                <input asp-for="GiftKey" class="form-control" required />
+                <input asp-for="GiftKey" id="GiftKey" class="form-control" required />
                 <span asp-validation-for="GiftKey" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">優惠券名稱</label>
-                <input asp-for="CouponName" class="form-control" required />
+                <input asp-for="CouponName" id="CouponName" class="form-control" required />
                 <span asp-validation-for="CouponName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label class="control-label">優惠金額</label>
-                <input asp-for="Discount" class="form-control" required />
+                <input asp-for="Discount" id="Discount" class="form-control" required />
                 <span asp-validation-for="Discount" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -46,7 +46,7 @@
 
             <div class="form-group">
                 <label class="control-label">使用條件</label>
-                <input asp-for="Condition" class="form-control" required />
+                <input id="Condition" asp-for="Condition" class="form-control" required />
                 <span asp-validation-for="Condition" class="text-danger"></span>
             </div>
             @*<div class="form-group">
@@ -70,16 +70,30 @@
             </div>
 
             <div class="modal-footer">
+                <button type="button" onclick="cdemo()" class="btn btn-success">DEMO</button>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                 <input type="submit" value="Create" class="btn btn-primary" />
+
             </div>
 
         </form>
     </div>
 </div>
+<script>
+    function cdemo() {
+        $("#GiftKey").val(1116);
+        $("#CouponName").val("結業優惠券");
+        $("#Discount").val(200);
+        $("#ex").val("2022-12-31");
+        $("#Condition").val(999);
+        $("#use").val("true");
+    }
 
+</script>
 
 
 @section Scripts {
+
  
+
 }
