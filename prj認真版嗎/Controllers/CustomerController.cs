@@ -128,6 +128,7 @@ namespace prj認真版嗎.Controllers
                 prod.MemberName = inPord.MemberName;
                 prod.Password = inPord.Password;
                 prod.Phone = inPord.Phone;
+                prod.Gender = inPord.Gender;
                 prod.CityId = _db.Cities.FirstOrDefault(p => p.CityName == inPord.CityName).CityId;
                 prod.MemberStatusId = _db.MemberStatuses.FirstOrDefault(p => p.MemberStatusName == inPord.MemberStatusName).MemberStatusId;
                 _db.SaveChanges();

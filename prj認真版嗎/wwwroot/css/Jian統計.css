@@ -6,13 +6,13 @@
     color: #000000;
     font-weight: bold;
     border-color: #dcdbdb;
-    height: 700px;
-    overflow: auto;
+    width:480px;
+    /*overflow: auto;*/
 }
-
+/*
 .tab > tr {
     border-color: #808080
-}
+}*/
 .yo 
 {
     margin-top: 30px;
@@ -63,7 +63,29 @@
 .訂單tr{
     background-color:#d8f575
 }
-
+.t1 thead tr, .t1 tbody tr {
+    box-sizing: border-box;
+    table-layout: fixed;
+    display: table;
+    width:100%;
+}
+.t1{
+    margin-bottom:0px;
+}
+::-webkit-scrollbar {
+    width: 3px;
+    background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+    background-color: #27314d;
+}
+.tbd {
+    display: block;
+    width: 100%; /*这里的8px是滚动条的宽度*/
+    height: 610px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
 .產品名稱{
      max-width:120px;
      overflow:hidden;

@@ -40,6 +40,7 @@
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="right:0">關閉</button>
+                <button type="button" class="btn btn-secondary" onclick="demo()" style="right:0">Demo</button>
             </div>
         </form>
     </div>
@@ -56,6 +57,11 @@
             Help.textContent = data;
         })
 
+    function demo() {
+        $("#AdminName").val("鄭凱");
+        $("#Account1").val("kai0088");
+        $("#Password").val("0088");
+    }
 </script>
 
 

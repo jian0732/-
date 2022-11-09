@@ -9,10 +9,10 @@
         <canvas id="myChart" width="100" height="100"></canvas>
     </div>
     <div class="tab card">
-        <table class="table">
+        <table class="table t1">
             <thead>
                 <tr class="tabtr">
-                    <th style="width:150px;">
+                    <th style="width:140px;">
                         @Html.DisplayNameFor(model => model.First().訂單日期)
                     </th>
                     <th>
@@ -26,7 +26,7 @@
                     </th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="tbd">
                 @{
                     decimal total = 0;
                     foreach (var item in Model)
@@ -53,8 +53,8 @@
                             </tr>
                         }
 
-                    total += item.金額;
-                }
+                        total += item.金額;
+                    }
                 }
                 <tr>
                 </tr>
@@ -66,9 +66,9 @@
                         NT$@Convert.ToInt32(total).ToString("###,###")
                     </td>
                 </tr>
-                </tbody>
-            </table>
-    </div>
+            </tbody>
+    </table>
+</div>
         <div class="yo">
             <div class="罩包 上d">
                 <div class="冠軍圖1">
@@ -182,8 +182,8 @@
             'rgb(201, 203, 207)'
         ];
 
-        var ctxx = document.getElementById('myChart').getContext('2d');
-        var myChart = new Chart(ctxx, {
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
                 labels: x,
@@ -196,9 +196,22 @@
                 }]
             },
             options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+                "hover": {
+                    "animationDuration": 0
+                },
+                "animation": {
+                    "duration": 1,
+                    "onComplete":function () {
+                        console.log(this.chart)
+                        var chartInstance = this.chart,
+                            ctx = chartInstance.ctx;
+                        this.data.datasets.forEach(function (dataset, i) {
+                            var meta = chartInstance.controller.getDatasetMeta(i);
+                            meta.data.forEach(function (pie, index) {
+                                var data = dataset.data[index];
+                                ctx.fillText(data, pie._model.x - 20, pie._model.y - 10);
+                            });
+                        });
                     }
                 }
             },
@@ -206,6 +219,3 @@
 
 
     </script>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.0.0/dist/chart.min.js"></script>

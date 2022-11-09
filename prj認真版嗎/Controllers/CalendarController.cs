@@ -18,7 +18,7 @@ namespace prj認真版嗎.Controllers
             };
 
  
-            return View(s);
+            return View();
         }
 
        
