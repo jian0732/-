@@ -62,7 +62,7 @@ namespace prj認真版嗎.Controllers
      {
          國家 = s.Key,
          營業額 = s.Sum(p => p.orderdetail.Quantity * p.orderdetail.UnitPrice)
-     }).ToList();
+     }).OrderByDescending(s=>s.營業額).ToList();
 
             string 國家 = "";
             string 營業額 = "";
@@ -137,7 +137,7 @@ namespace prj認真版嗎.Controllers
      {
          國家 = s.Key,
          營業額 = s.Sum(p => p.orderdetail.Quantity * p.orderdetail.UnitPrice)
-     }).ToList();
+     }).OrderByDescending(s=>s.營業額).ToList();
 
             string 國家 = "";
             string 營業額 = "";
@@ -209,5 +209,41 @@ namespace prj認真版嗎.Controllers
             return ViewComponent("AnalysisTable3");
         }
 
+        public IActionResult orderadd()
+        {
+            int[] mid = _db.Members.Select(s => s.MembersId).ToArray();
+            int index = mid.Length;
+            Random 亂數 = new Random();
+            int id = 亂數.Next(0,index);
+
+            Random gen = new Random();
+            DateTime start = new DateTime(2022, 1, 1) ;
+            int range = (DateTime.Today - start).Days;
+            
+            start = start.AddDays(gen.Next(range));
+            start = start.AddSeconds(new Random().Next(3000000));
+            Order ord = new Order();
+            ord.MembersId = mid[id];
+            ord.PaymentId = 4;
+            ord.OrderDate = start.ToString("yyyy/MM/dd HH:mm:ss");
+            ord.OrderStatusId = 3;
+
+            _db.Orders.Add(ord);
+            _db.SaveChanges();
+            int[] Tid = _db.TravelProducts.Select(s => s.TravelProductId).ToArray();
+            int Tindex = Tid.Length;
+            Random 亂數1 = new Random();
+            int id2 = 亂數1.Next(0, Tindex);
+            var tt = _db.TravelProducts.FirstOrDefault(p => p.TravelProductId == Tid[id2]);
+            OrderDetail ordd = new OrderDetail();
+            ordd.OrderId = ord.OrderId;
+            ordd.TravelProductId= tt.TravelProductId;
+            ordd.UnitPrice = tt.Price;
+            ordd.Quantity = new Random().Next(1,3);
+
+            _db.OrderDetails.Add(ordd);
+            _db.SaveChanges();
+            return RedirectToAction("page","Home");
+        }
     }
 }

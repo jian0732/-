@@ -115,7 +115,7 @@ namespace prj認真版嗎.Controllers
                 foreach (var i in id.Orderkey)
                 {
                     order = Orders.FirstOrDefault(p => p.OrderId == i);
-                    order.OrderStatusId = 3;
+                    order.OrderStatusId = 4;
 
                 }
                 _db.SaveChanges();

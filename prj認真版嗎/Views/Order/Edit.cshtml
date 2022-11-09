@@ -5,7 +5,7 @@
 }
 <h1>修改訂單</h1>
 <hr />
-<form asp-action="Edit">
+<form asp-action="Edit" method="post">
     <div class="row">
         <div class="col-6">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -62,9 +62,6 @@
                 await loadStatus()
                 await loadOStatus()
             }())
-
-
-
 
         async function loadStatus() {
             await ajaxCall("@Url.Content("~/Order/Status?id=")" + hid.value, rendering, selStatus)
