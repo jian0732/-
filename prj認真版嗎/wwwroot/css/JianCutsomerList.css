@@ -134,10 +134,16 @@ tbody tr > td > a:hover {
     color: #f11010;
 }
 
-
 tbody tr:hover {
     background-color: #eeeeee !important;
     color: black;
 }
 
+.ran {
+    width: 90px;
+}
+#蚯蚓{
+    font-weight:bold;
+    font-size:25px;
+}
 

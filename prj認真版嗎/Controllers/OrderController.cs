@@ -54,7 +54,6 @@ namespace prj認真版嗎.Controllers
                 ViewBag.CCid = CCid;
                 if (CCid != null)
                 {
-                    
                     ViewBag.取消理由 = _db.OrderCancels.FirstOrDefault(p => p.OrderId == id).Titel;
                     ViewBag.詳細說明 = _db.OrderCancels.FirstOrDefault(p => p.OrderId == id).CancaelContent;
                 }

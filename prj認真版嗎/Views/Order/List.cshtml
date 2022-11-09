@@ -19,9 +19,9 @@
         <button id="多筆處理訂單取消" class="btn btn-warning" type="submit">多筆處理訂單取消</button>
     </div>
     <div>
-        查詢範圍<input type="text" id="min" name="min">
-        ~<input type="text" id="max" name="max">
-        <input type="button" name="search" id="search" value="清除" class="btn btn-info" />
+        查詢日期範圍:<input type="text" id="min" name="min" class="ran">
+            <span id="蚯蚓">～</span><input type="text" id="max" name="max" class="ran">
+        <input type="button" name="search" id="search" onclick="clearRange()" value="清除" class="btn btn-info" />
     </div>
     <div class="justify-content-center dataTable">
         <table id="myTable" class="hover compact cell-border">
@@ -392,14 +392,17 @@
                 minDate = new DateTime($('#min'), {
                     format: 'yyyy-MM-DD'
                 });
+
                 maxDate = new DateTime($('#max'), {
                     format: 'yyyy-MM-DD'
                 });
 
                 var table = $('#myTable').DataTable();
+
                 $('#min, #max').on('change', function () {
                     table.draw();
                 });
+
             });
         });
 
@@ -433,5 +436,15 @@
             }
         });
 
+        function clearRange() {
+            var table = $('#myTable').DataTable();
+
+            $("#min").val("");
+            $("#max").val("");
+            minDate = new DateTime($('#min'), {format: 'yyyy-MM-DD'});
+            maxDate = new DateTime($('#max'), {format: 'yyyy-MM-DD'});
+            
+            table.draw();
+        }
     </script>
 }

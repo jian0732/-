@@ -81,7 +81,7 @@
 }
 .tbd {
     display: block;
-    width: 100%; /*这里的8px是滚动条的宽度*/
+    width: 100%; 
     height: 610px;
     overflow-y: auto;
     -webkit-overflow-scrolling: touch;

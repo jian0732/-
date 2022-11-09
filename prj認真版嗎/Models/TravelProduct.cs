@@ -12,6 +12,7 @@ namespace prj認真版嗎.Models
             Comments = new HashSet<Comment>();
             Myfavorites = new HashSet<Myfavorite>();
             OrderDetails = new HashSet<OrderDetail>();
+            ProductCoordinates = new HashSet<ProductCoordinate>();
             TravelPictures = new HashSet<TravelPicture>();
             TravelProductDetails = new HashSet<TravelProductDetail>();
         }
@@ -36,6 +37,7 @@ namespace prj認真版嗎.Models
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Myfavorite> Myfavorites { get; set; }
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<ProductCoordinate> ProductCoordinates { get; set; }
         public virtual ICollection<TravelPicture> TravelPictures { get; set; }
         public virtual ICollection<TravelProductDetail> TravelProductDetails { get; set; }
     }

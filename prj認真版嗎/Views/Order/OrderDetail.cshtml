@@ -21,7 +21,7 @@
                 <th>
                     @Html.DisplayNameFor(model => model.FirstOrDefault().UnitPrice)
                 </th>
-                <th>
+                <th style="padding-left: 0">
                     小計
                 </th>
             </tr>
@@ -33,7 +33,7 @@
                 decimal 總小計 = 0;
                 string 優惠內容 = "";
                 string 優惠券名稱 = "";
-                var 折扣 =Model.Select(p => p.優惠內容).FirstOrDefault();
+                var 折扣 = Model.Select(p => p.優惠內容).FirstOrDefault();
 
                 foreach (var item in Model)
                 {
@@ -54,10 +54,25 @@
                         <td>
                             @item.UnitPrice.ToString("###,##0")
                         </td>
-                        <td>
+                        <td style="padding-left: 0">
                             @item.小計.ToString("###,#0")
                         </td>
                     </tr>
+                    
+                        if (item.隨行人員 != null)
+                        {
+                            <tr>
+                                <td></td>
+                                <td colspan="4">
+                                    @foreach (var i in item.隨行人員)
+                                    {
+                                        <p>@i.姓名</p>
+                                        <p>@i.電話</p>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    
                 }
 
                 if (折扣 > 1 && 折扣 != null)
@@ -81,16 +96,22 @@
                 總金額 -= (int)折扣;
                 折扣 = (int)折扣;
             }
-            
+
             <tr>
                 <td></td>
                 <td></td>
                 <td></td>
-                <td class="金額顯示" colspan="2">
-                    <p>優惠名稱:@優惠券名稱 &ensp; @優惠內容</p>
-                    <p>小計金額:$ @總小計.ToString("###,###,##0")</p>
-                    <p>折&ensp;&ensp;&ensp;&ensp;抵:$ @折扣</p>
-                    <p>總&ensp;金&ensp;額:$ @總金額.ToString("###,###,##0")</p>
+                <td class="金額顯示" style="text-align:end;padding-right:0">
+                    <p>優惠名稱:&ensp;</p>
+                    <p>小計金額:$</p>
+                    <p>折&ensp;&ensp;&ensp;&ensp;抵:$</p>
+                    <p>總&ensp;金&ensp;額:$</p>
+                </td>
+                <td class="金額顯示" style="padding-left: 0">
+                    <p>@優惠券名稱&ensp;@優惠內容</p>
+                    <p>@總小計.ToString("###,###,##0")</p>
+                    <p>@折扣</p>
+                    <p>@總金額.ToString("###,###,##0")</p>
                 </td>
             </tr>
         </tbody>

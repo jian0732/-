@@ -55,5 +55,12 @@ namespace prj認真版嗎.ViewModel
         public int? 取消id  { get; set; }
         public string 取消理由 { get; set; }
         public string 詳細說明 { get; set; }
+
+        public List<隨行人員> 隨行人員 { get; set; }
+    }
+    public class 隨行人員 
+    {
+        public string 姓名 { get; set; }
+        public string 電話 { get; set; }
     }
 }
