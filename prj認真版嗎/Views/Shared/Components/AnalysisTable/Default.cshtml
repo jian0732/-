@@ -33,6 +33,8 @@
     var p = document.querySelector("#p").value.split(",");
     var color = "";
     (function () {
+        console.log(c)
+        console.log(p)
         go();
     }());
 
@@ -60,7 +62,6 @@
             "animation": {
                 "duration": 1,
                 "onComplete": function () {
-                    console.log(this.chart)
                     var chartInstance = this.chart,
                         ctx = chartInstance.ctx;
                     this.data.datasets.forEach(function (dataset, i) {
@@ -87,7 +88,6 @@
     var data = {
         labels: g,
         datasets: [{
-            label: 'My First dataset',
             data: gg,
             backgroundColor: [
                 'rgb(255, 99, 132,0.3)',

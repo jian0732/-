@@ -73,6 +73,14 @@ namespace prj認真版嗎.Controllers
                 國家 += i.國家 + ",";
                 營業額 += i.營業額.ToString("0") + ",";
             }
+            if (國家.Substring(國家.Length - 1, 1) == ",")
+            {
+                國家 = 國家.Substring(0, 國家.Length - 1);
+            }
+            if (營業額.Substring(營業額.Length - 1, 1) == ",")
+            {
+                營業額 = 營業額.Substring(0, 營業額.Length - 1);
+            }
             ViewBag.今年營業總額 = 營業總額.ToString("C0");
             ViewBag.國家 = 國家;
             ViewBag.營業額 = 營業額;

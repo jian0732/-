@@ -59,16 +59,12 @@
                         </td>
                     </tr>
                     
-                        if (item.隨行人員 != null)
+                        if (item.隨行人員姓名 != null)
                         {
                             <tr>
                                 <td></td>
                                 <td colspan="4">
-                                    @foreach (var i in item.隨行人員)
-                                    {
-                                        <p>@i.姓名</p>
-                                        <p>@i.電話</p>
-                                    }
+                                        <p>隨行人員:@item.隨行人員姓名</p>
                                 </td>
                             </tr>
                         }
@@ -108,7 +104,7 @@
                     <p>總&ensp;金&ensp;額:$</p>
                 </td>
                 <td class="金額顯示" style="padding-left: 0">
-                    <p>@優惠券名稱&ensp;@優惠內容</p>
+                    <p>@優惠券名稱 | @優惠內容</p>
                     <p>@總小計.ToString("###,###,##0")</p>
                     <p>@折扣</p>
                     <p>@總金額.ToString("###,###,##0")</p>

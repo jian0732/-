@@ -48,6 +48,7 @@ namespace prj認真版嗎.Controllers
                         優惠券名稱 = s.Order.Coupon.CouponName,
                         優惠內容 = s.Order.Coupon.Discount,
                         產品名稱 = s.TravelProduct.TravelProductName,
+                        隨行人員姓名 =s.Order.AccompanyPeople, 
                     }).ToList();
                 
                 var CCid = _db.Orders.FirstOrDefault(p=>p.OrderId==id&& p.OrderStatusId==4);
