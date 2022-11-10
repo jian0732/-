@@ -47,15 +47,7 @@
 
                     var id = Accessor.HttpContext.Session.GetString(CDictionary.SK_Admin_Login);
                     var data = JsonSerializer.Deserialize<CAdminViewModel>(id);
-                    if (data.ProductStatus == true)
-                    {
-                        <li class="nav-item active">
-                            <div class="nav-link ">
-                                <i class=" fas fa-fw fa-tachometer-alt" id="Jimg"></i>
-                                @Html.ActionLink("儀錶板", "Index", "AnalysisTable", null, new { @class = "nav-link 超連結", style = "display:inline" })
-                            </div>
-                        </li>
-                    }
+
 
                     if (data.ProductStatus == true)
                     {
@@ -67,24 +59,6 @@
                         </li>
                     }
 
-                    if (data.ProductStatus == true)
-                    {
-                        <li class="nav-item active ">
-                            <div class="nav-link ">
-                                <i class="fas fa-fw fa-calendar" id="Jimg"></i>
-                                @Html.ActionLink("行事曆", "Index", "Calendar", null, new { @class = "nav-link 超連結", style = "display:none" })
-                            </div>
-                        </li>
-                    }
-                    if (data.ProductStatus == true)
-                    {
-                        <li class="nav-item active ">
-                            <div class="nav-link ">
-                                <i class=" fas fa-fw fa-wallet" id="Jimg"></i>
-                                @Html.ActionLink("訂單管理", "List", "Order", null, new { @class = "nav-link 超連結", style = "display:inline" })
-                            </div>
-                        </li>
-                    }
 
                     if (data.MemberStatus == true)
                     {
@@ -96,12 +70,29 @@
                         </li>
                     }
 
-                    if (data.CommentStatus == true)
+                    if (data.ProductStatus == true)
+                    {
+                        <li class="nav-item active">
+                            <div class="nav-link ">
+                                <i class=" fas fa-fw fa-tachometer-alt" id="Jimg"></i>
+                                @Html.ActionLink("儀錶板", "Index", "AnalysisTable", null, new { @class = "nav-link 超連結", style = "display:inline" })
+                            </div>
+                        </li>
+                    }
+                    @*<div hidden>
+                    <li class="nav-item active ">
+                        <div class="nav-link ">
+                            <i class="fas fa-fw fa-calendar" id="Jimg"></i>
+                            @Html.ActionLink("行事曆", "Index", "Calendar", null, new { @class = "nav-link 超連結", style = "display:none" })
+                        </div>
+                    </li>
+                </div>*@
+                    if (data.ProductStatus == true)
                     {
                         <li class="nav-item active ">
                             <div class="nav-link ">
-                                <i class=" fas fa-fw fa-comment " id="Jimg"></i>
-                                @Html.ActionLink("評論管理", "List", "Comment", null, new { @class = "nav-link 超連結", style = "display:inline" })
+                                <i class=" fas fa-fw fa-wallet" id="Jimg"></i>
+                                @Html.ActionLink("訂單管理", "List", "Order", null, new { @class = "nav-link 超連結", style = "display:inline" })
                             </div>
                         </li>
                     }
@@ -112,6 +103,16 @@
                             <div class="nav-link ">
                                 <i class=" fas fa-fw fa-users" id="Jimg"></i>
                                 @Html.ActionLink("權限管理", "List", "Admin", null, new { @class = "nav-link 超連結", style = "display:inline" })
+                            </div>
+                        </li>
+                    }
+
+                    if (data.CommentStatus == true)
+                    {
+                        <li class="nav-item active ">
+                            <div class="nav-link ">
+                                <i class=" fas fa-fw fa-comment " id="Jimg"></i>
+                                @Html.ActionLink("評論管理", "List", "Comment", null, new { @class = "nav-link 超連結", style = "display:inline" })
                             </div>
                         </li>
                     }
