@@ -291,37 +291,72 @@ namespace prj認真版嗎.Controllers
 
             return RedirectToAction("List");
         }
-        //[HttpPost] 失敗
-        //public ActionResult Edit(FormCollection inPord)
+        public IActionResult testaaaa()
+        {
+            return View();
+        }
+        //[HttpPost]
+        //public IActionResult te(CCsendmailcs ms)
         //{
-        //    TravelProduct c = _db.TravelProducts.FirstOrDefault(p => p.TravelProductId == inPord["TravelProductId"]);
-        //    if (c != null)
-        //    {
-        //        c.TravelProductName = inPord["TravelProductName"];
-        //        c.Price = Convert.ToDecimal(inPord["Price"]);
-        //        c.TravelProductTypeId = Convert.ToInt32(inPord["TravelProductTypeId"]);
-        //        c.Stocks = Convert.ToInt32(inPord["Stocks"]);
-        //        c.Description = inPord["Description"];
-        //        c.CountryId = Convert.ToInt32(inPord["CountryId"]);
-        //        c.Cost = Convert.ToInt32(inPord["Cost"]);
-        //        c.EventIntroduction = inPord["EventIntroduction"];
-        //        c.PreparationDescription = inPord["PreparationDescription"];
-        //        //_db.SaveChanges();
-        //        if (inPord["photo"].Count > 0)
-        //        {
-        //            var TraPicture = _db.TravelPictures.Where(pic => pic.TravelProductId == c.TravelProductId).FirstOrDefault();
-        //            TraPicture.TravelPictureText = inPord["TravelPictureText"];
+        //    CCsendmailcs 商品描述 = new CCsendmailcs();
+        //    var em = _PlanetTravelContext.Members.ToList();
+        //    var myf = _PlanetTravelContext.Myfavorites.Where(a => a.TravelProductId == ms.ProductID).Select(a => a.Members.Email).ToList();
+        //    商品描述 = (from a in _PlanetTravelContext.TravelProducts.Where(a => a.TravelProductId == ms.ProductID)
+        //            select new CCsendmailcs
+        //            {
+        //                商品名稱 = a.TravelProductName,
+        //                商品照片 = a.TravelPictures.Where(a => a.TravelProductId == ms.ProductID).Select(a => a.TravelPicture1).FirstOrDefault(),
+        //                商品價格 = a.Price,
+        //                商品描述 = a.EventIntroduction,
+        //                商品詳情 = a.Description,
+        //            }).FirstOrDefault();
 
-        //            string pname = Guid.NewGuid().ToString() + ".jpg";
-        //            TraPicture.TravelPicture1 = pname;
-        //            string path = _enviro.WebRootPath + "/images/TravelProductPictures/" + pname;
-        //            var temp = inPord["photo"] as IFormFile;
-        //            //temp.CopyTo(new FileStream(path, FileMode.Create));
-        //            //_db.SaveChanges();
-        //        }
+        //    MimeMessage message = new MimeMessage();
+        //    BodyBuilder builder = new BodyBuilder();
+        //    var mu = new Multipart();
+        //    string imgPath = _enviro.WebRootPath + "/Images/logoRefer.png";
+
+        //    var image = builder.LinkedResources.Add(imgPath);
+
+        //    image.ContentId = MimeUtils.GenerateMessageId();
+
+        //    var attach = new MimePart("image", "PNG")
+        //    {
+        //        FileName = Path.GetFullPath(imgPath)
+        //    };
+
+        //    builder.HtmlBody =
+        //                        $"<img width:80px src='cid:{image.ContentId}'/>" +
+        //                       $"<p>您好，您關注的商品更新了!</p>" +
+        //                        $"<div class='container col-md-12'>" +
+        //                        $"<a href='https://localhost:44302/shopping/List?TravelProductId={ms.ProductID}'>" +
+        //                         $"<h3>{商品描述.商品名稱}</h3>" + $"</a>" +
+        //                          $"<img src='https://localhost:44338/images/TravelProductPictures/{商品描述.商品照片}'width='600px''>" +
+        //                          $"<p>{商品描述.商品描述}</p>" +
+        //                          $"<p>{商品描述.商品詳情}</p>" +
+        //                          $"<p style='red'> 驚喜價格:{商品描述.商品價格.ToString("###,0")}元!</p>" +
+        //                        $"</div>" +
+        //                      $"<div style='border: 2px solid black;text-align: center;'>      </div>" +
+        //                      $"<p>傳送時間:{DateTime.Now:yyyy-MM-dd HH:mm:ss}</p>";
+
+        //    message.From.Add(new MailboxAddress("PlanetTraveler星球旅遊", "planetmait143-1@outlook.com"));
+        //    foreach (var item in myf)
+        //    {
+        //        message.To.Add(new MailboxAddress("", item));
         //    }
 
-        //    return RedirectToAction("List");
+        //    message.Subject = "PlanetTraveler星球旅遊";
+        //    message.Body = builder.ToMessageBody();
+
+        //    using (SmtpClient client = new SmtpClient())
+        //    {
+        //        client.Connect("smtp.outlook.com", 25, MailKit.Security.SecureSocketOptions.StartTls);
+        //        client.Authenticate("planetmait143-1@outlook.com", "gogo1116");
+        //        client.Send(message);
+        //        client.Disconnect(true);
+        //    }
+        //    return Json(new { Res = true });
+
         //}
         public IActionResult IndexHome()
         {
