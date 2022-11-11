@@ -27,6 +27,8 @@ namespace prj認真版嗎.ViewModel
         public int TravelProductTypeId { get; set; }
         [DisplayName("行程類型")]
         public string TravelProductTypeDisplayName { get; set; }
+        [DisplayName("行程天數")]
+        public int TravelProductDaysDisplay { get; set; }
         [DisplayName("庫存")]
         public int Stocks { get; set; }
         [DisplayName("行程簡介")]

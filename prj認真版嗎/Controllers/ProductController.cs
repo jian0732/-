@@ -41,6 +41,7 @@ namespace prj認真版嗎.Controllers
                                Price = c.Price,
                                TravelProductTypeId = c.TravelProductTypeId,
                                TravelProductTypeDisplayName = c.TravelProductType.TravelProductTypeName,
+                               TravelProductDaysDisplay = c.TravelProductDetails.Count,
                                Stocks = c.Stocks,
                                Description = StripHTML(c.Description),
                                CountryId = c.CountryId,
@@ -49,7 +50,7 @@ namespace prj認真版嗎.Controllers
                                EventIntroduction = c.EventIntroduction,
                                PreparationDescription = c.PreparationDescription,
                                TravelPicture1 = c.TravelPictures.Where(pic => pic.TravelProductId == c.TravelProductId).FirstOrDefault().TravelPicture1,
-                               ProductStatus = c.ProductStatus,                               
+                               ProductStatus = c.ProductStatus,
                            }).ToList();
 
             return View(result);
