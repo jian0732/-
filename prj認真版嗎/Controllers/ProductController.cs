@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MimeKit;
+using MimeKit.Utils;
 using prjMvcCoreModel.ViewModel;
 using prj認真版嗎.Authorization;
 using prj認真版嗎.Models;
@@ -11,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using MailKit.Net.Smtp;
 
 namespace prj認真版嗎.Controllers
 {
@@ -226,10 +229,15 @@ namespace prj認真版嗎.Controllers
         [HttpPost]
         public ActionResult Edit(CProductViewModel inProd)
         {
+            int tempStocks = 0;
             //部分功能未完善，待補
             TravelProduct c = _db.TravelProducts.FirstOrDefault(p => p.TravelProductId == inProd.TravelProductId);
             if (c != null)
             {
+                //紀錄當下產品庫存
+                tempStocks = c.Stocks;
+
+                //修改相關資訊
                 c.TravelProductName = inProd.TravelProductName;
                 c.Price = inProd.Price;
                 //c.TravelProductTypeId = inProd.TravelProductTypeId;
@@ -240,6 +248,73 @@ namespace prj認真版嗎.Controllers
                 c.EventIntroduction = inProd.EventIntroduction;
                 c.PreparationDescription = inProd.PreparationDescription;
                 _db.SaveChanges();
+
+                //如果庫存增加則寄送Email給關注該產品的客戶
+                if (tempStocks ==0 && inProd.Stocks > tempStocks)
+                {
+                    CCsendmailcs 商品描述 = new CCsendmailcs();
+                    var em = _db.Members.ToList();
+                    var myf = _db.Myfavorites.Where(a => a.TravelProductId == inProd.TravelProductId).Select(a => a.Members.Email).ToList();
+                    if (myf.Count != 0)
+                    {
+                        商品描述 = (from a in _db.TravelProducts.Where(a => a.TravelProductId == inProd.TravelProductId)
+                                select new CCsendmailcs
+                                {
+                                    商品名稱 = a.TravelProductName,
+                                    商品照片 = a.TravelPictures.Where(a => a.TravelProductId == inProd.TravelProductId).Select(a => a.TravelPicture1).FirstOrDefault(),
+                                    商品價格 = a.Price,
+                                    商品描述 = a.EventIntroduction,
+                                    商品詳情 = a.Description,
+                                }).FirstOrDefault();
+
+                        MimeMessage message = new MimeMessage();
+                        BodyBuilder builder = new BodyBuilder();
+                        var mu = new Multipart();
+                        string imgPath = _enviro.WebRootPath + "/Images/logoRefer.png";
+
+                        var image = builder.LinkedResources.Add(imgPath);
+
+                        image.ContentId = MimeUtils.GenerateMessageId();
+
+                        var attach = new MimePart("image", "PNG")
+                        {
+                            FileName = Path.GetFullPath(imgPath)
+                        };
+
+                        builder.HtmlBody =
+                                            $"<img width:80px src='cid:{image.ContentId}'/>" +
+                                           $"<p>您好，您關注的商品更新了!</p>" +
+                                            $"<div class='container col-md-12'>" +
+                                            $"<a href='https://localhost:44302/shopping/List?TravelProductId={inProd.TravelProductId}'>" +
+                                             $"<h3>{商品描述.商品名稱}</h3>" + $"</a>" +
+                                              $"<img src='https://localhost:44338/images/TravelProductPictures/{商品描述.商品照片}'width='600px''>" +
+                                              $"<p>{商品描述.商品描述}</p>" +
+                                              $"<p>{商品描述.商品詳情}</p>" +
+                                              $"<p style='red'> 驚喜價格:{商品描述.商品價格.ToString("###,0")}元!</p>" +
+                                            $"</div>" +
+                                          $"<div style='border: 2px solid black;text-align: center;'>      </div>" +
+                                          $"<p>傳送時間:{DateTime.Now:yyyy-MM-dd HH:mm:ss}</p>";
+
+                        message.From.Add(new MailboxAddress("PlanetTraveler星球旅遊", "planetmait143-1@outlook.com"));
+                        foreach (var item in myf)
+                        {
+                            message.To.Add(new MailboxAddress("", item));
+                        }
+
+                        message.Subject = "PlanetTraveler星球旅遊";
+                        message.Body = builder.ToMessageBody();
+
+                        using (SmtpClient client = new SmtpClient())
+                        {
+                            client.Connect("smtp.outlook.com", 25, MailKit.Security.SecureSocketOptions.StartTls);
+                            client.Authenticate("planetmait143-1@outlook.com", "gogo1116");
+                            client.Send(message);
+                            client.Disconnect(true);
+                        }
+                        //return Json(new { Res = true });
+                    }
+                }
+
                 if (inProd.photo != null)
                 {
                     int tempCount = 0;
@@ -291,73 +366,12 @@ namespace prj認真版嗎.Controllers
 
             return RedirectToAction("List");
         }
+        //測試用的頁面 可以隨時刪除
         public IActionResult testaaaa()
         {
             return View();
         }
-        //[HttpPost]
-        //public IActionResult te(CCsendmailcs ms)
-        //{
-        //    CCsendmailcs 商品描述 = new CCsendmailcs();
-        //    var em = _PlanetTravelContext.Members.ToList();
-        //    var myf = _PlanetTravelContext.Myfavorites.Where(a => a.TravelProductId == ms.ProductID).Select(a => a.Members.Email).ToList();
-        //    商品描述 = (from a in _PlanetTravelContext.TravelProducts.Where(a => a.TravelProductId == ms.ProductID)
-        //            select new CCsendmailcs
-        //            {
-        //                商品名稱 = a.TravelProductName,
-        //                商品照片 = a.TravelPictures.Where(a => a.TravelProductId == ms.ProductID).Select(a => a.TravelPicture1).FirstOrDefault(),
-        //                商品價格 = a.Price,
-        //                商品描述 = a.EventIntroduction,
-        //                商品詳情 = a.Description,
-        //            }).FirstOrDefault();
-
-        //    MimeMessage message = new MimeMessage();
-        //    BodyBuilder builder = new BodyBuilder();
-        //    var mu = new Multipart();
-        //    string imgPath = _enviro.WebRootPath + "/Images/logoRefer.png";
-
-        //    var image = builder.LinkedResources.Add(imgPath);
-
-        //    image.ContentId = MimeUtils.GenerateMessageId();
-
-        //    var attach = new MimePart("image", "PNG")
-        //    {
-        //        FileName = Path.GetFullPath(imgPath)
-        //    };
-
-        //    builder.HtmlBody =
-        //                        $"<img width:80px src='cid:{image.ContentId}'/>" +
-        //                       $"<p>您好，您關注的商品更新了!</p>" +
-        //                        $"<div class='container col-md-12'>" +
-        //                        $"<a href='https://localhost:44302/shopping/List?TravelProductId={ms.ProductID}'>" +
-        //                         $"<h3>{商品描述.商品名稱}</h3>" + $"</a>" +
-        //                          $"<img src='https://localhost:44338/images/TravelProductPictures/{商品描述.商品照片}'width='600px''>" +
-        //                          $"<p>{商品描述.商品描述}</p>" +
-        //                          $"<p>{商品描述.商品詳情}</p>" +
-        //                          $"<p style='red'> 驚喜價格:{商品描述.商品價格.ToString("###,0")}元!</p>" +
-        //                        $"</div>" +
-        //                      $"<div style='border: 2px solid black;text-align: center;'>      </div>" +
-        //                      $"<p>傳送時間:{DateTime.Now:yyyy-MM-dd HH:mm:ss}</p>";
-
-        //    message.From.Add(new MailboxAddress("PlanetTraveler星球旅遊", "planetmait143-1@outlook.com"));
-        //    foreach (var item in myf)
-        //    {
-        //        message.To.Add(new MailboxAddress("", item));
-        //    }
-
-        //    message.Subject = "PlanetTraveler星球旅遊";
-        //    message.Body = builder.ToMessageBody();
-
-        //    using (SmtpClient client = new SmtpClient())
-        //    {
-        //        client.Connect("smtp.outlook.com", 25, MailKit.Security.SecureSocketOptions.StartTls);
-        //        client.Authenticate("planetmait143-1@outlook.com", "gogo1116");
-        //        client.Send(message);
-        //        client.Disconnect(true);
-        //    }
-        //    return Json(new { Res = true });
-
-        //}
+        
         public IActionResult IndexHome()
         {
 
