@@ -4,6 +4,17 @@
 }
 @section Styles{
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css" />
+    <link href="~/css/jiancustomer.css" rel="stylesheet" />
+    <style>
+        tr {
+            background-color: #adccbe
+        }
+        th {
+            font-weight: bold;            
+            color: black;
+            
+        }
+    </style>
 }
 
 <div style="margin:30px 30px;">
@@ -18,7 +29,7 @@
         <button type="submit" class="btn btn-success" style="font-size: 20px;margin-right:40px">修改上下架</button>
     </div>
     <div class="m-4">
-        <table id="travelTable" class="table table-striped table-hover">
+        <table id="myTable" class="table table-striped table-hover">
             <thead>
                 <tr>
                     <th style="width:40px">
@@ -120,7 +131,7 @@
     <script src="~/js/datatables.min.js"></script>
     <script>
         $(document).ready(function () {
-            $('#travelTable').DataTable({
+            $('#myTable').DataTable({
                 "language": {
                     "processing": "處理中...",
                     "loadingRecords": "載入中...",
