@@ -24,6 +24,19 @@ namespace prj認真版嗎.Controllers
         // GET: Coupons
         public async Task<IActionResult> Index()
         {
+
+            _context.Coupons.ToList();
+            var q = _context.Coupons.Select(a => a.CouponId).ToList();
+            var 日期 = DateTime.Now.ToShortDateString();
+            foreach (var item in _context.Coupons)
+            {
+                if (DateTime.Parse(item.ExDate) < DateTime.Parse(日期))
+                {
+                    item.Useful= false;
+                }
+
+            }
+         
             return View(await _context.Coupons.ToListAsync());
         }
 
