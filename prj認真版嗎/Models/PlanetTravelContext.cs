@@ -355,8 +355,6 @@ namespace prj認真版嗎.Models
 
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
 
-                entity.Property(e => e.AccompanyPeople).HasMaxLength(50);
-
                 entity.Property(e => e.CouponId).HasColumnName("CouponID");
 
                 entity.Property(e => e.MembersId).HasColumnName("MembersID");
@@ -417,6 +415,8 @@ namespace prj認真版嗎.Models
                 entity.ToTable("OrderDetail");
 
                 entity.Property(e => e.OrderDetailId).HasColumnName("OrderDetailID");
+
+                entity.Property(e => e.AccompanyPeople).HasMaxLength(50);
 
                 entity.Property(e => e.OrderId).HasColumnName("OrderID");
 

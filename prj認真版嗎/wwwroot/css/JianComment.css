@@ -1,6 +1,7 @@
 ﻿#List {
     overflow-y: scroll;
     height: 710px;
+    -webkit-overflow-scrolling: touch;
 }
 .big {
     margin: 10px 300px;
@@ -95,4 +96,12 @@ thead > tr {
     right: 0;
     bottom: 0;
     visibility:hidden;
+}
+::-webkit-scrollbar {
+    width: 3px;
+    background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #27314d;
 }

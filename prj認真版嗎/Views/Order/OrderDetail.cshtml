@@ -98,13 +98,19 @@
                 <td></td>
                 <td></td>
                 <td class="金額顯示" style="text-align:end;padding-right:0">
-                    <p>優惠名稱:&ensp;</p>
+                    @if (優惠內容 != "無使用優惠券")
+                    {
+                        <p>優惠名稱:&ensp;</p>
+                    }
                     <p>小計金額:$</p>
                     <p>折&ensp;&ensp;&ensp;&ensp;抵:$</p>
                     <p>總&ensp;金&ensp;額:$</p>
                 </td>
                 <td class="金額顯示" style="padding-left: 0">
-                    <p>@優惠券名稱 | @優惠內容</p>
+                    @if (優惠內容 != "無使用優惠券")
+                    {
+                    <p>@優惠券名稱 (@優惠內容)</p>
+                    }
                     <p>@總小計.ToString("###,###,##0")</p>
                     <p>@折扣</p>
                     <p>@總金額.ToString("###,###,##0")</p>

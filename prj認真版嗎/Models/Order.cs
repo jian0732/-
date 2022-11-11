@@ -17,7 +17,6 @@ namespace prj認真版嗎.Models
         public int MembersId { get; set; }
         public int PaymentId { get; set; }
         public string OrderDate { get; set; }
-        public string AccompanyPeople { get; set; }
         public int OrderStatusId { get; set; }
         public int? CouponId { get; set; }
 

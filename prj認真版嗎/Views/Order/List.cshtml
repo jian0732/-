@@ -391,7 +391,17 @@
                     return false;
                 }
             );
-            $(document).ready(function () {
+        });
+        $(document).ready(function () {
+            minDate = new DateTime($('#min'), {
+                format: 'yyyy-MM-DD'
+            });
+            maxDate = new DateTime($('#max'), {
+                format: 'yyyy-MM-DD'
+            });
+            var table = $('#myTable').DataTable();
+            $('#min, #max').on('change', function () {
+
                 minDate = new DateTime($('#min'), {
                     format: 'yyyy-MM-DD'
                 });
@@ -401,15 +411,10 @@
                 });
 
                 var table = $('#myTable').DataTable();
-
-                $('#min, #max').on('change', function () {
-                    table.draw();
-                });
-
+                table.draw();
             });
+            table.draw();
         });
-
-
         $(function () {
             $('#全部').on('click', function () {
                 $('.dataTables_filter [type=search]').val("").keyup();
@@ -424,12 +429,10 @@
                 $('.dataTables_filter [type=search]').val("訂單取消").keyup();
             });
         })
-
         $(".checkall").on('click', function () {
             var check = $(this).prop("checked");
             $(".checkchild").prop("checked", check);
         });
-
         $("#myTable tbody tr td:nth-child(-n+6)").on("click", function () {
             var check = $(this).closest("tr").find(".checkchild").prop("checked");
             if (check == true) {
@@ -438,7 +441,6 @@
                 $(this).closest("tr").find('.checkchild').prop("checked", true);
             }
         });
-
         function clearRange() {
             var table = $('#myTable').DataTable();
 
