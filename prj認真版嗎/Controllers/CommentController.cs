@@ -32,14 +32,15 @@ namespace prj認真版嗎.Controllers
         [HttpPost]
         public IActionResult List(CCommentS ss)
         {
-            if (ss.idd != null) { 
-            Comment com = null;
-            foreach (var id in ss.idd)
+            if (ss.idd != null)
             {
-                com = _db.Comments.FirstOrDefault(p => p.CommentId == id);
-                com.CommentStatus =ss.check;
-            }
-            _db.SaveChanges();
+                Comment com = null;
+                foreach (var id in ss.idd)
+                {
+                    com = _db.Comments.FirstOrDefault(p => p.CommentId == id);
+                    com.CommentStatus = ss.check;
+                }
+                _db.SaveChanges();
             }
             return View();
         }
@@ -148,7 +149,7 @@ namespace prj認真版嗎.Controllers
                         產品名稱 = s.TravelProduct.TravelProductName
                     }).ToList();
                 }
-                else
+                else if (filter == 1 || filter == 2)
                 {
                     com = _db.Comments.Where(p => p.Star == filter).OrderByDescending(o => o.CommentDate).Select(s => new C評論畫面
                     {
@@ -162,6 +163,26 @@ namespace prj認真版嗎.Controllers
             return RedirectToAction("List");
         }
 
+        public IActionResult commentfilte(string keyword)
+        {
+            List<C評論畫面> com = null;
+            if (keyword == null)
+            {
+                com = _db.Comments.OrderByDescending(o => o.CommentDate).Select(s => new C評論畫面
+                {
+                    comment = s,
+                    產品名稱 = s.TravelProduct.TravelProductName
+                }).ToList();
+                return ViewComponent("Commentleft", com);
+            }
+            else { 
+            com = _db.Comments.Where(s => s.TravelProductId.ToString().Contains(keyword)||s.TravelProduct.TravelProductName.Contains(keyword)).Select(s=> new C評論畫面 {
+                comment = s,
+                產品名稱 = s.TravelProduct.TravelProductName
+            }).ToList();
+            }
+            return ViewComponent("Commentleft", com);
+        }
 
         public IActionResult getAll()
         {

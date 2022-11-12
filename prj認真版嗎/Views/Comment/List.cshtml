@@ -14,9 +14,9 @@
             <div class="input-group">
                 <input type="text" class="form-control bg-light border-0 small"
                        placeholder="搜尋" aria-label="Search"
-                       aria-describedby="basic-addon2">
+                       aria-describedby="basic-addon2" id="select1">
                 <div class="input-group-append">
-                    <button class="btn btn-primary" type="button">
+                    <button class="btn btn-primary" type="button" id="select2">
                         <i class="fas fa-search fa-sm"></i>
                     </button>
                 </div>
@@ -88,7 +88,7 @@
             load();
         }())
         function load() {
-            
+            $("#select1").val("");
             $("#左tbody").load("@Url.Content("~/Comment/goleft")")
         }
         function getdata(id) {
@@ -183,12 +183,17 @@
             $(".checkchild").prop("checked", check);
         });
 
+        $("#select2").on('click', function() {
+            var pa = $("#select1").val();
+                $("#左tbody").load("@Url.Content("~/Comment/commentfilte")" +"?keyword="+pa)
+
+        })
+
         //$("#List").on("mouseenter mouseleave", function (event) { // 挷定滑鼠進入及離開事件
         //    if (event.type == "mouseenter") {
         //        $(this).css({ "overflow-y": "scroll" }); // 滑鼠進入
         //    } else {
         //        $(this).scrollTop(0).css({ "overflow-y": "hidden" }); // 滑鼠離開
-        //    }
         //});
     </script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>

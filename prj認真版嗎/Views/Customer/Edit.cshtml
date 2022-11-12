@@ -4,8 +4,12 @@
     ViewData["Title"] = "Edit";
     Layout = null;
 }
+
 <div id="">
     <h1 style="font-family:Helvetica">會員修改資料</h1>
+    <div>
+        <button type="button" id="我愛"  class="btn btn-primary" />修改名稱
+    </div>
     <hr />
     <div class="row">
         <div class="col-md-12">
@@ -88,7 +92,11 @@
             let datas = await response.json()
             rendering(sel, datas)
         }
+    
+    $("#我愛").on('click', function () {
+        $('#MemberName').val("我愛星球旅遊123");
 
+    })
         function rendering(sel, datas) {
         datas.forEach(da=>{
             const opt = new Option(da, da)
