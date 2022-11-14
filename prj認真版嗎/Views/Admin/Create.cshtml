@@ -11,20 +11,20 @@
 <hr />
 <div class="row">
     <div class="col-md-12">
-        <form asp-action="Create">
+        <form asp-action="Create" method="post" name="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="AdminName" class="control-label"></label>
-                <input asp-for="AdminName" class="form-control" />
+                <input asp-for="AdminName" class="form-control" Required />
             </div>
             <div class="form-group">
                 <label asp-for="Account" class="control-label"></label>
-                <input asp-for="Account" class="form-control" id="Account1" />
+                <input asp-for="Account" class="form-control" id="Account1" Required />
                 <span asp-validation-for="Account" class="text-danger" id="NameHelp"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" />
+                <input asp-for="Password" class="form-control" Required />
             </div>
             <div class="form-group inputt">
                 <label asp-for="CommentStatus" class="control-label"></label>
@@ -38,7 +38,7 @@
             </div>
 
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="button" value="新增" class="btn btn-primary" id="cCreate" />
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" style="right:0">關閉</button>
                 <button type="button" class="btn btn-secondary" onclick="demo()" style="right:0">Demo</button>
             </div>
@@ -51,16 +51,39 @@
         var Account = document.querySelector("#Account1")
         var Help = document.querySelector("#NameHelp")
 
-        Account.addEventListener("blur", async () => {
-            let rp = await fetch('@Url.Content("~/Admin/Cy")' + `?Account=${Account.value}`)
-            let data =await rp.text();
-            Help.textContent = data;
-        })
 
-    function demo() {
+    $('#cCreate').on('click', function (e) {
+        if (Help.textContent == "此帳號可以使用")
+        {
+            let e = new XMLHttpRequest();
+            let formData = new FormData(document.Create);
+            e.open('post', '@Url.Content("~/Admin/Create")');
+            e.send(formData);
+            e.addEventListener('load', function () {
+                location.reload()
+                alert('新增成功');
+            })
+        }
+        else {
+            alert("資料未填寫完，或是帳號重複");
+        }
+    })
+
+    Account.addEventListener("blur", async () => {
+        if (Help.textContent != "") {
+            $.get('@Url.Content("~/Admin/Cy")' + `?Account=${Account.value}`, function (text) {
+                Help.textContent = text;
+            });
+        };
+    });
+
+    async function demo() {
         $("#AdminName").val("鄭凱");
-        $("#Account1").val("kai0088");
+        await $("#Account1").val("kai0088");
         $("#Password").val("0088");
+        $.get('@Url.Content("~/Admin/Cy")' + `?Account=${Account.value}`, function (text) {
+            Help.textContent = text;
+        });
     }
 </script>
 

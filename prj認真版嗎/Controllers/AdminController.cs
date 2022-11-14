@@ -60,7 +60,7 @@ namespace prj認真版嗎.Controllers
 
         [HttpPost]
         public IActionResult Create(Admin ad, CAdminViewModel Vad)
-        {
+         {
             _db.Admins.Add(ad);
             _db.SaveChanges();
             _db.AdminStatuses.Add(new AdminStatus()

@@ -5,5 +5,20 @@
 }
 a:hover {
     text-decoration: none; 
+     transform: scale(1.05);
+        box-shadow: 0 0 6px rgba(255,102,0,1);
+        top: 0px;
+        border: none;
+}
+.cardd {
+    /* margin: 0 auto;*/
+    width: 210px;
+    transition: all .5s;
 }
 
+    .cardd:hover {
+        transform: scale(1.05);
+        box-shadow: 0 0 6px rgba(255,102,0,1);
+        top: 0px;
+        border: none;
+    }

@@ -12,8 +12,8 @@
 </div>
 <div class="btn-group">
     <button id="全部" class="btn btn-primary" type="button">全部</button>
-    <button id="停權" class="btn btn-danger" type="button">停權</button>
-    <button id="席維尼" class="btn btn-dark" type="button">查詢姓名</button>
+    <button id="停權" class="btn btn-danger" type="button">評論停權</button>
+    <button id="席維尼" class="btn btn-dark" type="button">DEMO</button>
 </div>
 <div>
     <table id="myTable" class="hover compact cell-border 自訂">
@@ -47,7 +47,7 @@
                     @Html.DisplayNameFor(model => model.First().CityId)
                 </th>
                 <th>
-                    @Html.DisplayNameFor(model => model.First().MemberStatusId)
+                    評論權限
                 </th>
                 <th>
                 </th>
@@ -63,7 +63,7 @@
                     <td>
                         @if (@item.PhotoPath != null)
                         {
-                            <img src="https://localhost:44302/images/客戶大頭貼/@item.PhotoPath" height="50px"/>
+                            <img src="https://localhost:44302/images/客戶大頭貼/@item.PhotoPath" height="50px" style="border-radius:10px"/>
                         }
                     </td>
                     <td>

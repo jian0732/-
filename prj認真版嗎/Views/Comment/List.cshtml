@@ -1,12 +1,11 @@
 
 @section Styles{
     <style>
-
     </style>
     <link href="~/css/JianComment.css" rel="stylesheet" />
 }
 <div class="d-flex justify-content-center">
-    <h1 class="標題1">評價管理</h1>
+    <h1 class="標題1">評論管理</h1>
 </div>
 <form method="post">
     <div class="big d-flex">
@@ -41,7 +40,7 @@
 
             <div class="評論內容">
                 <div class="標題div">
-                    <h3 class="標題">評價內容 / 修改</h3>
+                    <h3 class="標題">評論明細</h3>
                 </div>
                 <div id="comview">
 
@@ -84,22 +83,34 @@
 </form>
 @section Scripts{
     <script>
+        let t = 0;
         (function () {
             load();
         }())
         function load() {
+            t = 0;
             $("#select1").val("");
             $("#左tbody").load("@Url.Content("~/Comment/goleft")")
         }
         function getdata(id) {
             $("#comview").load("@Url.Content("~/Comment/Showcomment?id=")" + id)
         }
-        function offs(id) {
-            $("#comview").load("@Url.Content("~/Comment/offs?id=")" + id)
+       async function offs(id) {
+           await $("#comview").load("@Url.Content("~/Comment/offs?id=")" + id);
+            if(t == 1)
+            filter(3)
         }
-        function opens(id) {
-            $("#comview").load("@Url.Content("~/Comment/opens?id=")" + id)
+       async function opens(id) {
+           await $("#comview").load("@Url.Content("~/Comment/opens?id=")" + id);
+            if (t == 1)
+            filter(3)
+        };
+        function filter(prt) {
+            if (prt == 3)t = 1;
+            else t = 0;
+             $("#左tbody").load("@Url.Content("~/Comment/commentfilter")" + "?filter=" + prt)
         }
+
         let ww = [];
         const one = document.querySelector("#onestar");
         const two = document.querySelector("#twostar");
@@ -155,6 +166,7 @@
                               <td>${data.commentText}</td>`
                   tr.innerHTML = text
                   $("#coms").append(tr);
+
               })
                 ww.push(id);
                 if (ww.length != 0)
@@ -174,9 +186,7 @@
         }
 
 
-        function filter(prt) {
-            $("#左tbody").load("@Url.Content("~/Comment/commentfilter")"+"?filter="+prt)
-        }
+
 
         $(".checkall").on('click', function () {
             var check = $(this).prop("checked");
@@ -186,7 +196,6 @@
         $("#select2").on('click', function() {
             var pa = $("#select1").val();
                 $("#左tbody").load("@Url.Content("~/Comment/commentfilte")" +"?keyword="+pa)
-
         })
 
         //$("#List").on("mouseenter mouseleave", function (event) { // 挷定滑鼠進入及離開事件
