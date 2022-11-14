@@ -162,5 +162,9 @@ namespace prj認真版嗎.Controllers
         {
             return _context.Coupons.Any(e => e.CouponId == id);
         }
+        public IActionResult power_bi()
+        {
+            return View();
+        }
     }
 }
