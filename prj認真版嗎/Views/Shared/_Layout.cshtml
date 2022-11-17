@@ -127,7 +127,16 @@
                         </li>
 
                     }
+                    if (data.ProductStatus == true)
+                    {
+                        <li class="nav-item active ">
+                            <div class="nav-link ">
+                                <i class=" fas fa-fw fa-wallet" id="Jimg"></i>
+                                @Html.ActionLink("Power Bi", "power_bi", "Coupons", null, new { @class = "nav-link 超連結", style = "display:inline" })
+                            </div>
+                        </li>
 
+                    }
                     @Html.ActionLink("訂單生成", "orderadd", "AnalysisTable", null, new { @class = "nav-link 超連結", style = "display:inline ; display:none" })
 
                     @Html.ActionLink("登出", "Logout", "Home", null, new { @class = "btn btn-dark" })

@@ -118,7 +118,8 @@ namespace prj認真版嗎.Controllers
                 {
                     string photoname = Guid.NewGuid().ToString() + ".jpg";
                     prod.PhotoPath = photoname;
-                    string path = _enviro.WebRootPath + "/images/" + photoname;
+                    //string path = _enviro.WebRootPath + "/images/" + photoname;
+                    string path = "https://localhost:44302/images/客戶大頭貼/" + photoname;
                     inPord.photo.CopyTo(new FileStream(path, FileMode.Create));
 
                 }

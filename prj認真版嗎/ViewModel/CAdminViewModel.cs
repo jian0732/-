@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -20,25 +21,29 @@ namespace prj認真版嗎.ViewModel
             get { return _admin; }
             set { _admin = value; }
         }
-
+        
         [DisplayName("ID")]
         public int AdminId
         {
             get { return _admin.AdminId; }
             set { _admin.AdminId = value; }
         }
+
+        [Required]
         [DisplayName("權限名")]
         public string AdminName
         {
             get { return _admin.AdminName; }
             set { _admin.AdminName = value; }
         }
+        [Required]
         [DisplayName("帳號")]
         public string Account
         {
             get { return _admin.Account; }
             set { _admin.Account = value; }
         }
+        [Required]
         [DisplayName("密碼")]
         public string Password
         {

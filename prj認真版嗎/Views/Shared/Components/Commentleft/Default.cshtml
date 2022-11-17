@@ -3,7 +3,7 @@
 
 @{
     Layout = null;
- }
+}
 
 @foreach (var item in Model)
 {
@@ -14,10 +14,18 @@
         <td>
             (@item.TravelProductId)
         </td>
-        <td>
-            @item.產品名稱 (@item.Star 星)
-        </td>
-
+        @if (@item.Star >= 3)
+        {
+            <td style="color:red">
+                @item.產品名稱 (@item.Star 星)
+            </td>
+        }
+        else
+        {
+            <td>
+                @item.產品名稱 (@item.Star 星)
+            </td>
+        }
     </tr>
 
 }
