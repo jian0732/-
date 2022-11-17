@@ -14,6 +14,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using MailKit.Net.Smtp;
+using Microsoft.Data.SqlClient;
 
 namespace prj認真版嗎.Controllers
 {
@@ -82,7 +83,8 @@ namespace prj認真版嗎.Controllers
         [HttpPost]
         public ActionResult Create(CCreateTravelProductViewModel newProduct)
         {
-
+            // 可用SqlConnection.BeginTransaction()和transaction.Rollback()避免途中發生錯誤，資料庫建立不當的資料
+            // 在ram中記錄所有要對資料庫多張資料表新增資料，最後透過交易全部新增
             if (newProduct != null)
             {
 
@@ -231,7 +233,7 @@ namespace prj認真版嗎.Controllers
         public ActionResult Edit(CProductViewModel inProd)
         {
             int tempStocks = 0;
-            //部分功能未完善，待補
+            
             TravelProduct c = _db.TravelProducts.FirstOrDefault(p => p.TravelProductId == inProd.TravelProductId);
             if (c != null)
             {
